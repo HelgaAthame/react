@@ -7,12 +7,17 @@ import {
 } from "react-router-dom";
 import App from './App'
 import './index.scss'
+import AboutUs from './AboutUs.js';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
+  },
+  {
+    path: "/about-us",
+    element: <AboutUs />,
   },
 ]);
 
