@@ -26,7 +26,6 @@ class SearchBar extends Component<SearchBarProps> {
   }
 
   render () {
-    console.log(this.state);
     return (
       <div className="wrapper">🔍
         <input
