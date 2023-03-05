@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Unbounded;
   line-height: 1.5;
   font-weight: 400;
 
@@ -66,4 +66,9 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+@font-face {
+  font-family: Unbounded;
+  src: url("./assets/unbounded.ttf");
 }

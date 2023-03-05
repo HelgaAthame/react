@@ -5,16 +5,8 @@
   text-align: center;
 
 }
+
 .app {
   display: flex;
   flex-direction: column;
-  .header {
-
-  }
-  .main {
-    width: 100vw;
-    display: flex;
-    flex-direction: row;
-    flex-wrap:wrap;
-  }
 }
