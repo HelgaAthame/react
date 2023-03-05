@@ -7,7 +7,7 @@ function App() {
 
   history.replaceState(null, '', "main")
   return (
-    <div className="App">
+    <div className="app">
       <Header />
       <Main />
     </div>
