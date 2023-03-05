@@ -1,0 +1,13 @@
+.app{
+  .main {
+    .card {
+      .image {
+        height: 300px;
+        overflow-y: hidden;
+        img {
+          width: 200px;
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import { FunctionComponent, ReactComponentElement } from "react"
 import { CardT } from './cards';
+import './card.scss';
 
 interface CardType extends CardT {
   ky: string

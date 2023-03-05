@@ -1,15 +1,32 @@
+import { Component } from 'react'
 import './App.scss'
 import Header from './Header.js'
 import Main from './Main.js'
+import cards, { CardT } from "./cards";
 
-export default function App() {
-  //const [count, setCount] = useState(0)
+class App extends Component<any, any> {
+  constructor(props: any) {
+    super(props)
+    history.replaceState(null, '', "main")
+    this.state = {cards: cards}
+  }
 
-  history.replaceState(null, '', "main")
-  return (
-    <div className="app">
-      <Header />
-      <Main />
-    </div>
-  )
+  updateData(cards: CardT[]) {
+    this.setState({ cards: cards })
+  }
+
+  render() {
+    return (
+      <div className="app">
+        <Header updateData={this.updateData.bind(this)}/>
+        <Main cards={this.state.cards}/>
+      </div>
+    )
+  }
 }
+
+function updateData() {
+  throw new Error('Function not implemented.')
+}
+
+export default App
