@@ -1,4 +1,4 @@
-type Card = {
+export type CardT = {
   name: string
   price: number
   category: string
@@ -9,7 +9,7 @@ type Card = {
   picture: string
 }
 
-const cards: Card[] = [
+const cards: CardT[] = [
   {
     name: 'The Angel of the West Window',
     price: 1000,
