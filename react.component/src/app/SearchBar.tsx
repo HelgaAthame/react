@@ -4,7 +4,7 @@ import cards, { CardT } from './cards';
 
 interface SearchBarProps {
   cards: CardT[]
-  updateData: any
+  updateData: (cards: CardT[]) => void
 }
 
 class SearchBar extends Component<SearchBarProps> {

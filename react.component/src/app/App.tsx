@@ -7,7 +7,6 @@ import cards, { CardT } from "./cards";
 class App extends Component<any, any> {
   constructor(props: any) {
     super(props)
-    history.replaceState(null, '', "main")
     this.state = {cards: cards}
   }
 

@@ -10,14 +10,16 @@ class Main extends Component<any, any> {
         {this.props.cards.map( (card: CardT, i: number) =>
           <Card
             key = {i.toString()}
-            name = {card.name}
+            {...card}
+            /*name = {card.name}
             price = {card.price}
             category = {card.category}
             author = {card.author}
             genre = {card.genre}
             year = {card.year}
             likes = {card.likes}
-            picture = {card.picture}
+            picture = {card.picture}*/
+
           />
         )}
       </div>
