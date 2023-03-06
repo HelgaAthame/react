@@ -25,13 +25,30 @@ class SearchBar extends Component<SearchBarProps> {
     this.props.updateData(filtered);
   }
 
+  handleFocus () {
+    const wrapper = document.querySelector('.search_wrapper') as HTMLDivElement;
+    if (wrapper) wrapper.style.flexGrow = '1';
+  }
+
+  handleBlur () {
+    const wrapper = document.querySelector('.search_wrapper') as HTMLDivElement;
+    const input = wrapper.querySelector('.input') as HTMLDivElement;
+    if (wrapper && document.activeElement !== input) wrapper.style.flexGrow = '0';
+  }
+
   render () {
     return (
-      <div className="wrapper">🔍
-        <input
-          type="search"
-          className="input"
-          onChange={this.handleChange} required />
+      <div className='wrapper'>
+        <div className="search_wrapper"
+          onMouseOver={this.handleFocus}
+          onMouseOut={this.handleBlur}>🔍
+          <input
+            type="search"
+            className="input"
+            onChange={this.handleChange}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur} required />
+        </div>
       </div>
     )
   }

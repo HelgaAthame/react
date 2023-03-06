@@ -2,6 +2,8 @@ import SearchBar from "./SearchBar";
 import './header.scss'
 import cards, { CardT } from "./cards";
 import { Component } from "react";
+import Logo from "./Logo";
+import Nav from "./Nav";
 
 interface SearchBarProps {
   cards: CardT[]
@@ -20,10 +22,12 @@ class Header extends Component< any , any> {
   render() {
     return (
       <header className="header">
+        <Logo />
         <SearchBar
           cards = {this.state.cards}
           updateData = {this.props.updateData}
          />
+         <Nav />
       </header>
     )
   }

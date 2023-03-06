@@ -11,10 +11,9 @@ $basic: 1rem;
       border-width: 1px;
       border-color: $color;
       border-style: solid;
-      margin: $basic;
-      padding: $basic;
-      max-width: 95vw;
-      width: 18rem;
+      margin: $basic 0.2rem;
+      padding: 1.5rem;
+      width: 16rem;
       .card-footer, .author, .name, .image {
         width: 16rem;
         max-width: 90vw;

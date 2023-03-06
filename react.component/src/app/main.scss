@@ -1,8 +1,8 @@
 .main {
-  margin: 1rem;
+  margin: 0 1rem 1rem;
   //width: 100vw;
   display: flex;
   flex-direction: row;
   flex-wrap:wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }

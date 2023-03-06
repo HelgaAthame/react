@@ -11,15 +11,6 @@ class Main extends Component<any, any> {
           <Card
             key = {i.toString()}
             {...card}
-            /*name = {card.name}
-            price = {card.price}
-            category = {card.category}
-            author = {card.author}
-            genre = {card.genre}
-            year = {card.year}
-            likes = {card.likes}
-            picture = {card.picture}*/
-
           />
         )}
       </div>
