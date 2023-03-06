@@ -1,5 +1,7 @@
+$color: #105544;
+
 :root {
-  font-family: Unbounded;
+  font-family: Regular-font;
   line-height: 1.5;
   font-weight: 600;
 
@@ -15,7 +17,7 @@
 }
 
 a {
-  font-weight: 500;
+  font-weight: 900;
   color: #646cff;
   text-decoration: inherit;
 }
@@ -24,6 +26,7 @@ a:hover {
 }
 
 body {
+  color: $color;
   margin: 0;
   display: flex;
   place-items: center;
@@ -71,4 +74,19 @@ button:focus-visible {
 @font-face {
   font-family: Unbounded;
   src: url("./assets/unbounded.ttf");
+}
+
+@font-face {
+  font-family: Light-font;
+  src: url("./assets/Objectivity/Objectivity-Light.otf");
+}
+
+@font-face {
+  font-family: Regular-font;
+  src: url("./assets/Objectivity/Objectivity-Regular.otf");
+}
+
+@font-face {
+  font-family: Medium-font;
+  src: url("./assets/Objectivity/Objectivity-Medium.otf");
 }
