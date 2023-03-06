@@ -2,13 +2,9 @@ import { FunctionComponent, ReactComponentElement } from "react"
 import { CardT } from './cards';
 import './card.scss';
 
-interface CardType extends CardT {
-  ky: string
-}
-
-const Card:FunctionComponent <CardType> = (props) => {
+const Card:FunctionComponent <CardT> = (props) => {
   return (
-    <section className='card' key={props.ky}>
+    <section className='card' >
       <div className='image'><img src={props.picture} /></div>
       <div className='name'>{props.name}</div>
       <div className='author'>{props.author}</div>

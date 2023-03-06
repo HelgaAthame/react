@@ -9,7 +9,7 @@ class Main extends Component<any, any> {
       <div className="main">
         {this.props.cards.map( (card: CardT, i: number) =>
           <Card
-            ky = {i.toString()}
+            key = {i.toString()}
             name = {card.name}
             price = {card.price}
             category = {card.category}
