@@ -15,18 +15,15 @@ class Header extends Component< any , any> {
     this.state = {cards: cards}
   }
 
-  updateData = (filtered: CardT[]) => {
+  /*updateData = (filtered: CardT[]) => {
     this.setState({ cards: filtered })
-  }
+  }*/
 
   render() {
     return (
       <header className="header">
         <Logo />
-        <SearchBar
-          cards = {this.state.cards}
-          updateData = {this.props.updateData}
-         />
+          {this.props.children}
          <Nav />
       </header>
     )

@@ -1,0 +1,18 @@
+$color: #105544;
+$basic: 1rem;
+
+.nav {
+  padding: $basic $basic 0.5rem;
+  border-radius: 2px;
+  border-width: 1px;
+  border-color: $color;
+  border-style: solid;
+  margin: $basic $basic 0 0 ;
+  .link {
+    font-size: 2rem;
+    color: $color;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

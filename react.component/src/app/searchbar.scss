@@ -6,23 +6,33 @@ $basic: 1rem;
   display: flex;
   flex-grow: 1;
   justify-content: flex-start;
+  margin-right: $basic;
   .search_wrapper{
     padding: $basic;
     border-radius: 2px;
     border-width: 1px;
     border-color: $color;
     border-style: solid;
-    margin: $basic $basic 0;
-    width: 1.75rem;
+    margin: $basic 0 0;
+    width: 2.5rem;
     transition: 1s;
     display: flex;
     flex-wrap: nowrap;
     justify-self: right;
+    font-size: 1.75rem;
+    align-items: center;
+    .lupa {
+      width: 2rem;
+      height: 1.75rem;
+    }
     .input {
+      color: $color;
+      font-size: 2rem;
       outline: none;
       border: none;
       flex-grow: 1;
       width: 100%;
+      margin: 0 $basic;
     }
   }
 }

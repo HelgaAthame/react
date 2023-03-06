@@ -7,16 +7,17 @@ $basic: 1rem;
       display: flex;
       align-items: center;
       flex-direction: column;
+      flex-grow:1;
       border-radius: 2px;
       border-width: 1px;
       border-color: $color;
       border-style: solid;
-      margin: $basic 0.2rem;
+      margin: 0.5rem;
       padding: 1.5rem;
-      width: 16rem;
+      min-width: 16rem;
+      max-width: 22rem;
       .card-footer, .author, .name, .image {
         width: 16rem;
-        max-width: 90vw;
         text-align: left;
       }
       .name {
@@ -63,8 +64,8 @@ $basic: 1rem;
         display: flex;
         align-items: center;
         img {
-          width: 16rem;
-          max-width: 90vw;
+          min-width: 16rem;
+          max-width: 18rem;
         }
       }
     }

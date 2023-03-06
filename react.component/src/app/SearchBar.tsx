@@ -1,6 +1,7 @@
 import { ChangeEvent, Component } from 'react';
 import './searchbar.scss';
 import cards, { CardT } from './cards';
+import lupa from './lupa';
 
 interface SearchBarProps {
   cards: CardT[]
@@ -16,7 +17,7 @@ class SearchBar extends Component<SearchBarProps> {
   }
 
   handleChange (event: ChangeEvent<HTMLInputElement>) {
-    const filtered = this.props.cards
+    const filtered = cards
       .filter(card => Object.values(card)
         .find( (value: string | number) => value.toString().toLowerCase()
           .search(event.target.value.toLowerCase()) !== -1)
@@ -41,7 +42,8 @@ class SearchBar extends Component<SearchBarProps> {
       <div className='wrapper'>
         <div className="search_wrapper"
           onMouseOver={this.handleFocus}
-          onMouseOut={this.handleBlur}>🔍
+          onMouseOut={this.handleBlur}>
+          <div className='lupa'>{lupa}</div>
           <input
             type="search"
             className="input"

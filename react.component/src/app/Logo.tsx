@@ -1,11 +1,12 @@
 import { Component } from "react"
+import { Link } from "react-router-dom";
 import './logo.scss';
 
 class Logo extends Component< any , any> {
   render() {
     return (
       <div className="logo">
-        BEST BOOK STORE
+        <Link to='/' className="link">BEST BOOK STORE</Link>
       </div>
     )
   }

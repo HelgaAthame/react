@@ -3,6 +3,7 @@ import './App.scss'
 import Header from './Header.js'
 import Main from './Main.js'
 import cards, { CardT } from "./cards";
+import SearchBar from './SearchBar';
 
 class App extends Component<any, any> {
   constructor(props: any) {
@@ -17,7 +18,12 @@ class App extends Component<any, any> {
   render() {
     return (
       <div className="app">
-        <Header updateData={this.updateData.bind(this)}/>
+        <Header>
+         <SearchBar
+          cards = {this.state.cards}
+          updateData = {this.updateData.bind(this)}
+         />
+        </Header>
         <Main cards={this.state.cards}/>
       </div>
     )

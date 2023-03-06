@@ -32,6 +32,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  align-items: flex-start;
 }
 
 h1 {
@@ -69,11 +70,6 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
-
-@font-face {
-  font-family: Unbounded;
-  src: url("./assets/unbounded.ttf");
 }
 
 @font-face {
