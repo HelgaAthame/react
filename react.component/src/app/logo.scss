@@ -4,12 +4,13 @@ $basic: 1rem;
 .logo {
   text-align: left;
   font-size: 2rem;
-  min-width: 5rem;
+  //min-width: 5rem;
+  //max-width: fit-content;
   border-radius: 2px;
   border-width: 1px;
   border-color: $color;
   border-style: solid;
-  margin: $basic $basic 0;
+  margin: $basic 0.5rem 0;
   display: flex;
   flex-wrap: wrap;
   padding: $basic $basic 0.5rem;
