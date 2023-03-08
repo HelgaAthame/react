@@ -1,6 +1,6 @@
 import { Component } from "react";
 import Card from "./Card";
-import cards, { CardT } from "./cards";
+import { CardT } from "./cards";
 import './main.scss'
 
 class Main extends Component<any, any> {

@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactComponentElement } from "react"
+import { FunctionComponent, Component } from "react"
 import { CardT } from './cards';
 import './card.scss';
 import heart from "./heart";
@@ -14,7 +14,7 @@ const Card:FunctionComponent <CardT> = (props) => {
           <div className='genre'>{props.genre}</div>
           <div className='country'>{props.country}</div>
         </div>
-        <div className='likes'>{heart}&nbsp;{props.likes}</div>
+        <div className='likes'>{heart()}&nbsp;{props.likes}</div>
       </div>
     </section>
   )
