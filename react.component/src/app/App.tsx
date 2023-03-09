@@ -1,37 +1,33 @@
-import { Component } from 'react'
-import './App.scss'
-import Header from './Header.js'
-import Main from './Main.js'
-import cards, { CardT } from "./cards";
+import { Component } from 'react';
+import './App.scss';
+import Header from './Header.js';
+import Main from './Main.js';
+import cards, { CardT } from './cards';
 import SearchBar from './SearchBar';
 
-class App extends Component<any, any> {
-  constructor(props: any) {
-    super(props)
-    this.state = {cards: cards}
-  }
+class App extends Component {
+  state = {
+    cards: cards,
+  };
 
   updateData(cards: CardT[]) {
-    this.setState({ cards: cards })
+    this.setState({ cards: cards });
   }
 
   render() {
     return (
       <div className="app">
-        <Header>
-         <SearchBar
-          cards = {this.state.cards}
-          updateData = {this.updateData.bind(this)}
-         />
+        <Header cards={[]}>
+          <SearchBar cards={this.state.cards} updateData={this.updateData.bind(this)} />
         </Header>
-        <Main cards={this.state.cards}/>
+        <Main cards={this.state.cards} />
       </div>
-    )
+    );
   }
 }
 
 function updateData() {
-  throw new Error('Function not implemented.')
+  throw new Error('Function not implemented.');
 }
 
-export default App
+export default App;

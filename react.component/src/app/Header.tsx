@@ -1,33 +1,26 @@
-import SearchBar from "./SearchBar";
-import './header.scss'
-import cards, { CardT } from "./cards";
-import { Component } from "react";
-import Logo from "./Logo";
-import Nav from "./Nav";
+import './header.scss';
+import cards, { CardT } from './cards';
+import { Component } from 'react';
+import Logo from './Logo';
+import Nav from './Nav';
 
-interface SearchBarProps {
-  cards: CardT[]
-}
+type SearchBarProps = {
+  cards: CardT[];
+  children: React.ReactNode;
+};
 
-class Header extends Component< any , any> {
-  constructor (props: any) {
-    super (props)
-    this.state = {cards: cards}
-  }
-
-  /*updateData = (filtered: CardT[]) => {
-    this.setState({ cards: filtered })
-  }*/
+class Header extends Component<SearchBarProps> {
+  state = { cards: cards };
 
   render() {
     return (
       <header className="header">
         <Logo />
-          {this.props.children}
-         <Nav />
+        {this.props.children}
+        <Nav />
       </header>
-    )
+    );
   }
 }
 
-export default Header
+export default Header;

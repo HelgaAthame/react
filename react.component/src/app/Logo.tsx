@@ -1,15 +1,17 @@
-import { Component } from "react"
-import { Link } from "react-router-dom";
+import { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './logo.scss';
 
-class Logo extends Component< any , any> {
+class Logo extends Component {
   render() {
     return (
       <div className="logo">
-        <Link to='/' className="link">BEST BOOK STORE</Link>
+        <Link to="/" className="link">
+          BEST BOOK STORE
+        </Link>
       </div>
-    )
+    );
   }
 }
 
-export default Logo
+export default Logo;
