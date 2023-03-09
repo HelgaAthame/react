@@ -5,6 +5,7 @@ import './main.scss';
 
 type PropT = {
   cards: CardT[];
+  updateData: (cards: CardT[]) => void;
 };
 
 class Main extends Component<PropT> {
@@ -12,7 +13,7 @@ class Main extends Component<PropT> {
     return (
       <div className="main">
         {this.props.cards.map((card: CardT, i: number) => (
-          <Card key={i.toString()} {...card} />
+          <Card key={i.toString()} {...card} cards={this.props.cards} updateData = {this.props.updateData} />
         ))}
       </div>
     );

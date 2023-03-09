@@ -138,7 +138,7 @@ const cards: CardT[] = [
     genre: 'series of novels',
     year: 1997 - 2007,
     likes: 6,
-    picture: 'https://s2-goods.ozstatic.by/2000/373/71/101/101071373_0.jpg',
+    picture:'https://s2-goods.ozstatic.by/2000/373/71/101/101071373_0.jpg',
   },
   {
     name: 'Belarusian folk costume',
@@ -159,7 +159,8 @@ const cards: CardT[] = [
     genre: 'monograph',
     year: 2019,
     likes: 2,
-    picture: 'https://kniganosha.by/public/images/books/mDnOVBb9NMgKZpwJfFS5.jpg',
+    picture:
+      'https://kniganosha.by/public/images/books/mDnOVBb9NMgKZpwJfFS5.jpg',
   },
   {
     name: 'The Gold-Bug',

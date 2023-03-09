@@ -20,14 +20,10 @@ class App extends Component {
         <Header cards={[]}>
           <SearchBar cards={this.state.cards} updateData={this.updateData.bind(this)} />
         </Header>
-        <Main cards={this.state.cards} />
+        <Main cards={this.state.cards} updateData={this.updateData.bind(this)}/>
       </div>
     );
   }
-}
-
-function updateData() {
-  throw new Error('Function not implemented.');
 }
 
 export default App;
