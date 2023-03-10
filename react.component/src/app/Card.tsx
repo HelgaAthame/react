@@ -1,7 +1,7 @@
-import cards, { CardT } from './cards';
+import { CardT } from './cards';
 import './card.scss';
 import heart from './heart';
-import { Component } from 'react';
+import { Component, createRef, RefObject } from 'react';
 
 interface NewCardT  extends CardT {
   cards: CardT[];
@@ -9,29 +9,28 @@ interface NewCardT  extends CardT {
 };
 
 class Card extends Component<NewCardT> {
+  heart: RefObject<HTMLDivElement>;
+
+  constructor(props: NewCardT) {
+     super(props);
+     this.heart = createRef<HTMLDivElement>();
+  }
 
   handleClick(event: React.MouseEvent) {
+    const heartDiv = this.heart.current;
+    const heartEl = (heartDiv ? heartDiv.firstElementChild: undefined) as SVGElement;
+    if (heartEl) {
+      heartEl.setAttribute('fill', 'darkred');
+    }
+    setTimeout(() => {
+      heartEl.setAttribute('fill', '#105544');
+    }, 500);
+
     const target = event.target as HTMLDivElement;
     const changedCards: CardT[] = JSON.parse(JSON.stringify(this.props.cards));
     const targetCard = changedCards.find((card: { name: string | undefined; }) => card.name === target.closest('section')?.querySelector('.name')?.innerHTML);
     if (targetCard) targetCard.likes++;
     this.props.updateData(changedCards);
-    /*const changedCard = JSON.parse(JSON.stringify({
-      name: this.props.name,
-      price: this.props.price,
-      country: this.props.country,
-      author: this.props.author,
-      genre: this.props.genre,
-      year: this.props.year,
-      likes: this.props.likes,
-      picture: this.props.picture,
-    }));*/
-
-
-    /*const targetCard = cards.find(card => card.name === target.closest('section')?.querySelector('.name')?.innerHTML);
-    alert(targetCard?.name);
-    if (targetCard) targetCard.likes ++ ;
-    this.render();*/
   }
 
   render() {
@@ -47,7 +46,7 @@ class Card extends Component<NewCardT> {
             <div className="genre">{this.props.genre}</div>
             <div className="country">{this.props.country}</div>
           </div>
-          <div className="likes" onClick={this.handleClick.bind(this)}>
+          <div ref={this.heart} className="likes" onClick={this.handleClick.bind(this)}>
             {heart()}&nbsp;{this.props.likes}
           </div>
         </div>

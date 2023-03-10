@@ -4,7 +4,7 @@ import './aboutus.scss';
 function AboutUs() {
   return (
     <div className="AboutUs">
-      <Header cards={[]}>children={undefined}</Header>
+      <Header cards={[]}>{undefined}</Header>
     </div>
   );
 }

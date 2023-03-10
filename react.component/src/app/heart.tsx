@@ -1,5 +1,3 @@
-import cards from "./cards";
-
 const heart = () => {
   return (
     <svg

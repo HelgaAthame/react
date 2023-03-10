@@ -47,11 +47,16 @@ $basic: 1rem;
           }
         }
         .likes {
+          width: 4rem;
+          white-space: nowrap;
           font-size: 2rem;
           font-family: Light-font;
           line-height: 1rem;
           svg {
             margin-bottom: -0.1rem;
+            &:hover {
+              cursor: pointer;
+            }
           }
         }
       }

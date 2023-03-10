@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`здесь должно быть название серии тестов > all the card field import properly > 
+exports[`react app > all the card field import properly > 
     Object {
       "name": "The Modern JavaScript Tutorial",
       "country": "Russia",

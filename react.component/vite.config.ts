@@ -10,6 +10,7 @@ export default defineConfig({
     port: 5000,
   },
   test: {
+    globals: true,
     environment: "happy-dom",
     coverage: {
       provider: 'istanbul',
