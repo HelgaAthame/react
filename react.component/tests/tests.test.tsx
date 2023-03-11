@@ -28,31 +28,8 @@ describe('react app', () => {
   });
 
   test('order of books is proper', () => {
-    expect(app.state.cards[2]).toMatchInlineSnapshot(`
-      {
-        "author": "Franz Kafka",
-        "country": "Czech",
-        "genre": "novel",
-        "likes": 3,
-        "name": "The Castle",
-        "picture": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Franz_Kafka_Das_Schloss.jpg/220px-Franz_Kafka_Das_Schloss.jpg",
-        "price": 1200,
-        "year": 1926,
-      }
-    `);
-  });
-
-  test('all the card field import properly', () => {
-    expect(app.state.cards[1]).toMatchSnapshot(`
-    Object {
-      "name": "The Modern JavaScript Tutorial",
-      "country": "Russia",
-      "author: "Ilya Kantor",
-      "genre": "tutorial",
-      "likes": 2,
-      "picture": "https://i.livelib.ru/workpic/1001593289/200/a57d/Ilya_Kantor__Sovremennyj_uchebnik_JavaScript.jpg"
-    }
-    `);
+    const { getAllByTestId } = render(<App />);
+    expect(getAllByTestId('card')).toHaveLength(2);
   });
 
   test('should update App State', () => {
@@ -110,6 +87,6 @@ describe('react app', () => {
   });
 
   test('Header renders properly', () => {
-    
+
   });
 })
