@@ -1,17 +1,20 @@
 /// <reference types="vitest" />
+/// <reference types="vite-plugin-svgr/client" />
 import { defineConfig } from 'vite'
-//import { defineConfig } from 'vitest/config'
+import svgr from 'vite-plugin-svgr'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    svgr()
+  ],
   server: {
     port: 5000,
   },
   test: {
     globals: true,
-    environment: "happy-dom",
+    environment: "jsdom",
     coverage: {
       provider: 'istanbul',
     }

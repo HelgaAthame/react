@@ -1,7 +1,7 @@
 import { ChangeEvent, Component, createRef, RefObject } from 'react';
 import './searchbar.scss';
 import cards, { CardT } from './cards';
-import search from './search';
+import { ReactComponent as Lupa } from '../assets/lupa.svg';
 
 interface SearchBarProps {
   cards: CardT[];
@@ -78,7 +78,7 @@ class SearchBar extends Component<SearchBarProps> {
           onMouseOver={this.handleFocus.bind(this)}
           onMouseOut={this.handleBlur.bind(this)}
         >
-          <div className="lupa">{search()}</div>
+          <div className="lupa"><Lupa/></div>
           <input
             ref={this.input}
             type="search"

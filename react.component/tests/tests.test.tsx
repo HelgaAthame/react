@@ -1,8 +1,3 @@
-/*
- * @vitest-environment
-happy-dom
- */
-
 import {
   beforeEach,
   describe,
@@ -17,25 +12,22 @@ import Header from "../src/app/Header";
 import Logo from "../src/app/Logo";
 import Main from "../src/app/Main";
 import React from "react";
+import SearchBar from "../src/app/SearchBar";
 
 const props = {};
 const app = new App(props);
 
 beforeEach( () => {
-  //app.setState({cards: cards});
+  //app.setState({cards: null});
 })
 
 describe('react app', () => {
 
   test('cards imports to app instance correctly', () => {
-    //const props = {};
-    //const app = new App(props);
     expect(app.state.cards).toEqual(cards);
   });
 
   test('order of books is proper', () => {
-    //const props = {};
-    //const app = new App(props);
     expect(app.state.cards[2]).toMatchInlineSnapshot(`
       {
         "author": "Franz Kafka",
@@ -92,8 +84,32 @@ describe('react app', () => {
     expect(app.state.cards[0].name).toBe('Holly Bible');
   });
 
-  test('logo renders properly', () => {
-    render(<Logo />);
+  test('Main renders properly', () => {
+    const fakeFunc = () => {
+      console.log('it is a fake func');
+    }
+    const main = render(<Main cards={cards} updateData={fakeFunc.bind(this)}/>);
+    expect(main).toBeTruthy();
+    const card = main.getByText(/javascript/i);
+    expect(card.innerHTML).toBe('The Modern JavaScript Tutorial');
+  });
+
+  test('SearchBar renders properly', () => {
+    const fakeFunc = () => {
+      console.log('it is a fake func');
+    }
+    const searchbar = render(<SearchBar cards={cards} updateData={fakeFunc.bind(this)}/>);
+    expect(searchbar).toBeTruthy();
+    const input = screen.getByRole('searchbox') as HTMLInputElement;
+    expect(input.type).toBe('search');
+    expect(input.className).toBe('input');
+  });
+
+  test('Logo renders properly', () => {
+    const logo = render(<Logo />);
+  });
+
+  test('Header renders properly', () => {
     
-  })
+  });
 })

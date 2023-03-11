@@ -1,9 +1,9 @@
 import { CardT } from './cards';
 import './card.scss';
-import heart from './heart';
+import { ReactComponent as Heart } from '../assets/heart.svg';
 import { Component, createRef, RefObject } from 'react';
 
-interface NewCardT  extends CardT {
+interface NewCardT extends CardT {
   cards: CardT[];
   updateData: (cards: CardT[]) => void;
 };
@@ -12,13 +12,14 @@ class Card extends Component<NewCardT> {
   heart: RefObject<HTMLDivElement>;
 
   constructor(props: NewCardT) {
-     super(props);
-     this.heart = createRef<HTMLDivElement>();
+    super(props);
+    this.heart = createRef<HTMLDivElement>();
   }
 
   handleClick(event: React.MouseEvent) {
     const heartDiv = this.heart.current;
-    const heartEl = (heartDiv ? heartDiv.firstElementChild: undefined) as SVGElement;
+    const heartEl = (heartDiv ? heartDiv.firstElementChild : undefined) as SVGElement;
+    console.log(heartEl);
     if (heartEl) {
       heartEl.setAttribute('fill', 'darkred');
     }
@@ -47,7 +48,9 @@ class Card extends Component<NewCardT> {
             <div className="country">{this.props.country}</div>
           </div>
           <div ref={this.heart} className="likes" onClick={this.handleClick.bind(this)}>
-            {heart()}&nbsp;{this.props.likes}
+            <Heart />
+            &nbsp;
+            {this.props.likes}
           </div>
         </div>
       </section>
