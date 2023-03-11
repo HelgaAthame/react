@@ -6,9 +6,13 @@ class Nav extends Component {
   render() {
     return (
       <div className="nav">
-        <Link to="/about-us" className="link">
-          ABOUT US
-        </Link>
+        <div className="link-wrapper">
+          <div className="l-div">
+            <Link to="/about-us" className="link">
+              ABOUT US
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }

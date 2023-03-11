@@ -3,7 +3,6 @@
 happy-dom
  */
 
-import { mount } from "@vue/test-utils";
 import {
   beforeEach,
   describe,
@@ -17,6 +16,7 @@ import cards from '../src/app/cards'
 import Header from "../src/app/Header";
 import Logo from "../src/app/Logo";
 import Main from "../src/app/Main";
+import React from "react";
 
 const props = {};
 const app = new App(props);
@@ -51,8 +51,6 @@ describe('react app', () => {
   });
 
   test('all the card field import properly', () => {
-    //const props = {};
-    //const app = new App(props);
     expect(app.state.cards[1]).toMatchSnapshot(`
     Object {
       "name": "The Modern JavaScript Tutorial",
@@ -94,8 +92,8 @@ describe('react app', () => {
     expect(app.state.cards[0].name).toBe('Holly Bible');
   });
 
-  test('logo renders', () => {
+  test('logo renders properly', () => {
     render(<Logo />);
-    //WHY DOESN'T LOGO RENDERS???????//
+    
   })
 })

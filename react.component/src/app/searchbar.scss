@@ -1,5 +1,6 @@
 
 $color: #105544;
+$col2: #109966;
 $basic: 1rem;
 
 .wrapper{
@@ -21,11 +22,16 @@ $basic: 1rem;
     justify-self: right;
     font-size: 1.75rem;
     align-items: center;
+    transition: 1s;
+    &:hover {
+      border-color: $col2;
+    }
     .lupa {
       width: 2rem;
       height: 1.75rem;
     }
     .input {
+      font-family: Light-font;
       color: $color;
       font-size: 2rem;
       outline: none;
@@ -33,6 +39,7 @@ $basic: 1rem;
       flex-grow: 1;
       width: 100%;
       margin: 0 $basic;
+      transition: 1s;
     }
   }
 }

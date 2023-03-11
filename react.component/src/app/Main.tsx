@@ -9,6 +9,7 @@ type PropT = {
 };
 
 class Main extends Component<PropT> {
+
   render() {
     return (
       <div className="main">

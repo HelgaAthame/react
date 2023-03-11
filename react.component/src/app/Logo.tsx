@@ -5,10 +5,12 @@ import './logo.scss';
 class Logo extends Component {
   render() {
     return (
-      <div className="logo">
-        <Link to="/" className="link">
-          BEST BOOK STORE
-        </Link>
+      <div className="logo-wrapper">
+        <div className="logo">
+          <Link to="/" className="link">
+            BEST BOOK STORE
+          </Link>
+        </div>
       </div>
     );
   }
