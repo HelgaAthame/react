@@ -1,4 +1,4 @@
-import { CardT } from './cards';
+import { CardT } from '../cards';
 import './card.scss';
 import { ReactComponent as Heart } from '../assets/heart.svg';
 import { Component, createRef, RefObject } from 'react';
@@ -8,7 +8,7 @@ interface NewCardT extends CardT {
   updateData: (cards: CardT[]) => void;
 };
 
-class Card extends Component<NewCardT> {
+export class Card extends Component<NewCardT> {
   heart: RefObject<HTMLDivElement>;
 
   constructor(props: NewCardT) {
@@ -57,8 +57,3 @@ class Card extends Component<NewCardT> {
     );
   }
 };
-
-export default Card;
-function handleClick() {
-  throw new Error('Function not implemented.');
-}

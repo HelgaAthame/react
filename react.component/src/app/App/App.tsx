@@ -1,11 +1,11 @@
 import { Component } from 'react';
 import './App.scss';
-import Header from './Header.js';
-import Main from './Main.js';
-import cards, { CardT } from './cards';
-import SearchBar from './SearchBar';
+import { Header } from '../Header';
+import { Main } from '../Main';
+import cards, { CardT } from '../cards';
+import { SearchBar } from '../SearchBar';
 
-class App extends Component {
+export class App extends Component {
   state = {
     cards: cards,
   };
@@ -25,5 +25,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;

@@ -1,15 +1,15 @@
 import './header.scss';
-import cards, { CardT } from './cards';
+import cards, { CardT } from '../cards';
 import { Component } from 'react';
-import Logo from './Logo';
-import Nav from './Nav';
+import { Logo } from '../Logo';
+import { Nav } from '../Nav';
 
 type SearchBarProps = {
   cards: CardT[];
   children: React.ReactNode;
 };
 
-class Header extends Component<SearchBarProps> {
+export class Header extends Component<SearchBarProps> {
   state = { cards: cards };
 
   render() {
@@ -22,5 +22,3 @@ class Header extends Component<SearchBarProps> {
     );
   }
 }
-
-export default Header;

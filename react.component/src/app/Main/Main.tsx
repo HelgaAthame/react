@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import Card from './Card';
-import { CardT } from './cards';
+import { Card } from '../Card';
+import { CardT } from '../cards';
 import './main.scss';
 
 type PropT = {
@@ -8,8 +8,7 @@ type PropT = {
   updateData: (cards: CardT[]) => void;
 };
 
-class Main extends Component<PropT> {
-
+export class Main extends Component<PropT> {
   render() {
     return (
       <div className="main">
@@ -20,5 +19,3 @@ class Main extends Component<PropT> {
     );
   }
 }
-
-export default Main;

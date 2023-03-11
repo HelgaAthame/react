@@ -1,6 +1,6 @@
 import { ChangeEvent, Component, createRef, RefObject } from 'react';
 import './searchbar.scss';
-import cards, { CardT } from './cards';
+import cards, { CardT } from '../cards';
 import { ReactComponent as Lupa } from '../assets/lupa.svg';
 
 interface SearchBarProps {
@@ -8,7 +8,7 @@ interface SearchBarProps {
   updateData: (cards: CardT[]) => void;
 }
 
-class SearchBar extends Component<SearchBarProps> {
+export class SearchBar extends Component<SearchBarProps> {
   wrapper: RefObject<HTMLDivElement>;
   input: RefObject<HTMLInputElement> | undefined;
 
@@ -93,5 +93,3 @@ class SearchBar extends Component<SearchBarProps> {
     );
   }
 }
-
-export default SearchBar;
