@@ -9,7 +9,7 @@ export type CardT = {
   picture: string;
 };
 
-const cards: CardT[] = [
+export const cards: CardT[] = [
   {
     name: 'The Angel of the West Window',
     price: 1000,
@@ -195,5 +195,3 @@ const cards: CardT[] = [
     picture: ''
   },*/
 ];
-
-export default cards;

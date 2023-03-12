@@ -7,7 +7,8 @@ import {
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import { App } from './App';
-import cards from '../cards'
+import { cards } from '../cards';
+import { Card } from '../Card';
 import React from "react";
 
 const props = {};

@@ -7,7 +7,7 @@ import {
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import { Main } from './Main';
-import cards from '../cards';
+import { cards } from '../cards';
 
 beforeEach( () => {
   //app.setState({cards: null});

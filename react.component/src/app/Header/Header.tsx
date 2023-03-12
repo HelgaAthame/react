@@ -1,5 +1,5 @@
 import './header.scss';
-import cards, { CardT } from '../cards';
+import { cards, CardT } from '../cards';
 import { Component } from 'react';
 import { Logo } from '../Logo';
 import { Nav } from '../Nav';

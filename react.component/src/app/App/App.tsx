@@ -2,7 +2,7 @@ import { Component } from 'react';
 import './App.scss';
 import { Header } from '../Header';
 import { Main } from '../Main';
-import cards, { CardT } from '../cards';
+import { cards, CardT } from '../cards';
 import { SearchBar } from '../SearchBar';
 
 export class App extends Component {
