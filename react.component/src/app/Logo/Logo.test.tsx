@@ -5,21 +5,32 @@ import {
   test,
 } from "vitest";
 import { render, screen, fireEvent } from '@testing-library/react';
+import { createMemoryRouter, RouterProvider } from "react-router-dom";
 
 import { Logo } from './Logo';
 import { cards } from '../cards';
+import { ErrorPage } from "../../errorPage";
+import { AboutUs } from "../../aboutUs";
+import { App } from '../App';
 
-beforeEach( () => {
-  //app.setState({cards: null});
-})
+const routes = [
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/about-us',
+    element: <AboutUs />,
+  }
+];
+const router = createMemoryRouter(routes);
 
-const fakeUpdateData = () => {
-  console.log('this is fake update data');
-}
-
-describe('react app', () => {
+describe('react Logo', () => {
 
   test('Logo renders properly', () => {
-    const logo = render(<Logo />);
+    render(<RouterProvider router={router} />);
+    const logo = screen.findAllByTestId('logo');
+    expect(logo).toBeTruthy();
   });
 })

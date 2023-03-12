@@ -1,8 +1,9 @@
-import Header from '../app/Header.js';
+import { Header } from '../app/Header';
 import './aboutus.scss';
 import Info from './Info.js';
 
-function AboutUs() {
+
+export function AboutUs() {
   return (
     <div className="AboutUs">
       <Header cards={[]}>{undefined}</Header>
@@ -10,5 +11,3 @@ function AboutUs() {
     </div>
   );
 }
-
-export default AboutUs;

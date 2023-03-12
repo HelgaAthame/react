@@ -1,10 +1,10 @@
-import ErrorPage from './errorPage/error-page.js';
+import { ErrorPage } from './errorPage/error-page.js';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { App } from './app/App';
 import './index.scss';
-import AboutUs from './aboutUs/AboutUs';
+import { AboutUs } from './aboutUs/AboutUs';
 
 const router = createBrowserRouter([
   {

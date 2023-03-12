@@ -9,15 +9,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { Main } from './Main';
 import { cards } from '../cards';
 
-beforeEach( () => {
-  //app.setState({cards: null});
-})
-
-const fakeUpdateData = () => {
-  console.log('this is fake update data');
-}
-
-describe('react app', () => {
+describe('react Main', () => {
   test('Main renders properly', () => {
     const fakeFunc = () => {
       console.log('it is a fake func');

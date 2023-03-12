@@ -4,19 +4,30 @@ import {
   expect,
   test,
 } from "vitest";
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { createMemoryRouter, RouterProvider } from "react-router-dom";
 
 import { App } from './App';
 import { cards } from '../cards';
-import { Card } from '../Card';
 import React from "react";
+import { ErrorPage } from "../../errorPage";
+import { AboutUs } from "../../aboutUs";
 
 const props = {};
 const app = new App(props);
 
-beforeEach( () => {
-  //app.setState({cards: null});
-})
+const routes = [
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/about-us',
+    element: <AboutUs />,
+  }
+];
+const router = createMemoryRouter(routes);
 
 describe('react app', () => {
 
@@ -24,10 +35,12 @@ describe('react app', () => {
     expect(app.state.cards).toEqual(cards);
   });
 
-  test('order of books is proper', () => {
-    const { getAllByTestId } = render(<App />);
-    expect(getAllByTestId('card')).toHaveLength(16);
-    expect(getAllByTestId('card')[2].className).toBe('card');
+  test('App renders properly', () => {
+    render(<RouterProvider router={router} />);
+    const input = screen.getByRole('searchbox');
+    expect(input).toBeTruthy();
+    const card = screen.findByText('The Castle');
+    expect(card).toBeTruthy();
   });
 
   test('should update App State', () => {

@@ -1,7 +1,7 @@
 import { ChangeEvent, Component, createRef, RefObject } from 'react';
 import './searchbar.scss';
 import { cards, CardT } from '../cards';
-import { ReactComponent as Lupa } from '../assets/lupa.svg';
+import { ReactComponent as Lupa } from '../../assets/lupa.svg';
 
 interface SearchBarProps {
   cards: CardT[];
