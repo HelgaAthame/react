@@ -19,6 +19,7 @@ export class App extends Component {
       <div className="app">
         <Header cards={[]}>
           <SearchBar cards={this.state.cards} updateData={this.updateData.bind(this)} />
+          Cur.page is Main
         </Header>
         <Main cards={this.state.cards} updateData={this.updateData.bind(this)}/>
       </div>
