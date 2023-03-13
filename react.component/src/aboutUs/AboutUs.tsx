@@ -6,7 +6,7 @@ import Info from './Info.js';
 export function AboutUs() {
   return (
     <div className="AboutUs">
-      <Header cards={[]}>{undefined}</Header>
+      <Header cards={[]} currentPage="ABOU US">{undefined}</Header>
       <Info />
     </div>
   );

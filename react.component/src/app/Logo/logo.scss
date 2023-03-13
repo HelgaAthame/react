@@ -6,6 +6,7 @@ $basic: 1rem;
   margin: $basic 0.5rem 0;
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   overflow: hidden;
   position:relative;
   transition: 1s;
@@ -55,6 +56,15 @@ $basic: 1rem;
         color: $col2;
       }
     }
+    .cur-page {
+      font-size: 0.75rem;
+      font-family: Regular-font;
+      margin: -1rem 0 1px;
+    }
 
+    &:hover {
+      color: $col2;
+    }
   }
+
 }

@@ -7,6 +7,7 @@ import { Nav } from '../Nav';
 type SearchBarProps = {
   cards: CardT[];
   children: React.ReactNode;
+  currentPage: string;
 };
 
 export class Header extends Component<SearchBarProps> {
@@ -15,7 +16,7 @@ export class Header extends Component<SearchBarProps> {
   render() {
     return (
       <header className="header">
-        <Logo />
+        <Logo curPage={this.props.currentPage}/>
         {this.props.children}
         <Nav />
       </header>
