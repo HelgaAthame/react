@@ -1,11 +1,12 @@
 import './info.scss';
+import olga from "../../assets/photo.jpg";
 
 export function Info() {
   return (
     <section className="info">
       <div className="photo-wrapper">
         <div className="photo">
-          <img src="../../src/assets/photo.jpg" />
+          <img src={olga} />
         </div>
       </div>
       <div className="content-wrapper">
