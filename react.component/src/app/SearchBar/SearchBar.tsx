@@ -35,16 +35,14 @@ export class SearchBar extends Component<SearchBarProps> {
       this.input.current.value = myvalue;
 
       const filtered = cards.filter((card) =>
-      Object.values(card).find(
-        (value: string | number) =>
-          value.toString().toLowerCase().search(myvalue.toLowerCase()) !== -1
-      )
-    );
-    this.setState({ cards: filtered });
-    this.props.updateData(filtered);
+        Object.values(card).find(
+          (value: string | number) =>
+            value.toString().toLowerCase().search(myvalue.toLowerCase()) !== -1
+        )
+      );
+      this.setState({ cards: filtered });
+      this.props.updateData(filtered);
     }
-
-
   }
 
   handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -60,13 +58,13 @@ export class SearchBar extends Component<SearchBarProps> {
 
   handleFocus() {
     if (this.wrapper.current !== null) this.wrapper.current.style.flexGrow = '1';
-    if(this.input && this.input.current) this.input.current.style.color = '#109966';
+    if (this.input && this.input.current) this.input.current.style.color = '#109966';
   }
 
   handleBlur() {
     if (this.wrapper.current && this.input && document.activeElement !== this.input.current)
       this.wrapper.current.style.flexGrow = '0';
-      if(this.input && this.input.current) this.input.current.style.color = '#105544';
+    if (this.input && this.input.current) this.input.current.style.color = '#105544';
   }
 
   render() {
@@ -78,7 +76,9 @@ export class SearchBar extends Component<SearchBarProps> {
           onMouseOver={this.handleFocus.bind(this)}
           onMouseOut={this.handleBlur.bind(this)}
         >
-          <div className="lupa"><Lupa/></div>
+          <div className="lupa">
+            <Lupa />
+          </div>
           <input
             ref={this.input}
             type="search"

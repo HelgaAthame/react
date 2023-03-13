@@ -4,7 +4,7 @@ import './logo.scss';
 
 type LogoProps = {
   curPage: string;
-}
+};
 
 export class Logo extends Component<LogoProps> {
   render() {
@@ -14,9 +14,7 @@ export class Logo extends Component<LogoProps> {
           <Link to="/" className="link">
             BEST BOOK STORE
           </Link>
-          <div className="cur-page">
-            Current page is {this.props.curPage}
-          </div>
+          <div className="cur-page">Current page is {this.props.curPage}</div>
         </div>
       </div>
     );

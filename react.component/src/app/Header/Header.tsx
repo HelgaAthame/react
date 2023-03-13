@@ -16,7 +16,7 @@ export class Header extends Component<SearchBarProps> {
   render() {
     return (
       <header className="header">
-        <Logo curPage={this.props.currentPage}/>
+        <Logo curPage={this.props.currentPage} />
         {this.props.children}
         <Nav />
       </header>

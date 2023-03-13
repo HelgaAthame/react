@@ -6,9 +6,11 @@ export function ErrorPage() {
   console.log(error);
   return (
     <div id="error-page">
-      <Header cards={[]} currentPage="404">{undefined}</Header>
+      <Header cards={[]} currentPage="404">
+        {undefined}
+      </Header>
       <h1>404</h1>
-      <p placeholder='error-text'>Sorry, this page doesn't exist.</p>
+      <p placeholder="error-text">Sorry, this page doesn&apos;t exist.</p>
       <p>
         <i> {isRouteErrorResponse(error) && error.statusText}</i>
       </p>

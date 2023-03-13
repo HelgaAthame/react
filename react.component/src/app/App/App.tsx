@@ -20,7 +20,7 @@ export class App extends Component {
         <Header cards={[]} currentPage="MAIN">
           <SearchBar cards={this.state.cards} updateData={this.updateData.bind(this)} />
         </Header>
-        <Main cards={this.state.cards} updateData={this.updateData.bind(this)}/>
+        <Main cards={this.state.cards} updateData={this.updateData.bind(this)} />
       </div>
     );
   }
