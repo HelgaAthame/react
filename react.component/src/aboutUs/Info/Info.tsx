@@ -1,5 +1,5 @@
 import './info.scss';
-import olga from "../../assets/photo.jpg";
+import olga from '../../assets/photo.jpg';
 
 export const Info = () => {
   return (
@@ -28,4 +28,4 @@ export const Info = () => {
       </div>
     </section>
   );
-}
+};

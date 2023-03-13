@@ -1,10 +1,9 @@
 import { ChangeEvent, Component, createRef, RefObject } from 'react';
 import './searchbar.scss';
-import { cards, CardT } from '../cards';
 import { ReactComponent as Lupa } from '../../assets/lupa.svg';
 
 interface SearchBarProps {
-  updateData: (cards: CardT[]) => void;
+  updateData: (arg0: string) => void;
 }
 
 export class SearchBar extends Component<SearchBarProps> {
@@ -31,27 +30,12 @@ export class SearchBar extends Component<SearchBarProps> {
     const myvalue = localStorage.getItem('bestbookstore-input-data');
     if (myvalue && this.input && this.input.current) {
       this.input.current.value = myvalue;
-
-      const filtered = cards.filter((card) =>
-        Object.values(card).find(
-          (value: string | number) =>
-            value.toString().toLowerCase().search(myvalue.toLowerCase()) !== -1
-        )
-      );
-      this.setState({ cards: filtered });
-      this.props.updateData(filtered);
+      this.props.updateData(myvalue);
     }
   }
 
   handleChange(event: ChangeEvent<HTMLInputElement>) {
-    const filtered = cards.filter((card) =>
-      Object.values(card).find(
-        (value: string | number) =>
-          value.toString().toLowerCase().search(event.target.value.toLowerCase()) !== -1
-      )
-    );
-    this.setState({ cards: filtered });
-    this.props.updateData(filtered);
+    this.props.updateData(event.target.value);
   }
 
   handleFocus() {

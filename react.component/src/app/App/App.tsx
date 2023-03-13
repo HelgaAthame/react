@@ -2,7 +2,7 @@ import { Component } from 'react';
 import './App.scss';
 import { Header } from '../Header';
 import { Main } from '../Main';
-import { cards, CardT } from '../cards';
+import { cards } from '../cards';
 import { SearchBar } from '../SearchBar';
 
 export class App extends Component {
@@ -10,8 +10,14 @@ export class App extends Component {
     cards: cards,
   };
 
-  updateData(cards: CardT[]) {
-    this.setState({ cards: cards });
+  updateData(inputValue: string) {
+    const filtered = cards.filter((card) =>
+      Object.values(card).find(
+        (value: string | number) =>
+          value.toString().toLowerCase().search(inputValue.toLowerCase()) !== -1
+      )
+    );
+    this.setState({ cards: filtered });
   }
 
   render() {
@@ -20,7 +26,7 @@ export class App extends Component {
         <Header cards={[]} currentPage="MAIN">
           <SearchBar updateData={this.updateData.bind(this)} />
         </Header>
-        <Main cards={this.state.cards} updateData={this.updateData.bind(this)} />
+        <Main cards={this.state.cards} />
       </div>
     );
   }

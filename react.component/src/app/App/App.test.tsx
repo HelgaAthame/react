@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 
 import { App } from './App';
@@ -64,5 +64,12 @@ describe('react app', () => {
     app.state = { cards: fakeCards };
     expect(app.state.cards[0].author).toBe('Jesus Christ');
     expect(app.state.cards[0].name).toBe('Holly Bible');
+  });
+
+  test('update data method works', () => {
+    render(<RouterProvider router={router} />);
+    const input = screen.getByRole('searchbox') as HTMLInputElement;
+    fireEvent.change(input, { target: { value: 'fakeValue' } });
+    expect(input.value).toBe('fakeValue');
   });
 });
