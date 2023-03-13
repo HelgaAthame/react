@@ -2,8 +2,8 @@ import { describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 
-import { ErrorPage } from '../errorPage';
-import { AboutUs } from '.';
+import { ErrorPage } from '../../errorPage';
+import { AboutUs } from './AboutUs';
 
 const fakeroutes = [
   {

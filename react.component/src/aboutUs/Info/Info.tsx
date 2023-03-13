@@ -1,6 +1,6 @@
 import './info.scss';
 
-function Info() {
+export function Info() {
   return (
     <section className="info">
       <div className="photo-wrapper">
@@ -28,5 +28,3 @@ function Info() {
     </section>
   );
 }
-
-export default Info;

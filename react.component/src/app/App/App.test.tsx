@@ -6,7 +6,7 @@ import { App } from './App';
 import { cards } from '../cards';
 import React from 'react';
 import { ErrorPage } from '../../errorPage';
-import { AboutUs } from '../../aboutUs';
+import { AboutUs } from '../../aboutUs/aboutus/';
 
 const props = {};
 const app = new App(props);

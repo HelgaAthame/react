@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 
 import { ErrorPage } from '../../errorPage';
-import { AboutUs } from '../../aboutUs';
+import { AboutUs } from '../../aboutUs/aboutus';
 import { App } from '../App';
 
 const routes = [

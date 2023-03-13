@@ -1,6 +1,6 @@
-import { Header } from '../app/Header';
+import { Info } from '../Info';
+import { Header } from '../../app/Header';
 import './aboutus.scss';
-import Info from './Info.js';
 
 export function AboutUs() {
   return (
