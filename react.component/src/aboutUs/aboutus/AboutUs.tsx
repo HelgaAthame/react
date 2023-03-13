@@ -1,8 +1,7 @@
 import { Info } from '../Info';
 import { Header } from '../../app/Header';
-import './aboutus.scss';
 
-export function AboutUs() {
+export const AboutUs = () => {
   return (
     <div className="AboutUs">
       <Header cards={[]} currentPage="ABOUT US">

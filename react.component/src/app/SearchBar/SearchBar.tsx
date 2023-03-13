@@ -4,7 +4,6 @@ import { cards, CardT } from '../cards';
 import { ReactComponent as Lupa } from '../../assets/lupa.svg';
 
 interface SearchBarProps {
-  cards: CardT[];
   updateData: (cards: CardT[]) => void;
 }
 
@@ -14,7 +13,6 @@ export class SearchBar extends Component<SearchBarProps> {
 
   constructor(props: SearchBarProps) {
     super(props);
-    this.state = { cards: this.props.cards };
     this.handleChange = this.handleChange.bind(this);
     this.wrapper = createRef<HTMLDivElement>();
     this.input = createRef<HTMLInputElement>();

@@ -2,7 +2,6 @@ import { describe, expect, test } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import { SearchBar } from './SearchBar';
-import { cards } from '../cards';
 
 const fakeUpdateData = () => {
   console.log('this is fake update data');
@@ -10,7 +9,7 @@ const fakeUpdateData = () => {
 
 describe('react Search Bar', () => {
   test('SearchBar renders properly', () => {
-    const searchbar = render(<SearchBar cards={cards} updateData={fakeUpdateData.bind(this)} />);
+    const searchbar = render(<SearchBar updateData={fakeUpdateData.bind(this)} />);
     expect(searchbar).toBeTruthy();
     const input = screen.getByRole('searchbox') as HTMLInputElement;
     expect(input.type).toBe('search');
@@ -20,7 +19,7 @@ describe('react Search Bar', () => {
   });
 
   test('focus and blur input', () => {
-    render(<SearchBar cards={cards} updateData={fakeUpdateData.bind(this)} />);
+    render(<SearchBar updateData={fakeUpdateData.bind(this)} />);
     const input = screen.getByRole('searchbox') as HTMLInputElement;
     fireEvent.focus(input);
     expect(input.style.color).toBe('rgb(16, 153, 102)');

@@ -183,14 +183,4 @@ export const cards: CardT[] = [
     picture:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/The_Whisperer_in_Darkness_by_Alexander_Moore.jpg/150px-The_Whisperer_in_Darkness_by_Alexander_Moore.jpg',
   },
-  /*{
-    name: '',
-    price: 0,
-    country: '',
-    author: '',
-    genre: '',
-    year: 0,
-    likes: 0,
-    picture: ''
-  },*/
 ];

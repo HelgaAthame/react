@@ -1,7 +1,7 @@
 import './info.scss';
 import olga from "../../assets/photo.jpg";
 
-export function Info() {
+export const Info = () => {
   return (
     <section className="info">
       <div className="photo-wrapper">
