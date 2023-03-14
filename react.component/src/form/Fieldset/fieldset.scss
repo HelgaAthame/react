@@ -40,6 +40,8 @@ $basic: 1rem;
   @include animated-border;
   margin: 0.5rem;
   border-radius: 3px;
+  display: flex;
+  align-items: stretch;
   .fieldset {
     font-size: 1.2rem;
     margin: 1px;
@@ -51,6 +53,9 @@ $basic: 1rem;
     transition: 1s;
     &:hover {
       color: $col2;
+      input {
+        color: $col2;
+      }
     }
   }
 }
