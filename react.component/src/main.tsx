@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { App } from './app/App';
 import './index.scss';
 import { AboutUs } from './aboutUs/aboutus/AboutUs';
+import { FormPage } from 'form/FormPage';
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/form',
-    element: <Form />,
+    element: <FormPage />,
   },
 ]);
 
