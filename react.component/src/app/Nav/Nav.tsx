@@ -13,6 +13,13 @@ export class Nav extends Component {
             </Link>
           </div>
         </div>
+        <div className="link-wrapper">
+          <div className="l-div">
+            <Link to="/form" className="link">
+              FORM
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }

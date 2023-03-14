@@ -1,20 +1,26 @@
-import { Fieldset } from "form/Fieldset";
-import { Form } from "form/Form";
-import { Input } from "form/Input";
+import { Header } from "../../app/Header";
+import { Fieldset } from "../Fieldset";
+import { Form } from "../Form";
+import { Input } from "../Input";
 import { Component } from "react";
 
 export class FormPage extends Component {
   render() {
     return(
-      <Form>
-        <Fieldset>
-          <Input
-            id="one"
-            label="First input"
-            type="text"
-          />
-        </Fieldset>
-      </Form>
+      <section className="form-page">
+        <Header cards={[]} currentPage="FORM">
+          {undefined}
+        </Header>
+        <Form>
+          <Fieldset>
+            <Input
+              id="one"
+              label="First input"
+              type="text"
+            />
+          </Fieldset>
+        </Form>
+      </section>
     );
   }
 }
