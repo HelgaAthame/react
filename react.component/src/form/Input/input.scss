@@ -1,0 +1,26 @@
+$col2: #109966;
+$color: #105544;
+$basic: 1rem;
+
+.input-wrapper {
+  font-size: $basic;
+  display: flex;
+  .label {
+    text-align: left;
+    flex-grow: 1;
+    display: flex;
+    .input {
+      flex-grow: 1;
+      font-size: $basic;
+      outline: none;
+      border: none;
+      transition: 1s;
+      margin-left: 0.5rem;
+      color: $color;
+      &:focus {
+        color: $col2;
+        border-bottom: 1px solid $col2;
+      }
+    }
+  }
+}

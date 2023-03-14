@@ -12,10 +12,35 @@ export class FormPage extends Component {
           {undefined}
         </Header>
         <Form>
-          <Fieldset>
+          <Fieldset title="Personal Information">
             <Input
               id="one"
-              label="First input"
+              label="First Name"
+              type="text"
+            />
+            <Input
+              id="two"
+              label="Second Name"
+              type="text"
+            />
+            <Input
+              id="three"
+              label="Age"
+              type="text"
+            />
+            <Input
+              id="four"
+              label="Education"
+              type="text"
+            />
+            <Input
+              id="five"
+              label="Profession"
+              type="text"
+            />
+            <Input
+              id="six"
+              label="Hobbie"
               type="text"
             />
           </Fieldset>

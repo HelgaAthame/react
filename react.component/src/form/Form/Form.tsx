@@ -1,4 +1,5 @@
 import { Component, ReactNode } from "react";
+import './form.scss';
 
 type FormProps = {
   children: ReactNode,

@@ -1,15 +1,20 @@
 import { Component, ReactNode } from "react";
+import './fieldset.scss';
 
 type FieldsetProps = {
   children: ReactNode,
+  title: string,
 }
 
 export class Fieldset extends Component<FieldsetProps> {
   render() {
     return (
-      <fieldset className="fieldset">
-        {this.props.children}
-      </fieldset>
+      <div className="fieldset-wrapper">
+        <fieldset className="fieldset">
+          {this.props.title}
+          {this.props.children}
+        </fieldset>
+      </div>
     );
   }
 }
