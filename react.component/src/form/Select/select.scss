@@ -1,0 +1,22 @@
+$basic: 1rem;
+$color: #105544;
+$col2: #109966;
+.select-wrapper{
+  .select{
+    color: $color;
+    font-family: Regular-font;
+    font-size: $basic;
+    padding: $basic;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    &:hover{
+      color: $col2;
+    }
+    .option {
+      font-family: Regular-font;
+      font-size: $basic;
+      cursor: pointer;
+    }
+  }
+}
