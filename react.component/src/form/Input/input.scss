@@ -4,11 +4,13 @@ $basic: 1rem;
 
 .input-wrapper {
   font-size: $basic;
+  font-family: Regular-font;
   display: flex;
   .label {
     text-align: left;
     flex-grow: 1;
     display: flex;
+    margin: 0.5rem 0;
     .input {
       flex-grow: 1;
       font-size: $basic;

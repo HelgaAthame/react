@@ -10,6 +10,7 @@ $basic: 1rem;
     height: 100%;
     z-index: -1;
     transition: 1s;
+    left: 0;
   }
   &:hover::before {
     background-image: conic-gradient(white 10%,$color 20%);
@@ -43,6 +44,7 @@ $basic: 1rem;
   overflow: hidden;
   position:relative;
   transition: 1s;
+  height: min-content;
   @include animated-border;
     .photo {
       font-family: Light-font;

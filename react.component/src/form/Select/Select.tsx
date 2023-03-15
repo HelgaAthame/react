@@ -1,3 +1,4 @@
+import { countries } from '../countries';
 import { ChangeEvent, Component } from 'react';
 import './select.scss';
 
@@ -5,7 +6,6 @@ type SelectProps = {
   multiple: boolean;
   label: string;
   value: string;
-  ops: string[];
 };
 
 type StateType = {
@@ -28,8 +28,8 @@ export class Select extends Component<SelectProps, StateType> {
         {this.props.label}
         <select value={this.state.value} multiple={this.props.multiple} onChange={this.handleCahnge.bind(this)} className="select">
           <option className="option" value="choose" disabled>Choose</option>
-          {this.props.ops.map((option, index) => (
-            <option value={option} key={index} className="option">{option}</option>
+          {countries.sort().map((country, index) => (
+            <option value={country} key={index} className="option">{country}</option>
           ))}
         </select>
       </div>

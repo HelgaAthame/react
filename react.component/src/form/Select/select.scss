@@ -2,10 +2,12 @@ $basic: 1rem;
 $color: #105544;
 $col2: #109966;
 .select-wrapper{
+  font-size: $basic;
+  text-align: left;
   .select{
     color: $color;
-    font-family: Regular-font;
     font-size: $basic;
+    font-family: Regular-font;
     padding: $basic;
     outline: none;
     border: none;

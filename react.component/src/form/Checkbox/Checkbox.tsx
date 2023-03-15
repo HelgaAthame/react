@@ -1,23 +1,25 @@
-import { Component, ReactNode } from "react";
+import { ChangeEvent, Component } from "react";
+import './checkbox.scss';
 
 type CheckboxProps = {
-  values: [string, boolean][]
+  id: string
+  title: string
 }
 
-type CheckboxState = {
-  values: [string, boolean][]
-}
+export class Checkbox extends Component<CheckboxProps> {
+  state = {checked: true};
 
-export class Checkbox extends Component<CheckboxProps, CheckboxState> {
-  constructor(props: CheckboxProps) {
-    super(props);
-    this.state = {values: this.props.values};
+  handleChange(event: ChangeEvent<HTMLInputElement>) {
+    if(event.target) this.setState({checked: !this.state.checked});
   }
 
   render() {
     return(
       <div className="checkbox-wrapper">
-        {this.props.values.map((value, index) => <input name={value[0]} type="checkbox" checked={this.state.values[index][1]} />)}
+        <input type="checkbox" id={this.props.id} checked={this.state.checked} onChange={this.handleChange.bind(this)} className="checkbox-input"/>
+        <label htmlFor={this.props.id} className="checkbox-label">
+          {this.props.title}
+        </label>
       </div>
     );
   }

@@ -6,6 +6,7 @@ import { Component } from 'react';
 import { Select } from '../Select';
 import { Switcher } from '../Switcher';
 import { File } from '../File';
+import { Checkbox } from '../Checkbox';
 
 export class FormPage extends Component {
   render() {
@@ -20,6 +21,7 @@ export class FormPage extends Component {
             <Input id="one" label="First Name" type="text" />
             <Input id="two" label="Last Name" type="text" />
             <Input id="three" label="Birthday" type="date" />
+            <Checkbox id="thidteen" title="Show my age" />
             <File id="twelve"/>
           </Fieldset>
 
@@ -27,9 +29,8 @@ export class FormPage extends Component {
             <Input id="four" label="Zip-code" type="text" />
             <Select
               multiple={false}
-              label="City"
+              label="Country"
               value="Minsk"
-              ops={['Minsk', 'Homel', 'Brest', 'Hrodna', 'Vitsebsk', 'Mahilow']}
             />
             <Input id="six" label="City" type="text" />
             <Input id="seven" label="Address" type="text" />
@@ -37,9 +38,9 @@ export class FormPage extends Component {
 
           <Fieldset title="Contacts">
             <Input id="eight" label="E-mail" type="text" />
-            <Switcher key="ten" title="I want to receive notifications by mail" id="ten"/>
+            <Switcher key="ten" title="Receive notifications by mail" id="ten"/>
             <Input id="nine" label="Phone" type="text" />
-            <Switcher key="eleven" title="I want to receive sms" id="eleven"/>
+            <Switcher key="eleven" title="Receive sms" id="eleven"/>
           </Fieldset>
         </Form>
       </section>
