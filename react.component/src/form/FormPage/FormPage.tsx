@@ -4,6 +4,7 @@ import { Form } from '../Form';
 import { Input } from '../Input';
 import { Component } from 'react';
 import { Select } from '../Select';
+import { Switcher } from '../Switcher';
 
 export class FormPage extends Component {
   render() {
@@ -34,7 +35,9 @@ export class FormPage extends Component {
 
           <Fieldset title="Contacts">
             <Input id="eight" label="E-mail" type="text" />
+            <Switcher key="ten" title="Do you want we mail you?" id="ten"/>
             <Input id="nine" label="Phone" type="text" />
+            <Switcher key="eleven" title="Do you want we call you?" id="eleven"/>
           </Fieldset>
         </Form>
       </section>
