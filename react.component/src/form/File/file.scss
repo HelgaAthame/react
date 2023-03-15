@@ -1,0 +1,30 @@
+$color: #105544;
+$col2: #109966;
+$basic: 1rem;
+
+.input__wrapper {
+  .input__file {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+  }
+  .input__label {
+    font-size: $basic;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    &:hover {
+      cursor: pointer;
+    }
+    .input__file-icon-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .input__file-button-text {
+      line-height: 1rem;
+      padding: $basic;
+      font-family: Medium-font;
+    }
+  }
+}

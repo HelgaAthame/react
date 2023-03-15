@@ -11,7 +11,7 @@ export class Fieldset extends Component<FieldsetProps> {
     return (
       <div className="fieldset-wrapper">
         <fieldset className="fieldset">
-          {this.props.title}
+          <h3>{this.props.title}</h3>
           {this.props.children}
         </fieldset>
       </div>

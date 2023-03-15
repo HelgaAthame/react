@@ -5,6 +5,7 @@ import { Input } from '../Input';
 import { Component } from 'react';
 import { Select } from '../Select';
 import { Switcher } from '../Switcher';
+import { File } from '../File';
 
 export class FormPage extends Component {
   render() {
@@ -19,6 +20,7 @@ export class FormPage extends Component {
             <Input id="one" label="First Name" type="text" />
             <Input id="two" label="Last Name" type="text" />
             <Input id="three" label="Birthday" type="date" />
+            <File id="twelve"/>
           </Fieldset>
 
           <Fieldset title="Address">
@@ -35,9 +37,9 @@ export class FormPage extends Component {
 
           <Fieldset title="Contacts">
             <Input id="eight" label="E-mail" type="text" />
-            <Switcher key="ten" title="Do you want we mail you?" id="ten"/>
+            <Switcher key="ten" title="I want to receive notifications by mail" id="ten"/>
             <Input id="nine" label="Phone" type="text" />
-            <Switcher key="eleven" title="Do you want we call you?" id="eleven"/>
+            <Switcher key="eleven" title="I want to receive sms" id="eleven"/>
           </Fieldset>
         </Form>
       </section>

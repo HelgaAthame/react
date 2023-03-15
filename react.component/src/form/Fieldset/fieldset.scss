@@ -35,6 +35,7 @@ $basic: 1rem;
 }
 
 .fieldset-wrapper {
+  flex-grow: 1;
   overflow: hidden;
   position:relative;
   @include animated-border;
@@ -43,7 +44,8 @@ $basic: 1rem;
   display: flex;
   align-items: stretch;
   .fieldset {
-    font-size: 1.2rem;
+    width: 100%;
+    font-size: 1.5rem;
     margin: 1px;
     border-radius: 2px;
     background-color: white;
@@ -56,6 +58,12 @@ $basic: 1rem;
       input {
         color: $col2;
       }
+    }
+    h3 {
+      text-transform: uppercase;
+      margin: 0;
+      padding: $basic 0;
+      text-align: left;
     }
   }
 }
