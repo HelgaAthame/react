@@ -1,4 +1,4 @@
-import { Component, ReactNode } from 'react';
+import { Component, FormEvent, ReactNode } from 'react';
 import './form.scss';
 
 type FormProps = {
@@ -6,7 +6,16 @@ type FormProps = {
 };
 
 export class Form extends Component<FormProps> {
+  handleSubmit(event: FormEvent) {
+    event.preventDefault();
+  }
+
   render() {
-    return <form className="form">{this.props.children}</form>;
+    return <form className="form" onSubmit={this.handleSubmit.bind(this)}>
+      {this.props.children}
+      <div className="submit-wrapper">
+        <input type="submit" className="submit-input" value="SUBMIT"/>
+      </div>
+    </form>;
   }
 }
