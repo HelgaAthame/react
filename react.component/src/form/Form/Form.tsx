@@ -3,11 +3,13 @@ import './form.scss';
 
 type FormProps = {
   children: ReactNode;
+  submitFunc: () => void,
 };
 
 export class Form extends Component<FormProps> {
   handleSubmit(event: FormEvent) {
     event.preventDefault();
+    this.props.submitFunc();
   }
 
   render() {
