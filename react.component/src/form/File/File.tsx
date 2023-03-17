@@ -1,12 +1,24 @@
-import { ChangeEvent, ChangeEventHandler, Component, createRef, RefObject } from 'react';
+import { ChangeEvent, ChangeEventHandler, Component, createRef, RefObject, forwardRef } from 'react';
 import './file.scss';
 import { ReactComponent as Upload } from '../../assets/upload.svg';
 
 type FileProps = {
+  handleChange: ChangeEventHandler<HTMLInputElement> | undefined;
   id: string
 }
 
-export class File extends Component<FileProps> {
+export const File = forwardRef<HTMLSpanElement, FileProps>((props, ref) => (
+  <div className="input__wrapper">
+        <input type="file" name="file" accept="im/*" id={props.id} className="input__file" onChange={props.handleChange}/>
+        <label htmlFor={props.id} className="input__label">
+          <span className="input__file-icon-wrapper">
+            <Upload />
+          </span>
+          <span className="input__file-button-text" ref={ref}>UPLOAD PROFILE PHOTO</span>
+        </label>
+      </div>
+))
+/*export class File extends Component<FileProps> {
   upload: RefObject<HTMLSpanElement>;
 
   constructor(props: FileProps) {
@@ -33,7 +45,7 @@ export class File extends Component<FileProps> {
   render() {
     return(
       <div className="input__wrapper">
-        <input type="file" name="file" accept="image/*" id={this.props.id} className="input__file" onChange={this.handleCahnge.bind(this)}/>
+        <input type="file" name="file" accept="im/*" id={this.props.id} className="input__file" onChange={this.handleCahnge.bind(this)}/>
         <label htmlFor={this.props.id} className="input__label">
           <span className="input__file-icon-wrapper">
             <Upload />
@@ -43,4 +55,4 @@ export class File extends Component<FileProps> {
       </div>
     );
   }
-}
+}*/

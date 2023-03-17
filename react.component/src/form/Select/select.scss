@@ -4,11 +4,15 @@ $col2: #109966;
 .select-wrapper{
   font-size: $basic;
   text-align: left;
+  display: flex;
+  align-items: center;
   .select{
+    height: 1.5rem;
+    flex-grow: 1;
     color: $color;
     font-size: $basic;
     font-family: Regular-font;
-    padding: $basic;
+    margin: $basic;
     outline: none;
     border: none;
     cursor: pointer;
@@ -20,5 +24,24 @@ $col2: #109966;
       font-size: $basic;
       cursor: pointer;
     }
+  }
+  .error {
+    border: 1px solid red;
+    border-radius: 2px;
+    color: red;
+    &:focus, &:hover {
+      color: red;
+      border-bottom: 1px solid red;
+    }
+  }
+}
+.error {
+  color: red;
+  &:after {
+    content: 'Error';
+    color: red;
+    z-index: 2;
+    background-color: white;
+
   }
 }

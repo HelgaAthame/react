@@ -39,6 +39,7 @@ $basic: 1rem;
   display: flex;
   flex-wrap: wrap;
   .form-card-wrapper{
+    max-width: 30rem;
     flex-grow: 1;
     overflow: hidden;
     position:relative;
@@ -64,11 +65,20 @@ $basic: 1rem;
         }
       }
       .profile-image-wrapper {
-        height: 10rem;
+        width: 100%;
+        text-align: center;
+        height: 15rem;
         overflow: hidden;
         img {
-          width: 10rem;
+          width: 15rem;
         }
+      }
+      div {
+        max-width: 25rem;
+        font-family: Medium-font;
+        font-size: 1rem;
+        padding: 0.25rem 0;
+        text-align: left;
       }
     }
   }
