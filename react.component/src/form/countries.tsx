@@ -134,4 +134,5 @@ export const countries = [
   'Ethiopia',
   'South Africa',
   'Jamaica',
-  'Japan'];
+  'Japan',
+];

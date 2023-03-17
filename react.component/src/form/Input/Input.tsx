@@ -1,13 +1,20 @@
-import { ChangeEventHandler, Component, forwardRef } from 'react';
+import { ChangeEventHandler, forwardRef } from 'react';
 import './input.scss';
 
-export const Input = forwardRef<HTMLInputElement,InputProps>((props, ref) => (
+export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => (
   <div className="input-wrapper">
-        <label htmlFor={props.id} className="label">
-          {props.label}
-          <input type={props.type} className="input" id={props.id} onChange={props.handleChange} ref={ref} value={props.value}/>
-        </label>
-      </div>
+    <label htmlFor={props.id} className="label">
+      {props.label}
+      <input
+        type={props.type}
+        className="input"
+        id={props.id}
+        onChange={props.handleChange}
+        ref={ref}
+        value={props.value}
+      />
+    </label>
+  </div>
 ));
 
 type InputProps = {
