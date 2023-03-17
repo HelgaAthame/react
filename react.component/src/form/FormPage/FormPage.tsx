@@ -36,6 +36,12 @@ export class FormPage extends Component {
   firstName: RefObject<HTMLInputElement>;
   lastName: RefObject<HTMLInputElement>;
   age: RefObject<HTMLInputElement>;
+  zipCode: RefObject<HTMLInputElement>;
+  country: RefObject<HTMLSelectElement>;
+  city: RefObject<HTMLInputElement>;
+  address: RefObject<HTMLInputElement>;
+  email: RefObject<HTMLInputElement>;
+  phone: RefObject<HTMLInputElement>;
 
   constructor(props: ReactPropTypes) {
     super(props);
@@ -44,6 +50,12 @@ export class FormPage extends Component {
     this.firstName = createRef();
     this.lastName = createRef();
     this.age = createRef();
+    this.zipCode = createRef();
+    this.country = createRef();
+    this.city = createRef();
+    this.address = createRef();
+    this.email = createRef();
+    this.phone = createRef();
   }
 
   state = {
@@ -91,6 +103,11 @@ export class FormPage extends Component {
   handleInputChange(event: ChangeEvent<HTMLInputElement>){
     //alert(event.target.id + ': ' + event.target.value);
     this.setState({[event.target.id]: event.target.value});
+  }
+
+  handleSelectChange(event: ChangeEvent<HTMLSelectElement>){
+    alert(event.target.id + ': ' + event.target.value);
+    this.setState({country: event.target.value});
   }
 
   handleCheckboxChange(event: ChangeEvent<HTMLInputElement>){
@@ -168,35 +185,37 @@ export class FormPage extends Component {
 
         <Form submitFunc={this.handleSubmit.bind(this)}>
           <Fieldset title="Personal Information">
-            <Input id="firstName" label="First Name" type="text" handleChange={this.handleInputChange} ref={this.firstName}/>
-            <Input id="lastName" label="Last Name" type="text" handleChange={this.handleInputChange} ref={this.lastName}/>
-            <Input id="age" label="Birthday" type="date" handleChange={this.handleDateChange} ref={this.age}/>
+            <Input id="firstName" label="First Name" type="text" handleChange={this.handleInputChange.bind(this)} ref={this.firstName}/>
+            <Input id="lastName" label="Last Name" type="text" handleChange={this.handleInputChange.bind(this)} ref={this.lastName}/>
+            <Input id="age" label="Birthday" type="date" handleChange={this.handleDateChange.bind(this)} ref={this.age}/>
             <Checkbox id="showMyAge" title="Show my age" checked={this.state.showMyAge} handleChange={this.handleCheckboxChange.bind(this)}/>
             <File id="profilePhoto"/>
           </Fieldset>
 
           <Fieldset title="Address">
-            <Input id="zipCode" label="Zip-code" type="text" updateFunc={this.updateData}/>
+            <Input id="zipCode" label="Zip-code" type="text" handleChange={this.handleInputChange} ref={this.zipCode}/>
             <Select
+              id="country"
               multiple={false}
               label="Country"
-              value="Minsk"
+              handleChange={this.handleSelectChange.bind(this)}
+              ref={this.country}
             />
-            <Input id="city" label="City" type="text" updateFunc={this.updateData}/>
-            <Input id="address" label="Address" type="text" updateFunc={this.updateData}/>
+            <Input id="city" label="City" type="text" handleChange={this.handleInputChange} ref={this.city}/>
+            <Input id="address" label="Address" type="text" handleChange={this.handleInputChange} ref={this.address}/>
           </Fieldset>
 
           <Fieldset title="Contacts">
-            <Input id="email" label="E-mail" type="text" updateFunc={this.updateData}/>
-            <Switcher key="ten" title="Receive notifications by mail" id="ten"/>
-            <Input id="phone" label="Phone" type="text" updateFunc={this.updateData}/>
-            <Switcher key="eleven" title="Receive sms" id="eleven"/>
+            <Input id="email" label="E-mail" type="text" handleChange={this.handleInputChange} ref={this.email}/>
+            <Switcher title="Receive notifications by mail" id="receiveMail" checked={this.state.receiveMail} handleChange={this.handleCheckboxChange.bind(this)}/>
+            <Input id="phone" label="Phone" type="text" handleChange={this.handleInputChange} ref={this.phone}/>
+            <Switcher title="Receive sms" id="receiveSMS" checked={this.state.receiveSMS} handleChange={this.handleCheckboxChange.bind(this)}/>
           </Fieldset>
 
           <Fieldset title="Checkboxes">
-            <Checkbox title="I like this website" id="fourteen" />
-            <Checkbox title="I enjoy filling out forms" id="fifteen" />
-            <Checkbox title="I like reading good books" id="sixteen" />
+            <Checkbox title="I like this website" id="firstCheckbox" checked={this.state.firstCheckbox} handleChange={this.handleCheckboxChange.bind(this)}/>
+            <Checkbox title="I enjoy filling out forms" id="secondCheckbox" checked={this.state.secondCheckbox} handleChange={this.handleCheckboxChange.bind(this)}/>
+            <Checkbox title="I like reading good books" id="thirdCheckbox" checked={this.state.thirdCheckbox} handleChange={this.handleCheckboxChange.bind(this)}/>
           </Fieldset>
         </Form>
 
