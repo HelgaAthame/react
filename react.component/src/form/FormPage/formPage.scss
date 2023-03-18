@@ -39,7 +39,7 @@ $basic: 1rem;
   display: flex;
   flex-wrap: wrap;
   .form-card-wrapper{
-    max-width: 30rem;
+    flex-basis: min-content;
     flex-grow: 1;
     overflow: hidden;
     position:relative;
@@ -48,6 +48,7 @@ $basic: 1rem;
     border-radius: 3px;
     display: flex;
     align-items: stretch;
+    justify-content: center;
     .form-card {
       width: 100%;
       font-size: 1.5rem;
@@ -74,11 +75,12 @@ $basic: 1rem;
         }
       }
       div {
-        max-width: 25rem;
+        max-width: 20rem;
         font-family: Medium-font;
         font-size: 1rem;
         padding: 0.25rem 0;
         text-align: left;
+        white-space: pre-wrap;
       }
     }
   }

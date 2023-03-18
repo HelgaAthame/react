@@ -12,7 +12,6 @@ import { countries } from '../countries';
 import { Confirmation } from '../Confirmation';
 
 type ProfileCard = {
-  [x: string]: boolean | string | undefined | any;
   birthday: string;
   firstName: string | undefined;
   lastName: string | undefined;
@@ -88,20 +87,23 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
   handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     event.target.classList.remove('err');
     event.target.parentElement?.classList.remove('parent-error');
-    //alert(event.target.id + ': ' + event.target.value);
-    this.setState({ [event.target.id]: event.target.value });
+    const fieldName = event.target.id as keyof typeof this.state;
+    const fieldValue = event.target.value as (typeof this.state)[typeof fieldName];
+    this.setState((prev) => ({...prev, [fieldName]: fieldValue}));
   }
 
   handleSelectChange(event: ChangeEvent<HTMLSelectElement>) {
     event.target.classList.remove('error');
     event.target.parentElement?.classList.remove('error');
-    //alert(event.target.id + ': ' + event.target.value);
     this.setState({ country: event.target.value });
   }
 
   handleCheckboxChange(event: ChangeEvent<HTMLInputElement>) {
-    //alert(event.target.id + ': ' + event.target.checked);
-    this.setState({ [event.target.id]: event.target.checked });
+    console.log(event.target);
+    //console.log(this.state[event.target.id]);
+    const fieldName = event.target.id as keyof typeof this.state;
+    const fieldValue = event.target.checked as (typeof this.state)[typeof fieldName];
+    this.setState((prev) => ({...prev, [fieldName]: fieldValue}));
   }
 
   handleDateChange(event: ChangeEvent<HTMLInputElement>) {
@@ -131,6 +133,7 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
     arr.push(this.validateAddress());
     arr.push(this.validateEmail());
     arr.push(this.validatePhone());
+
     return !arr.includes(false);
   }
 
@@ -268,7 +271,6 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        console.log(reader.result);
         const fileUrl = reader.result;
         if (typeof fileUrl === 'string') this.setState({ profilePhoto: fileUrl });
         if (this.upload && this.upload.current) this.upload.current.innerHTML = 'FILE UPLOADED';
@@ -277,7 +279,6 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
   }
 
   resetState() {
-    console.log('reseting state');
     this.setState({
       firstName: '',
       lastName: '',
@@ -299,7 +300,7 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
     });
   }
 
-  render() {
+  render() {console.log(`receive mail: ${this.state.receiveMail}`);console.log(`receive sms: ${this.state.receiveSMS}`);
     return (
       <section className="form-page">
         {this.state.confirm && <Confirmation />}
