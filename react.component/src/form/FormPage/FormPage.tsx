@@ -9,9 +9,10 @@ import { File } from '../File';
 import { Checkbox } from '../Checkbox';
 import './formPage.scss';
 import { countries } from '../countries';
+import { Confirmation } from '../Confirmation';
 
 type ProfileCard = {
-  [x: string]: boolean | string | undefined;
+  [x: string]: boolean | string | undefined | any;
   birthday: string;
   firstName: string | undefined;
   lastName: string | undefined;
@@ -32,10 +33,11 @@ type ProfileCard = {
 };
 
 interface FormStateType extends ProfileCard {
+  confirm: boolean;
   cards: ProfileCard[];
 }
 
-export class FormPage extends Component<ReactPropTypes, FormStateType> {
+export class FormPage extends Component<Readonly<any>, FormStateType> {
   firstName: RefObject<HTMLInputElement>;
   lastName: RefObject<HTMLInputElement>;
   age: RefObject<HTMLInputElement>;
@@ -47,10 +49,8 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
   phone: RefObject<HTMLInputElement>;
   upload: RefObject<HTMLSpanElement>;
 
-  constructor(props: ReactPropTypes) {
+  constructor(props: Readonly<any>) {
     super(props);
-    this.updateData = this.updateData.bind(this);
-
     this.firstName = createRef();
     this.lastName = createRef();
     this.age = createRef();
@@ -62,6 +62,7 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
     this.phone = createRef();
     this.upload = createRef();
     this.state = {
+      confirm: false,
       birthday: new Date().toISOString().slice(0, 10),
       firstName: '',
       lastName: '',
@@ -82,11 +83,6 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
       thirdCheckbox: true,
       cards: [],
     };
-  }
-
-  updateData<T>(name: string, value: T) {
-    this.setState({ [name]: value });
-    console.log(this.state.firstName);
   }
 
   handleInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -237,6 +233,8 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
     const arr: ProfileCard[] = this.state.cards;
 
     if (this.validateForm()) {
+      this.setState({confirm: true});
+      setTimeout(() => this.setState({confirm: false}), 5000);
       const newCard = {
         birthday: new Date().toISOString().slice(0, 10),
         firstName: this.state.firstName,
@@ -304,6 +302,7 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
   render() {
     return (
       <section className="form-page">
+        {this.state.confirm && <Confirmation />}
         <Header cards={[]} currentPage="FORM">
           {undefined}
         </Header>
