@@ -294,7 +294,9 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
       arr.push(newCard);
       this.setState({ cards: arr });
       this.resetState();
+      return true;
     }
+    return false;
   }
 
   fileToUrl() {

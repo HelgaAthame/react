@@ -3,13 +3,16 @@ import './form.scss';
 
 type FormProps = {
   children: ReactNode;
-  submitFunc: () => void;
+  submitFunc: () => boolean;
 };
 
 export class Form extends Component<FormProps> {
   handleSubmit(event: FormEvent) {
     event.preventDefault();
-    this.props.submitFunc();
+    if (this.props.submitFunc()) {
+      const form = event.target as HTMLFormElement;
+      form.reset();
+    }
   }
 
   render() {
