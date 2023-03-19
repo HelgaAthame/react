@@ -35,17 +35,16 @@ $basic: 1rem;
 .info {
   margin: 0 1rem 1rem;
   display: flex;
-  //flex-wrap:wrap;
   .photo-wrapper{
     max-width: calc(21rem + 2px);
     border-radius: 3px;
-  margin: 0.5rem 0.5rem;
-  display: flex;
-  flex-wrap: wrap;
-  overflow: hidden;
-  position:relative;
-  transition: 1s;
-  @include animated-border;
+    margin: 0.5rem 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    position:relative;
+    transition: 1s;
+    @include animated-border;
     .photo {
       font-family: Light-font;
       margin:1px;
