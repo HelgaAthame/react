@@ -75,24 +75,6 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
     this.state = {
       confirm: false,
       url: 'https://avatars.mds.yandex.net/i?id=3a61f30a8dda7b409f22c83055b5800984f9830c-8242815-images-thumbs&n=13',
-      /*birthday: new Date().toISOString().slice(0, 10),
-      firstName: '',
-      lastName: '',
-      age: '0',
-      showMyAge: true,
-      profilePhoto:
-        'https://avatars.mds.yandex.net/i?id=3a61f30a8dda7b409f22c83055b5800984f9830c-8242815-images-thumbs&n=13',
-      zipCode: '',
-      country: '',
-      city: '',
-      address: '',
-      email: '',
-      receiveMail: true,
-      phone: '',
-      receiveSMS: true,
-      firstCheckbox: true,
-      secondCheckbox: true,
-      thirdCheckbox: true,*/
       cards: [],
     };
   }
@@ -100,26 +82,12 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
   handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     event.target.classList.remove('err');
     event.target.parentElement?.classList.remove('parent-error');
-
-   /*const fieldName = event.target.id as keyof typeof this.state;
-    const fieldValue = event.target.value as (typeof this.state)[typeof fieldName];
-    this.setState((prev) => ({...prev, [fieldName]: fieldValue}));*/
   }
 
   handleSelectChange(event: ChangeEvent<HTMLSelectElement>) {
     event.target.classList.remove('error');
     event.target.parentElement?.classList.remove('error');
-
-   /* this.setState({ country: event.target.value });*/
   }
-
-  /*handleCheckboxChange(event: ChangeEvent<HTMLInputElement>) {
-    console.log(event.target);
-    //console.log(this.state[event.target.id]);
-    /*const fieldName = event.target.id as keyof typeof this.state;
-    const fieldValue = event.target.checked as (typeof this.state)[typeof fieldName];
-    this.setState((prev) => ({...prev, [fieldName]: fieldValue}));
-  }*/
 
   dateToAge(date: string) {
     const now = new Date();
@@ -136,16 +104,6 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
   handleDateChange(event: ChangeEvent<HTMLInputElement>) {
     event.target.classList.remove('err');
     event.target.parentElement?.classList.remove('parent-error');
-    /*this.setState({ birthday: event.target.value });
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const bd = new Date(event.target.value);
-    const birthdayThisYear = new Date(today.getFullYear(), bd.getMonth(), bd.getDate());
-    let myage = today.getFullYear() - bd.getFullYear();
-    if (today < birthdayThisYear) {
-      myage = myage - 1;
-    }
-    this.setState({ age: myage.toString() });*/
   }
 
   validateForm() {
@@ -291,9 +249,9 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
         secondCheckbox: this.secondCheckbox.current?.checked,
         thirdCheckbox: this.thirdCheckbox.current?.checked,
       };
+
       arr.push(newCard);
       this.setState({ cards: arr });
-      this.resetState();
       return true;
     }
     return false;
@@ -314,29 +272,7 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
     }
   }
 
-   resetState() {
-    /*this.setState({
-      firstName: '',
-      lastName: '',
-      age: '0',
-      showMyAge: true,
-      profilePhoto:
-        'https://avatars.mds.yandex.net/i?id=3a61f30a8dda7b409f22c83055b5800984f9830c-8242815-images-thumbs&n=13',
-      zipCode: '',
-      country: '',
-      city: '',
-      address: '',
-      email: '',
-      receiveMail: true,
-      phone: '',
-      receiveSMS: true,
-      firstCheckbox: true,
-      secondCheckbox: true,
-      thirdCheckbox: true,
-    });*/
-  }
-
-  render() {//console.log(`receive mail: ${this.state.receiveMail}`);console.log(`receive sms: ${this.state.receiveSMS}`);
+  render() {
     return (
       <section className="form-page">
         {this.state.confirm && <Confirmation />}
@@ -417,6 +353,7 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
             <Switcher
               title="Receive notifications by mail"
               id="receiveMail"
+              ref={this.receiveMail}
             />
             <Input
               id="phone"
@@ -428,6 +365,7 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
             <Switcher
               title="Receive sms"
               id="receiveSMS"
+              ref={this.receiveSMS}
             />
           </Fieldset>
 
@@ -435,14 +373,17 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
             <Checkbox
               title="I like this website"
               id="firstCheckbox"
+              ref={this.firstCheckbox}
             />
             <Checkbox
               title="I enjoy filling out forms"
               id="secondCheckbox"
+              ref={this.secondCheckbox}
             />
             <Checkbox
               title="I like reading good books"
               id="thirdCheckbox"
+              ref={this.thirdCheckbox}
             />
           </Fieldset>
         </Form>
@@ -466,7 +407,7 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
                 </div>
                 <div className="form-card__phone">
                   Phone: {card.phone}&nbsp;
-                  {card.receiveMail ? 'R' : "Don't r"}eceive sms
+                  {card.receiveSMS ? 'R' : "Don't r"}eceive sms
                 </div>
                 <div className="form-card__first">
                   I{card.firstCheckbox ? ' ' : " don't "}like this website
