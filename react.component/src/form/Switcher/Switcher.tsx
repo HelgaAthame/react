@@ -1,27 +1,19 @@
-import { ChangeEventHandler, Component } from 'react';
+import { ChangeEventHandler, Component, forwardRef } from 'react';
 import './switcher.scss';
 
 type SwitcherProps = {
-  checked: boolean;
   title: string;
   id: string;
-  handleChange: ChangeEventHandler<HTMLInputElement> | undefined;
 };
-
-export class Switcher extends Component<SwitcherProps> {
-  render() {
-    return (
+export const Switcher = forwardRef<HTMLInputElement, SwitcherProps>((props, ref) => (
       <div className="switcher-wrapper">
-        {this.props.title}
+        {props.title}
         <input
           type="checkbox"
-          id={this.props.id}
+          id={props.id}
           className="switcher-input"
-          checked={this.props.checked}
-          onChange={this.props.handleChange}
+          ref={ref}
         />
-        <label htmlFor={this.props.id} className="switcher-label"></label>
+        <label htmlFor={props.id} className="switcher-label"></label>
       </div>
-    );
-  }
-}
+));

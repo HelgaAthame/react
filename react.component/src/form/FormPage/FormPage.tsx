@@ -12,57 +12,70 @@ import { countries } from '../countries';
 import { Confirmation } from '../Confirmation';
 
 type ProfileCard = {
-  birthday: string;
   firstName: string | undefined;
   lastName: string | undefined;
-  age: string | undefined;
-  showMyAge: boolean;
-  profilePhoto: string;
+  age: number | undefined;
+  showMyAge: boolean | undefined;
+  upload: string | undefined;
   zipCode: string | undefined;
   country: string | undefined;
   city: string | undefined;
   address: string | undefined;
   email: string | undefined;
-  receiveMail: boolean;
+  receiveMail: boolean | undefined;
   phone: string | undefined;
-  receiveSMS: boolean;
-  firstCheckbox: boolean;
-  secondCheckbox: boolean;
-  thirdCheckbox: boolean;
+  receiveSMS: boolean | undefined;
+  firstCheckbox: boolean | undefined;
+  secondCheckbox: boolean | undefined;
+  thirdCheckbox: boolean | undefined;
 };
 
-interface FormStateType extends ProfileCard {
+interface FormStateType {
   confirm: boolean;
+  url: string | undefined;
   cards: ProfileCard[];
 }
 
-export class FormPage extends Component<Readonly<any>, FormStateType> {
+export class FormPage extends Component<ReactPropTypes, FormStateType> {
   firstName: RefObject<HTMLInputElement>;
   lastName: RefObject<HTMLInputElement>;
   age: RefObject<HTMLInputElement>;
+  showMyAge: RefObject<HTMLInputElement>;
   zipCode: RefObject<HTMLInputElement>;
   country: RefObject<HTMLSelectElement>;
   city: RefObject<HTMLInputElement>;
   address: RefObject<HTMLInputElement>;
   email: RefObject<HTMLInputElement>;
+  receiveMail: RefObject<HTMLInputElement>;
   phone: RefObject<HTMLInputElement>;
+  receiveSMS: RefObject<HTMLInputElement>;
   upload: RefObject<HTMLSpanElement>;
+  firstCheckbox: RefObject<HTMLInputElement>;
+  secondCheckbox: RefObject<HTMLInputElement>;
+  thirdCheckbox: RefObject<HTMLInputElement>;
 
-  constructor(props: Readonly<any>) {
+  constructor(props: ReactPropTypes) {
     super(props);
     this.firstName = createRef();
     this.lastName = createRef();
     this.age = createRef();
+    this.showMyAge = createRef();
     this.zipCode = createRef();
     this.country = createRef();
     this.city = createRef();
     this.address = createRef();
     this.email = createRef();
+    this.receiveMail = createRef();
     this.phone = createRef();
+    this.receiveSMS = createRef();
     this.upload = createRef();
+    this.firstCheckbox = createRef();
+    this.secondCheckbox = createRef();
+    this.thirdCheckbox = createRef();
     this.state = {
       confirm: false,
-      birthday: new Date().toISOString().slice(0, 10),
+      url: 'https://avatars.mds.yandex.net/i?id=3a61f30a8dda7b409f22c83055b5800984f9830c-8242815-images-thumbs&n=13',
+      /*birthday: new Date().toISOString().slice(0, 10),
       firstName: '',
       lastName: '',
       age: '0',
@@ -79,7 +92,7 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
       receiveSMS: true,
       firstCheckbox: true,
       secondCheckbox: true,
-      thirdCheckbox: true,
+      thirdCheckbox: true,*/
       cards: [],
     };
   }
@@ -87,29 +100,43 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
   handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     event.target.classList.remove('err');
     event.target.parentElement?.classList.remove('parent-error');
-    const fieldName = event.target.id as keyof typeof this.state;
+
+   /*const fieldName = event.target.id as keyof typeof this.state;
     const fieldValue = event.target.value as (typeof this.state)[typeof fieldName];
-    this.setState((prev) => ({...prev, [fieldName]: fieldValue}));
+    this.setState((prev) => ({...prev, [fieldName]: fieldValue}));*/
   }
 
   handleSelectChange(event: ChangeEvent<HTMLSelectElement>) {
     event.target.classList.remove('error');
     event.target.parentElement?.classList.remove('error');
-    this.setState({ country: event.target.value });
+
+   /* this.setState({ country: event.target.value });*/
   }
 
-  handleCheckboxChange(event: ChangeEvent<HTMLInputElement>) {
+  /*handleCheckboxChange(event: ChangeEvent<HTMLInputElement>) {
     console.log(event.target);
     //console.log(this.state[event.target.id]);
-    const fieldName = event.target.id as keyof typeof this.state;
+    /*const fieldName = event.target.id as keyof typeof this.state;
     const fieldValue = event.target.checked as (typeof this.state)[typeof fieldName];
     this.setState((prev) => ({...prev, [fieldName]: fieldValue}));
+  }*/
+
+  dateToAge(date: string) {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const bd = new Date(date);
+    const birthdayThisYear = new Date(today.getFullYear(), bd.getMonth(), bd.getDate());
+    let myage = today.getFullYear() - bd.getFullYear();
+    if (today < birthdayThisYear) {
+      myage = myage - 1;
+    }
+    return myage;
   }
 
   handleDateChange(event: ChangeEvent<HTMLInputElement>) {
     event.target.classList.remove('err');
     event.target.parentElement?.classList.remove('parent-error');
-    this.setState({ birthday: event.target.value });
+    /*this.setState({ birthday: event.target.value });
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const bd = new Date(event.target.value);
@@ -118,18 +145,18 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
     if (today < birthdayThisYear) {
       myage = myage - 1;
     }
-    this.setState({ age: myage.toString() });
+    this.setState({ age: myage.toString() });*/
   }
 
   validateForm() {
     const arr: boolean[] = [];
 
-    arr.push(this.validateName(this.state.firstName, this.firstName));
-    arr.push(this.validateName(this.state.lastName, this.lastName));
+    arr.push(this.validateName(this.firstName));
+    arr.push(this.validateName(this.lastName));
     arr.push(this.validateAge());
     arr.push(this.validateZipCode());
     arr.push(this.validateCountry());
-    arr.push(this.validateName(this.state.city, this.city));
+    arr.push(this.validateName(this.city));
     arr.push(this.validateAddress());
     arr.push(this.validateEmail());
     arr.push(this.validatePhone());
@@ -137,7 +164,8 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
     return !arr.includes(false);
   }
 
-  validateName(value: string | undefined, el: RefObject<HTMLInputElement>) {
+  validateName(el: RefObject<HTMLInputElement>) {
+    const value = el.current?.value;
     if (
       !value ||
       value.length > 50 ||
@@ -165,7 +193,8 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
   }
 
   validateAge() {
-    if (Number(this.state.age) > 0) {
+    const date = this.age.current?.value;
+    if (date && this.dateToAge(date) > 0) {
       return true;
     } else {
       if (this.age.current && this.age.current.parentElement) {
@@ -177,7 +206,8 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
   }
 
   validateZipCode() {
-    if (this.state.zipCode?.match(/\d{4,10}/)) {
+    const zipCode = this.zipCode.current?.value;
+    if (zipCode?.match(/\d{4,10}/)) {
       return true;
     } else {
       if (this.zipCode.current && this.zipCode.current.parentElement) {
@@ -189,11 +219,12 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
   }
 
   validateAddress() {
+    const address = this.address.current?.value;
     if (
-      !this.state.address ||
-      this.state.address.length > 100 ||
-      this.state.address.length < 10 ||
-      this.state.address.match(/[\!\*\\@#\$%\^\|\~\?\&\(\)\+\=]/)
+      !address ||
+      address.length > 100 ||
+      address.length < 10 ||
+      address.match(/[\!\*\\@#\$%\^\|\~\?\&\(\)\+\=]/)
     ) {
       if (this.address.current && this.address.current.parentElement) {
         this.address.current.classList.add('err');
@@ -205,8 +236,9 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
   }
 
   validateEmail() {
+    const email = this.email.current?.value;
     if (
-      this.state.email?.match(
+      email?.match(
         /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/i
       )
     ) {
@@ -221,7 +253,8 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
   }
 
   validatePhone() {
-    if (this.state.phone?.match(/^\+*\d*\(*[\d-]+\)*([\d-]){5,10}\d$/i)) {
+    const phone = this.phone.current?.value;
+    if (phone?.match(/^\+*\d*\(*[\d-]+\)*([\d-]){5,10}\d$/i)) {
       return true;
     } else {
       if (this.phone.current && this.phone.current.parentElement) {
@@ -235,27 +268,28 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
   handleSubmit() {
     const arr: ProfileCard[] = this.state.cards;
 
-    if (this.validateForm()) {
+    if (this.validateForm()
+      && this.age.current?.value
+    ) {
       this.setState({confirm: true});
       setTimeout(() => this.setState({confirm: false}), 5000);
       const newCard = {
-        birthday: new Date().toISOString().slice(0, 10),
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        age: this.state.age,
-        showMyAge: this.state.showMyAge,
-        profilePhoto: this.state.profilePhoto,
-        zipCode: this.state.zipCode,
-        country: this.state.country,
-        city: this.state.city,
-        address: this.state.address,
-        email: this.state.email,
-        receiveMail: this.state.receiveMail,
-        phone: this.state.phone,
-        receiveSMS: this.state.receiveSMS,
-        firstCheckbox: this.state.firstCheckbox,
-        secondCheckbox: this.state.secondCheckbox,
-        thirdCheckbox: this.state.thirdCheckbox,
+        firstName: this.firstName.current?.value,
+        lastName: this.lastName.current?.value,
+        age: this.dateToAge(this.age.current.value),
+        showMyAge: this.showMyAge.current?.checked,
+        upload: this.state.url,
+        zipCode: this.zipCode.current?.value,
+        country: this.country.current?.value,
+        city: this.city.current?.value,
+        address: this.address.current?.value,
+        email: this.email.current?.value,
+        receiveMail: this.receiveMail.current?.checked,
+        phone: this.phone.current?.value,
+        receiveSMS: this.receiveSMS.current?.checked,
+        firstCheckbox: this.firstCheckbox.current?.checked,
+        secondCheckbox: this.secondCheckbox.current?.checked,
+        thirdCheckbox: this.thirdCheckbox.current?.checked,
       };
       arr.push(newCard);
       this.setState({ cards: arr });
@@ -263,23 +297,23 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
     }
   }
 
-  fileUpload(event: ChangeEvent<HTMLInputElement>) {
-    const input = event.target;
-    let file;
-    if (input.files && Array.from(input.files).at(-1)) {
+  fileToUrl() {
+    const input = this.upload.current?.parentElement?.parentElement?.firstChild as HTMLInputElement;
+    let file, fileUrl: string | ArrayBuffer | null;
+    if (input && input.files && Array.from(input.files).at(-1)) {
       file = Array.from(input.files).at(-1) as Blob;
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        const fileUrl = reader.result;
-        if (typeof fileUrl === 'string') this.setState({ profilePhoto: fileUrl });
+        fileUrl = reader.result;
         if (this.upload && this.upload.current) this.upload.current.innerHTML = 'FILE UPLOADED';
+        if (typeof fileUrl === 'string') this.setState({url: fileUrl});
       };
     }
   }
 
-  resetState() {
-    this.setState({
+   resetState() {
+    /*this.setState({
       firstName: '',
       lastName: '',
       age: '0',
@@ -297,10 +331,10 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
       firstCheckbox: true,
       secondCheckbox: true,
       thirdCheckbox: true,
-    });
+    });*/
   }
 
-  render() {console.log(`receive mail: ${this.state.receiveMail}`);console.log(`receive sms: ${this.state.receiveSMS}`);
+  render() {//console.log(`receive mail: ${this.state.receiveMail}`);console.log(`receive sms: ${this.state.receiveSMS}`);
     return (
       <section className="form-page">
         {this.state.confirm && <Confirmation />}
@@ -312,99 +346,86 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
           <Fieldset title="Personal Information">
             <Input
               id="firstName"
-              value={this.state.firstName}
               label="First Name"
               type="text"
-              handleChange={this.handleInputChange.bind(this)}
               ref={this.firstName}
+              handleChange={this.handleInputChange.bind(this)}
             />
             <Input
               id="lastName"
-              value={this.state.lastName}
               label="Last Name"
               type="text"
-              handleChange={this.handleInputChange.bind(this)}
               ref={this.lastName}
+              handleChange={this.handleInputChange.bind(this)}
             />
             <Input
               id="age"
               label="Birthday"
               type="date"
-              value={this.state.birthday}
-              handleChange={this.handleDateChange.bind(this)}
               ref={this.age}
+              handleChange={this.handleInputChange.bind(this)}
             />
             <Checkbox
               id="showMyAge"
               title="Show my age"
-              checked={this.state.showMyAge}
-              handleChange={this.handleCheckboxChange.bind(this)}
+              ref={this.showMyAge}
             />
-            <File id="profilePhoto" handleChange={this.fileUpload.bind(this)} ref={this.upload} />
+            <File id="profilePhoto" ref={this.upload} handleChange={this.fileToUrl.bind(this)}/>
           </Fieldset>
 
           <Fieldset title="Address">
             <Input
               id="zipCode"
-              value={this.state.zipCode}
               label="Zip-code"
               type="text"
-              handleChange={this.handleInputChange.bind(this)}
               ref={this.zipCode}
+              handleChange={this.handleInputChange.bind(this)}
             />
             <Select
               id="country"
               multiple={false}
               label="Country"
-              handleChange={this.handleSelectChange.bind(this)}
               ref={this.country}
+              handleChange={this.handleSelectChange.bind(this)}
             />
             <Input
               id="city"
               label="City"
-              value={this.state.city}
               type="text"
-              handleChange={this.handleInputChange.bind(this)}
               ref={this.city}
+              handleChange={this.handleInputChange.bind(this)}
             />
             <Input
               id="address"
               label="Address"
-              value={this.state.address}
               type="text"
-              handleChange={this.handleInputChange.bind(this)}
               ref={this.address}
+              handleChange={this.handleInputChange.bind(this)}
             />
           </Fieldset>
 
           <Fieldset title="Contacts">
             <Input
               id="email"
-              value={this.state.email}
               label="E-mail"
               type="text"
-              handleChange={this.handleInputChange.bind(this)}
               ref={this.email}
+              handleChange={this.handleInputChange.bind(this)}
             />
             <Switcher
               title="Receive notifications by mail"
               id="receiveMail"
-              checked={this.state.receiveMail}
-              handleChange={this.handleCheckboxChange.bind(this)}
             />
             <Input
               id="phone"
-              value={this.state.phone}
               label="Phone"
               type="text"
-              handleChange={this.handleInputChange.bind(this)}
               ref={this.phone}
+              handleChange={this.handleInputChange.bind(this)}
             />
             <Switcher
               title="Receive sms"
               id="receiveSMS"
-              checked={this.state.receiveSMS}
-              handleChange={this.handleCheckboxChange.bind(this)}
             />
           </Fieldset>
 
@@ -412,20 +433,14 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
             <Checkbox
               title="I like this website"
               id="firstCheckbox"
-              checked={this.state.firstCheckbox}
-              handleChange={this.handleCheckboxChange.bind(this)}
             />
             <Checkbox
               title="I enjoy filling out forms"
               id="secondCheckbox"
-              checked={this.state.secondCheckbox}
-              handleChange={this.handleCheckboxChange.bind(this)}
             />
             <Checkbox
               title="I like reading good books"
               id="thirdCheckbox"
-              checked={this.state.thirdCheckbox}
-              handleChange={this.handleCheckboxChange.bind(this)}
             />
           </Fieldset>
         </Form>
@@ -435,7 +450,7 @@ export class FormPage extends Component<Readonly<any>, FormStateType> {
             <div className="form-card-wrapper" key={index}>
               <div className="form-card">
                 <div className="profile-image-wrapper">
-                  <img src={card['profilePhoto']} />
+                  <img src={card['upload']} />
                 </div>
                 <div className="form-card__name">Name: {card.firstName + ' ' + card.lastName}</div>
                 <div className="form-card__age">Age: {card.showMyAge ? card.age : 'hidden'}</div>
