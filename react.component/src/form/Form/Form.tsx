@@ -17,10 +17,10 @@ export class Form extends Component<FormProps> {
 
   render() {
     return (
-      <form className="form" onSubmit={this.handleSubmit.bind(this)}>
+      <form placeholder="form" className="form" onSubmit={this.handleSubmit.bind(this)}>
         {this.props.children}
         <div className="submit-wrapper">
-          <input type="submit" className="submit-input" value="SUBMIT" />
+          <input type="submit" className="submit-input" value="SUBMIT" placeholder='submit'/>
         </div>
       </form>
     );

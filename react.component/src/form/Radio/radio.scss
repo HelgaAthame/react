@@ -1,0 +1,30 @@
+.radio-super-wrapper {
+  text-transform: uppercase;
+  .radio-wrapper {
+    text-transform:none;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    .radio-label{
+      padding: 0.25rem;
+      text-align: left;
+      .radio-input {
+
+      }
+    }
+  }
+  .error {
+    color: red;
+    border: 1px solid red;
+    border-radius: 3px;
+    &:after {
+      content: 'Error';
+      padding-right: 0.5rem;
+      color: red;
+      z-index: 2;
+      background-color: white;
+      align-self: flex-end;
+      margin-top: -1.5rem;
+    }
+  }
+}

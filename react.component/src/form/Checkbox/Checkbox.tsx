@@ -1,4 +1,4 @@
-import { ChangeEventHandler, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import './checkbox.scss';
 
 type CheckboxProps = {
@@ -8,12 +8,7 @@ type CheckboxProps = {
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => (
   <div className="checkbox-wrapper">
-    <input
-      type="checkbox"
-      id={props.id}
-      className="checkbox-input"
-      ref={ref}
-    />
+    <input type="checkbox" id={props.id} className="checkbox-input" ref={ref} />
     <label htmlFor={props.id} className="checkbox-label">
       {props.title}
     </label>

@@ -10,8 +10,10 @@ import { Checkbox } from '../Checkbox';
 import './formPage.scss';
 import { countries } from '../countries';
 import { Confirmation } from '../Confirmation';
+import { Radio } from '../Radio';
 
 type ProfileCard = {
+  gender: string | undefined;
   firstName: string | undefined;
   lastName: string | undefined;
   age: number | undefined;
@@ -36,7 +38,7 @@ interface FormStateType {
   cards: ProfileCard[];
 }
 
-export class FormPage extends Component<ReactPropTypes, FormStateType> {
+export class FormPage extends Component<{}, FormStateType> {
   firstName: RefObject<HTMLInputElement>;
   lastName: RefObject<HTMLInputElement>;
   age: RefObject<HTMLInputElement>;
@@ -53,8 +55,9 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
   firstCheckbox: RefObject<HTMLInputElement>;
   secondCheckbox: RefObject<HTMLInputElement>;
   thirdCheckbox: RefObject<HTMLInputElement>;
+  gender: RefObject<HTMLDivElement>;
 
-  constructor(props: ReactPropTypes) {
+  constructor(props: FormStateType) {
     super(props);
     this.firstName = createRef();
     this.lastName = createRef();
@@ -72,6 +75,7 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
     this.firstCheckbox = createRef();
     this.secondCheckbox = createRef();
     this.thirdCheckbox = createRef();
+    this.gender = createRef();
     this.state = {
       confirm: false,
       url: 'https://avatars.mds.yandex.net/i?id=3a61f30a8dda7b409f22c83055b5800984f9830c-8242815-images-thumbs&n=13',
@@ -106,6 +110,10 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
     event.target.parentElement?.classList.remove('parent-error');
   }
 
+  handleRadioInput(event: ChangeEvent<HTMLInputElement>) {
+    event.target.parentElement?.parentElement?.classList.remove('error');
+  }
+
   validateForm() {
     const arr: boolean[] = [];
 
@@ -118,6 +126,7 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
     arr.push(this.validateAddress());
     arr.push(this.validateEmail());
     arr.push(this.validatePhone());
+    arr.push(this.validateRadio());
 
     return !arr.includes(false);
   }
@@ -223,14 +232,33 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
     }
   }
 
+  validateRadio() {
+    const gender = this.gender.current;
+    const inputs = gender?.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
+    const arr = Array.from(inputs);
+    const checked = arr.some(input => input.checked === true);
+
+    if (checked) {
+      return true;
+    } else {
+      this.gender.current?.classList.add('error');
+      return false;
+    }
+  }
+
+  radioValue() {
+    const gender = this.gender.current;
+    const inputs = gender?.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
+    const arr = Array.from(inputs);
+    return arr.find(el => el.checked)?.value;
+  }
+
   handleSubmit() {
     const arr: ProfileCard[] = this.state.cards;
 
-    if (this.validateForm()
-      && this.age.current?.value
-    ) {
-      this.setState({confirm: true});
-      setTimeout(() => this.setState({confirm: false}), 5000);
+    if (this.validateForm() && this.age.current?.value) {
+      this.setState({ confirm: true });
+      setTimeout(() => this.setState({ confirm: false }), 5000);
       const newCard = {
         firstName: this.firstName.current?.value,
         lastName: this.lastName.current?.value,
@@ -248,6 +276,7 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
         firstCheckbox: this.firstCheckbox.current?.checked,
         secondCheckbox: this.secondCheckbox.current?.checked,
         thirdCheckbox: this.thirdCheckbox.current?.checked,
+        gender: this.radioValue(),
       };
 
       arr.push(newCard);
@@ -267,14 +296,14 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
       reader.onload = () => {
         fileUrl = reader.result;
         if (this.upload && this.upload.current) this.upload.current.innerHTML = 'FILE UPLOADED';
-        if (typeof fileUrl === 'string') this.setState({url: fileUrl});
+        if (typeof fileUrl === 'string') this.setState({ url: fileUrl });
       };
     }
   }
 
   render() {
     return (
-      <section className="form-page">
+      <section className="form-page" placeholder='formpage'>
         {this.state.confirm && <Confirmation />}
         <Header cards={[]} currentPage="FORM">
           {undefined}
@@ -303,12 +332,8 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
               ref={this.age}
               handleChange={this.handleInputChange.bind(this)}
             />
-            <Checkbox
-              id="showMyAge"
-              title="Show my age"
-              ref={this.showMyAge}
-            />
-            <File id="profilePhoto" ref={this.upload} handleChange={this.fileToUrl.bind(this)}/>
+            <Checkbox id="showMyAge" title="Show my age" ref={this.showMyAge} />
+            <File id="profilePhoto" ref={this.upload} handleChange={this.fileToUrl.bind(this)} />
           </Fieldset>
 
           <Fieldset title="Address">
@@ -362,19 +387,11 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
               ref={this.phone}
               handleChange={this.handleInputChange.bind(this)}
             />
-            <Switcher
-              title="Receive sms"
-              id="receiveSMS"
-              ref={this.receiveSMS}
-            />
+            <Switcher title="Receive sms" id="receiveSMS" ref={this.receiveSMS} />
           </Fieldset>
 
           <Fieldset title="Checkboxes">
-            <Checkbox
-              title="I like this website"
-              id="firstCheckbox"
-              ref={this.firstCheckbox}
-            />
+            <Checkbox title="I like this website" id="firstCheckbox" ref={this.firstCheckbox} />
             <Checkbox
               title="I enjoy filling out forms"
               id="secondCheckbox"
@@ -384,6 +401,21 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
               title="I like reading good books"
               id="thirdCheckbox"
               ref={this.thirdCheckbox}
+            />
+          </Fieldset>
+
+          <Fieldset title="Radios">
+            <Radio
+              title="gender"
+              name="gender"
+              ref={this.gender}
+              values={[
+                'undefined',
+                'female',
+                'male',
+                'other'
+              ]}
+              handleChange={this.handleRadioInput.bind(this)}
             />
           </Fieldset>
         </Form>
@@ -397,6 +429,7 @@ export class FormPage extends Component<ReactPropTypes, FormStateType> {
                 </div>
                 <div className="form-card__name">Name: {card.firstName + ' ' + card.lastName}</div>
                 <div className="form-card__age">Age: {card.showMyAge ? card.age : 'hidden'}</div>
+                <div className="form-card__age">Gender: {card.gender}</div>
                 <div className="form-card__address">
                   Address:{' '}
                   {card.zipCode + ', ' + card.country + ', ' + card.city + ', ' + card.address}

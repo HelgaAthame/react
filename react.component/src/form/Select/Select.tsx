@@ -13,6 +13,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
   <div className="select-wrapper">
     {props.label}
     <select
+      placeholder='country'
       id={props.id}
       multiple={props.multiple}
       onChange={props.handleChange}
