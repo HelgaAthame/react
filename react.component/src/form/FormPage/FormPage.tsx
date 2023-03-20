@@ -2,7 +2,7 @@ import { Header } from '../../app/Header';
 import { Fieldset } from '../Fieldset';
 import { Form } from '../Form';
 import { Input } from '../Input';
-import { ChangeEvent, Component, createRef, ReactPropTypes, RefObject } from 'react';
+import { ChangeEvent, Component, createRef, RefObject } from 'react';
 import { Select } from '../Select';
 import { Switcher } from '../Switcher';
 import { File } from '../File';
@@ -38,7 +38,7 @@ interface FormStateType {
   cards: ProfileCard[];
 }
 
-export class FormPage extends Component<{}, FormStateType> {
+export class FormPage extends Component<unknown, FormStateType> {
   firstName: RefObject<HTMLInputElement>;
   lastName: RefObject<HTMLInputElement>;
   age: RefObject<HTMLInputElement>;
@@ -236,7 +236,7 @@ export class FormPage extends Component<{}, FormStateType> {
     const gender = this.gender.current;
     const inputs = gender?.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
     const arr = Array.from(inputs);
-    const checked = arr.some(input => input.checked === true);
+    const checked = arr.some((input) => input.checked === true);
 
     if (checked) {
       return true;
@@ -250,7 +250,7 @@ export class FormPage extends Component<{}, FormStateType> {
     const gender = this.gender.current;
     const inputs = gender?.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
     const arr = Array.from(inputs);
-    return arr.find(el => el.checked)?.value;
+    return arr.find((el) => el.checked)?.value;
   }
 
   handleSubmit() {
@@ -303,7 +303,7 @@ export class FormPage extends Component<{}, FormStateType> {
 
   render() {
     return (
-      <section className="form-page" placeholder='formpage'>
+      <section className="form-page" placeholder="formpage">
         {this.state.confirm && <Confirmation />}
         <Header cards={[]} currentPage="FORM">
           {undefined}
@@ -409,12 +409,7 @@ export class FormPage extends Component<{}, FormStateType> {
               title="gender"
               name="gender"
               ref={this.gender}
-              values={[
-                'undefined',
-                'female',
-                'male',
-                'other'
-              ]}
+              values={['undefined', 'female', 'male', 'other']}
               handleChange={this.handleRadioInput.bind(this)}
             />
           </Fieldset>

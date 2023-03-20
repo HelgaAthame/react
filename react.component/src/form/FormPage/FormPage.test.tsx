@@ -10,7 +10,7 @@ const routes = [
     path: '/',
     element: <FormPage />,
     errorElement: <ErrorPage />,
-  }
+  },
 ];
 const router = createMemoryRouter(routes);
 
@@ -80,7 +80,7 @@ describe('react form page', () => {
     await waitFor(() => {
       const confirmation = screen.getByPlaceholderText('confirmation');
       expect(confirmation).toBeDefined();
-    })
+    });
   });
 
   test('confirm with errors', () => {
@@ -134,18 +134,16 @@ describe('react form page', () => {
     expect(Array.from(radioWrapper.classList)).toContain('error');
   });
 
-  test('file imports properly', async () => {
+  test('file imports properly', () => {
     render(<RouterProvider router={router} />);
     const file = screen.getByLabelText('UPLOAD PROFILE PHOTO') as HTMLInputElement;
     expect(file).toBeTruthy();
     const files = [
-      new File(['hello'], 'hello.png', {type: 'image/png'}),
-      new File(['there'], 'there.png', {type: 'image/png'}),
+      new File(['hello'], 'hello.png', { type: 'image/png' }),
+      new File(['there'], 'there.png', { type: 'image/png' }),
     ];
 
-
+    userEvent.upload(file, files);
     expect(file.files).toHaveLength(0);
-
   });
-
 });
