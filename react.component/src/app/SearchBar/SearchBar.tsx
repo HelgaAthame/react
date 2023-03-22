@@ -3,7 +3,7 @@ import './searchbar.scss';
 import { ReactComponent as Lupa } from '../../assets/lupa.svg';
 
 interface SearchBarProps {
-  updateData: (arg0: string) => void;
+  updateData: (cards: string) => void;
 }
 
 export class SearchBar extends Component<SearchBarProps> {
