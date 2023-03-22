@@ -1,20 +1,15 @@
-import { Component } from 'react';
 import { Card } from '../Card';
 import { CardT } from '../cards';
 import './main.scss';
 
-type PropT = {
+export const Main = (props: MainPropType) => (
+  <div className="main">
+    {props.cards.map((card: CardT, i: number) => (
+      <Card key={i.toString()} {...card} />
+    ))}
+  </div>
+);
+
+type MainPropType = {
   cards: CardT[];
 };
-
-export class Main extends Component<PropT> {
-  render() {
-    return (
-      <div className="main">
-        {this.props.cards.map((card: CardT, i: number) => (
-          <Card key={i.toString()} {...card} cards={this.props.cards} />
-        ))}
-      </div>
-    );
-  }
-}
