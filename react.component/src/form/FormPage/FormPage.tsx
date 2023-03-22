@@ -34,7 +34,6 @@ type ProfileCard = {
 
 interface FormStateType {
   confirm: boolean;
-  url: string | undefined;
   cards: ProfileCard[];
 }
 
@@ -78,7 +77,6 @@ export class FormPage extends Component<unknown, FormStateType> {
     this.gender = createRef();
     this.state = {
       confirm: false,
-      url: 'https://avatars.mds.yandex.net/i?id=3a61f30a8dda7b409f22c83055b5800984f9830c-8242815-images-thumbs&n=13',
       cards: [],
     };
   }
@@ -259,12 +257,13 @@ export class FormPage extends Component<unknown, FormStateType> {
     if (this.validateForm() && this.age.current?.value) {
       this.setState({ confirm: true });
       setTimeout(() => this.setState({ confirm: false }), 5000);
-      const newCard = {
+
+      let newCard = {
         firstName: this.firstName.current?.value,
         lastName: this.lastName.current?.value,
         age: this.dateToAge(this.age.current.value),
         showMyAge: this.showMyAge.current?.checked,
-        upload: this.state.url,
+        upload: '',
         zipCode: this.zipCode.current?.value,
         country: this.country.current?.value,
         city: this.city.current?.value,
@@ -279,35 +278,49 @@ export class FormPage extends Component<unknown, FormStateType> {
         gender: this.radioValue(),
       };
 
+
+    const promise = this.fileToUrl.call(this);
+    promise.then(result => {
+      newCard.upload = result;
       arr.push(newCard);
       this.setState({ cards: arr });
       return true;
+    });
     }
     return false;
   }
 
-  fileToUrl() {
-    const input = this.upload.current?.parentElement?.parentElement?.firstChild as HTMLInputElement;
-    let file, fileUrl: string | ArrayBuffer | null;
-    if (input && input.files && Array.from(input.files).at(-1)) {
-      file = Array.from(input.files).at(-1) as Blob;
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        fileUrl = reader.result;
-        if (this.upload && this.upload.current) this.upload.current.innerHTML = 'FILE UPLOADED';
-        if (typeof fileUrl === 'string') this.setState({ url: fileUrl });
-      };
+  async fileToUrl() {
+
+    async function readFileAsDataURL(file: File):Promise<string> {
+      let result = await new Promise<string>(resolve => {
+        let fileReader = new FileReader();
+        fileReader.onload = (e) => {
+          if (typeof fileReader.result === 'string') {
+            resolve(fileReader.result)};
+          }
+        fileReader.readAsDataURL(file);
+      });
+
+      return result;
     }
+
+    const input = this.upload.current?.parentElement?.parentElement?.firstChild as HTMLInputElement;
+    const files = input.files;
+    let fileURL: string = 'https://avatars.mds.yandex.net/i?id=3a61f30a8dda7b409f22c83055b5800984f9830c-8242815-images-thumbs&n=13';
+    if (files && files.length > 0) {
+      const file = Array.from(files).at(-1) as File;
+      fileURL = await readFileAsDataURL(file);
+    }
+
+    return fileURL;
   }
 
   render() {
     return (
       <section className="form-page" placeholder="formpage">
         {this.state.confirm && <Confirmation />}
-        <Header cards={[]} currentPage="FORM">
-          {undefined}
-        </Header>
+        <Header currentPage="FORM" />
 
         <Form submitFunc={this.handleSubmit.bind(this)}>
           <Fieldset title="Personal Information">
@@ -333,7 +346,7 @@ export class FormPage extends Component<unknown, FormStateType> {
               handleChange={this.handleInputChange.bind(this)}
             />
             <Checkbox id="showMyAge" title="Show my age" ref={this.showMyAge} />
-            <File id="profilePhoto" ref={this.upload} handleChange={this.fileToUrl.bind(this)} />
+            <File id="profilePhoto" ref={this.upload} /*handleChange={this.fileToUrl.bind(this)} *//>
           </Fieldset>
 
           <Fieldset title="Address">

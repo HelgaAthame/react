@@ -3,7 +3,7 @@ import './file.scss';
 import { ReactComponent as Upload } from '../../assets/upload.svg';
 
 type FileProps = {
-  handleChange: ChangeEventHandler<HTMLInputElement> | undefined;
+  //handleChange: ChangeEventHandler<HTMLInputElement> | undefined;
   id: string;
 };
 
@@ -15,7 +15,7 @@ export const File = forwardRef<HTMLSpanElement, FileProps>((props, ref) => (
       accept="im/*"
       id={props.id}
       className="input__file"
-      onChange={props.handleChange}
+      //onChange={props.handleChange}
     />
     <label htmlFor={props.id} className="input__label">
       <span className="input__file-icon-wrapper">
