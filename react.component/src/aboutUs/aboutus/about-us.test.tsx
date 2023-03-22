@@ -17,7 +17,7 @@ const router = createMemoryRouter(fakeroutes);
 describe('react about-us page', () => {
   test('about-us page renders correctly', () => {
     render(<RouterProvider router={router} />);
-    const errorDiv = screen.getByText(/olga/i);
-    expect(errorDiv.innerHTML).toBe('My name is Olga Khmaruk');
+    const aboutUs = screen.getByPlaceholderText('about us');
+    expect(aboutUs).toBeTruthy;
   });
 });

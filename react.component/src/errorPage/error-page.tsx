@@ -6,9 +6,7 @@ export const ErrorPage = () => {
   console.log(error);
   return (
     <div id="error-page">
-      <Header cards={[]} currentPage="404">
-        {undefined}
-      </Header>
+      <Header currentPage="404" />
       <h1>404</h1>
       <p placeholder="error-text">Sorry, this page doesn&apos;t exist.</p>
       <p>
