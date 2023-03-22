@@ -4,9 +4,7 @@ import { Header } from '../../app/Header';
 export const AboutUs = () => {
   return (
     <div className="AboutUs">
-      <Header cards={[]} currentPage="ABOUT US">
-        {undefined}
-      </Header>
+      <Header currentPage="ABOUT US" />
       <Info />
     </div>
   );

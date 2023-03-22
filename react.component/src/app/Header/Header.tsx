@@ -5,8 +5,8 @@ import { Logo } from '../Logo';
 import { Nav } from '../Nav';
 
 type SearchBarProps = {
-  cards: CardT[];
-  children: React.ReactNode;
+  cards?: CardT[];
+  children?: React.ReactNode;
   currentPage: string;
 };
 
