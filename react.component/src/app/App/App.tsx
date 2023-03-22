@@ -1,16 +1,19 @@
-import { useState } from 'react';
+//import { useContext, useState } from 'react';
 import './App.scss';
 import { Header } from '../Header';
 import { Main } from '../Main';
 import { cards, CardT } from '../cards';
 import { SearchBar } from '../SearchBar';
+import { AppContext } from '../../context';
 
 
 export const App = () => {
 
-  const [newCards, setNewCards] = useState<CardT[]>(cards);
+  //const { newCards } = useContext(AppContext);
 
-  const updateData = (inputValue: string) => {
+  //const [newCards, setNewCards] = useState<CardT[]>(cards);
+
+  /*const updateData = (inputValue: string) => {
     const filtered = cards.filter((card) =>
       Object.values(card).find(
         (value: string | number) =>
@@ -18,12 +21,12 @@ export const App = () => {
       )
     );
     setNewCards(filtered);
-  }
+  }*/
 
   return (<div className="app">
   <Header currentPage="MAIN">
-    <SearchBar updateData={updateData} />
+    <SearchBar/>
   </Header>
-  <Main cards={newCards} />
+  <Main/>
 </div>);
 }
