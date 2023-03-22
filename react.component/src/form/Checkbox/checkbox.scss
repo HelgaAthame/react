@@ -58,14 +58,6 @@ $col2: #109966;
   border-color: $col2;
   color: $col2;
 }
-/* стили для чекбокса, находящегося в фокусе */
-.checkbox-input:focus+label::before {
-  //box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
-/* стили для чекбокса, находящегося в фокусе и не находящегося в состоянии checked */
-.checkbox-input:focus:not(:checked)+label::before {
-  //border-color: #80bdff;
-}
 /* стили для чекбокса, находящегося в состоянии disabled */
 .checkbox-input:disabled+label::before {
   background-color: grey;

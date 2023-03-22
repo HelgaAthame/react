@@ -1,21 +1,14 @@
-import { ChangeEventHandler, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import './file.scss';
 import { ReactComponent as Upload } from '../../assets/upload.svg';
 
 type FileProps = {
-  //handleChange: ChangeEventHandler<HTMLInputElement> | undefined;
   id: string;
 };
 
 export const File = forwardRef<HTMLSpanElement, FileProps>((props, ref) => (
   <div className="input__wrapper">
-    <input
-      type="file"
-      name="file"
-      accept="image/*"
-      id={props.id}
-      className="input__file"
-    />
+    <input type="file" name="file" accept="image/*" id={props.id} className="input__file" />
     <label htmlFor={props.id} className="input__label">
       <span className="input__file-icon-wrapper">
         <Upload />

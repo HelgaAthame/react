@@ -258,7 +258,7 @@ export class FormPage extends Component<unknown, FormStateType> {
       this.setState({ confirm: true });
       setTimeout(() => this.setState({ confirm: false }), 5000);
 
-      let newCard = {
+      const newCard = {
         firstName: this.firstName.current?.value,
         lastName: this.lastName.current?.value,
         age: this.dateToAge(this.age.current.value),
@@ -278,27 +278,27 @@ export class FormPage extends Component<unknown, FormStateType> {
         gender: this.radioValue(),
       };
 
-
-    const promise = this.fileToUrl.call(this);
-    promise.then(result => {
-      newCard.upload = result;
-      arr.push(newCard);
-      this.setState({ cards: arr });
+      const promise = this.fileToUrl.call(this);
+      promise.then((result) => {
+        newCard.upload = result;
+        arr.push(newCard);
+        this.setState({ cards: arr });
+        return true;
+      });
       return true;
-    });
     }
     return false;
   }
 
   async fileToUrl() {
-
-    async function readFileAsDataURL(file: File):Promise<string> {
-      let result = await new Promise<string>(resolve => {
-        let fileReader = new FileReader();
-        fileReader.onload = (e) => {
+    async function readFileAsDataURL(file: File): Promise<string> {
+      const result = await new Promise<string>((resolve) => {
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
           if (typeof fileReader.result === 'string') {
-            resolve(fileReader.result)};
+            resolve(fileReader.result);
           }
+        };
         fileReader.readAsDataURL(file);
       });
 
@@ -307,20 +307,14 @@ export class FormPage extends Component<unknown, FormStateType> {
 
     const input = this.upload.current?.parentElement?.parentElement?.firstChild as HTMLInputElement;
     const files = input.files;
-    let fileURL: string = 'https://avatars.mds.yandex.net/i?id=3a61f30a8dda7b409f22c83055b5800984f9830c-8242815-images-thumbs&n=13';
-
-
+    let fileURL =
+      'https://avatars.mds.yandex.net/i?id=3a61f30a8dda7b409f22c83055b5800984f9830c-8242815-images-thumbs&n=13';
 
     if (files && files.length > 0) {
-
-      const fileName = input.value;
-      const idxDot = fileName.lastIndexOf(".") + 1;
-      const extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
-
       const pattern = /image-*/;
       const file = Array.from(files).at(-1) as File;
 
-      if (file.type.match(pattern)){
+      if (file.type.match(pattern)) {
         fileURL = await readFileAsDataURL(file);
       }
     }
