@@ -308,9 +308,21 @@ export class FormPage extends Component<unknown, FormStateType> {
     const input = this.upload.current?.parentElement?.parentElement?.firstChild as HTMLInputElement;
     const files = input.files;
     let fileURL: string = 'https://avatars.mds.yandex.net/i?id=3a61f30a8dda7b409f22c83055b5800984f9830c-8242815-images-thumbs&n=13';
+
+
+
     if (files && files.length > 0) {
+
+      const fileName = input.value;
+      const idxDot = fileName.lastIndexOf(".") + 1;
+      const extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+
+      const pattern = /image-*/;
       const file = Array.from(files).at(-1) as File;
-      fileURL = await readFileAsDataURL(file);
+
+      if (file.type.match(pattern)){
+        fileURL = await readFileAsDataURL(file);
+      }
     }
 
     return fileURL;
@@ -346,7 +358,7 @@ export class FormPage extends Component<unknown, FormStateType> {
               handleChange={this.handleInputChange.bind(this)}
             />
             <Checkbox id="showMyAge" title="Show my age" ref={this.showMyAge} />
-            <File id="profilePhoto" ref={this.upload} /*handleChange={this.fileToUrl.bind(this)} *//>
+            <File id="profilePhoto" ref={this.upload} />
           </Fieldset>
 
           <Fieldset title="Address">

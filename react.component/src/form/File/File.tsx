@@ -12,10 +12,9 @@ export const File = forwardRef<HTMLSpanElement, FileProps>((props, ref) => (
     <input
       type="file"
       name="file"
-      accept="im/*"
+      accept="image/*"
       id={props.id}
       className="input__file"
-      //onChange={props.handleChange}
     />
     <label htmlFor={props.id} className="input__label">
       <span className="input__file-icon-wrapper">
