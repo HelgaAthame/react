@@ -4,6 +4,7 @@ import './formPage.scss';
 import { countries } from '../countries';
 import { Confirmation } from '../Confirmation';
 import { ReactComponent as Upload } from '../../assets/upload.svg';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
 type ProfileCard = {
   gender: string | undefined;
@@ -26,6 +27,8 @@ type ProfileCard = {
 };
 
 export const FormPage = () => {
+  const { register, handleSubmit } = useForm();
+
   const firstName: MutableRefObject<HTMLInputElement | null> = useRef(null);
   const lastName: MutableRefObject<HTMLInputElement | null> = useRef(null);
   const age: MutableRefObject<HTMLInputElement | null> = useRef(null);
@@ -218,7 +221,8 @@ export const FormPage = () => {
     return arr.find((el) => el.checked)?.value;
   }
 
-  const handleSubmit = () => {
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log(data);
     const arr: ProfileCard[] = cards;
 
     if (validateForm() && age.current?.value) {
@@ -291,7 +295,7 @@ export const FormPage = () => {
 
   const submitFunc = (event: FormEvent) => {
     event.preventDefault();
-    if (handleSubmit()) {
+    if (/*handleSubmit()*/true) {
       const form = event.target as HTMLFormElement;
       form.reset();
     }
@@ -302,7 +306,7 @@ export const FormPage = () => {
       {confirm && <Confirmation />}
       <Header currentPage="FORM" />
 
-      <form placeholder="form" className="form" onSubmit={submitFunc}>
+      <form placeholder="form" className="form" onSubmit={handleSubmit(onSubmit)}>
         <div className="fieldset-wrapper">
           <fieldset className="fieldset">
             <h3>Personal Information</h3>
@@ -313,6 +317,7 @@ export const FormPage = () => {
                 <input
                   type="text"
                   className="input"
+                  name="firstName"
                   id="firstName"
                   ref={firstName}
                   onChange={handleInputChange}
@@ -326,6 +331,7 @@ export const FormPage = () => {
                 <input
                   type="text"
                   className="input"
+                  name="lastName"
                   id="lastName"
                   ref={lastName}
                   onChange={handleInputChange}
@@ -339,6 +345,7 @@ export const FormPage = () => {
                 <input
                   type="date"
                   className="input"
+                  name="age"
                   id="age"
                   ref={age}
                   onChange={handleInputChange}
@@ -347,7 +354,7 @@ export const FormPage = () => {
             </div>
 
             <div className="checkbox-wrapper">
-              <input type="checkbox" id="showMyAge" className="checkbox-input" ref={showMyAge} />
+              <input type="checkbox" id="showMyAge" name="showMyAge" className="checkbox-input" ref={showMyAge} />
               <label htmlFor="showMyAge" className="checkbox-label">
                 Show my age
               </label>
@@ -378,6 +385,7 @@ export const FormPage = () => {
                 <input
                   type="text"
                   className="input"
+                  name="zipCode"
                   id="zipCode"
                   ref={zipCode}
                   onChange={handleInputChange}
@@ -389,6 +397,7 @@ export const FormPage = () => {
               Country
               <select
                 placeholder="country"
+                name="country"
                 id="country"
                 multiple={false}
                 onChange={handleSelectChange}
@@ -410,6 +419,7 @@ export const FormPage = () => {
                 <input
                   type="text"
                   className="input"
+                  name="city"
                   id="city"
                   ref={city}
                   onChange={handleInputChange}
@@ -423,6 +433,7 @@ export const FormPage = () => {
                 <input
                   type="text"
                   className="input"
+                  name="address"
                   id="address"
                   ref={address}
                   onChange={handleInputChange}
@@ -443,6 +454,7 @@ export const FormPage = () => {
                 <input
                   type="text"
                   className="input"
+                  name="email"
                   id="email"
                   ref={email}
                   onChange={handleInputChange}
@@ -452,7 +464,7 @@ export const FormPage = () => {
 
             <div className="switcher-wrapper">
               Receive notifications by mail
-              <input type="checkbox" id="receiveMail" className="switcher-input" ref={receiveMail} />
+              <input type="checkbox" name="receiveMail" id="receiveMail" className="switcher-input" ref={receiveMail} />
               <label htmlFor="receiveMail" className="switcher-label"></label>
             </div>
 
@@ -462,6 +474,7 @@ export const FormPage = () => {
                 <input
                   type="text"
                   className="input"
+                  name="phone"
                   id="phone"
                   ref={phone}
                   onChange={handleInputChange}
@@ -471,7 +484,7 @@ export const FormPage = () => {
 
             <div className="switcher-wrapper">
               Receive sms
-              <input type="checkbox" id="receiveSMS" className="switcher-input" ref={receiveSMS} />
+              <input type="checkbox" name="receiveSMS" id="receiveSMS" className="switcher-input" ref={receiveSMS} />
               <label htmlFor="receiveSMS" className="switcher-label"></label>
             </div>
 
@@ -483,21 +496,21 @@ export const FormPage = () => {
             <h3>Checkboxes</h3>
 
             <div className="checkbox-wrapper">
-              <input type="checkbox" id="firstCheckbox" className="checkbox-input" ref={firstCheckbox} />
+              <input type="checkbox" name="firstCheckbox" id="firstCheckbox" className="checkbox-input" ref={firstCheckbox} />
               <label htmlFor="firstCheckbox" className="checkbox-label">
               I like this website
               </label>
             </div>
 
             <div className="checkbox-wrapper">
-              <input type="checkbox" id="secondCheckbox" className="checkbox-input" ref={secondCheckbox} />
+              <input type="checkbox" name="secondCheckbox" id="secondCheckbox" className="checkbox-input" ref={secondCheckbox} />
               <label htmlFor="secondCheckbox" className="checkbox-label">
                 I enjoy filling out forms
               </label>
             </div>
 
             <div className="checkbox-wrapper">
-              <input type="checkbox" id="thirdCheckbox" className="checkbox-input" ref={thirdCheckbox} />
+              <input type="checkbox" name="thirdCheckbox" id="thirdCheckbox" className="checkbox-input" ref={thirdCheckbox} />
               <label htmlFor="thirdCheckbox" className="checkbox-label">
                 I like reading good books
               </label>
