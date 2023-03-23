@@ -1,4 +1,4 @@
-import { ChangeEvent, MutableRefObject, useContext, useEffect, useRef } from 'react';
+import { ChangeEvent, MutableRefObject, useContext, useEffect, useRef, useState } from 'react';
 import './searchbar.scss';
 import { ReactComponent as Lupa } from '../../assets/lupa.svg';
 import { AppContext } from '../../context';
@@ -10,30 +10,19 @@ export const SearchBar = () => {
   const wrapper: MutableRefObject<HTMLDivElement | null> = useRef(null);
   const input: MutableRefObject<HTMLInputElement | null> = useRef(null);
 
+  const [ inputValue, setInputValue ] = useState(localStorage.getItem('bestbookstore-input-data') ? localStorage.getItem('bestbookstore-input-data') : '');
+
   useEffect(() => {
-    const newValue = localStorage.getItem('bestbookstore-input-data');
-    console.log(input);
-    console.log(wrapper);
-    console.log(newValue);
-    if (newValue && input && input.current) {
-      input.current.value = newValue;
-      updateData(newValue);
-    }
-    return () => {
-      const neededValue = input?.current?.value;
-      console.log(input);  //null  ?
-      console.log(wrapper);  //null  ?
-      console.log(neededValue);
-    if (neededValue) {
-      localStorage.setItem('bestbookstore-input-data', neededValue.toString());
+      if (inputValue) {
+      localStorage.setItem('bestbookstore-input-data', inputValue);
     } else {
       localStorage.setItem('bestbookstore-input-data', '');
     }
-    }
-  }, []);
+  }, [inputValue]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     updateData(event.target.value);
+    setInputValue(event.target.value);
   }
 
   const handleFocus = () => {
@@ -58,6 +47,7 @@ export const SearchBar = () => {
           <Lupa />
         </div>
         <input
+          value={inputValue as string}
           ref={input}
           type="search"
           className="input"
