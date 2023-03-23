@@ -4,7 +4,7 @@ import { Header } from '../Header';
 import { Main } from '../Main';
 import { cards, CardT } from '../cards';
 import { SearchBar } from '../SearchBar';
-import { AppContext } from '../../context';
+import { AppContext, AppContextProvider } from '../../context';
 
 
 export const App = () => {
@@ -23,10 +23,14 @@ export const App = () => {
     setNewCards(filtered);
   }*/
 
-  return (<div className="app">
+  return (
+    <AppContextProvider>
+  <div className="app">
   <Header currentPage="MAIN">
     <SearchBar/>
   </Header>
   <Main/>
-</div>);
+</div>
+</AppContextProvider>
+);
 }

@@ -12,12 +12,18 @@ export const SearchBar = () => {
 
   useEffect(() => {
     const newValue = localStorage.getItem('bestbookstore-input-data');
+    console.log(input);
+    console.log(wrapper);
+    console.log(newValue);
     if (newValue && input && input.current) {
       input.current.value = newValue;
       updateData(newValue);
     }
     return () => {
       const neededValue = input?.current?.value;
+      console.log(input);  //null  ?
+      console.log(wrapper);  //null  ?
+      console.log(neededValue);
     if (neededValue) {
       localStorage.setItem('bestbookstore-input-data', neededValue.toString());
     } else {

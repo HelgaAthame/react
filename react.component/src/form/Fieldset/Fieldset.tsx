@@ -6,15 +6,11 @@ type FieldsetProps = {
   title: string;
 };
 
-export class Fieldset extends Component<FieldsetProps> {
-  render() {
-    return (
-      <div className="fieldset-wrapper">
-        <fieldset className="fieldset">
-          <h3>{this.props.title}</h3>
-          {this.props.children}
-        </fieldset>
-      </div>
-    );
-  }
-}
+export const Fieldset = (props: FieldsetProps) => (
+  <div className="fieldset-wrapper">
+    <fieldset className="fieldset">
+      <h3>{props.title}</h3>
+      {props.children}
+    </fieldset>
+  </div>
+);
