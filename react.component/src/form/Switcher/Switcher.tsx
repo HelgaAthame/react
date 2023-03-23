@@ -5,6 +5,7 @@ type SwitcherProps = {
   title: string;
   id: string;
 };
+
 export const Switcher = forwardRef<HTMLInputElement, SwitcherProps>((props, ref) => (
   <div className="switcher-wrapper">
     {props.title}
