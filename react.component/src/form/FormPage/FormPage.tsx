@@ -1,16 +1,9 @@
 import { Header } from '../../app/Header';
-import { Fieldset } from '../Fieldset';
-import { Form } from '../Form';
-import { Input } from '../Input';
-import { ChangeEvent, Component, createRef, MutableRefObject, RefObject, useRef, useState } from 'react';
-import { Select } from '../Select';
-import { Switcher } from '../Switcher';
-import { File } from '../File';
-import { Checkbox } from '../Checkbox';
+import { ChangeEvent, Component, createRef, FormEvent, MutableRefObject, RefObject, useRef, useState } from 'react';
 import './formPage.scss';
 import { countries } from '../countries';
 import { Confirmation } from '../Confirmation';
-import { Radio } from '../Radio';
+import { ReactComponent as Upload } from '../../assets/upload.svg';
 
 type ProfileCard = {
   gender: string | undefined;
@@ -31,11 +24,6 @@ type ProfileCard = {
   secondCheckbox: boolean | undefined;
   thirdCheckbox: boolean | undefined;
 };
-
-interface FormStateType {
-  confirm: boolean;
-  cards: ProfileCard[];
-}
 
 export const FormPage = () => {
   const firstName: MutableRefObject<HTMLInputElement | null> = useRef(null);
@@ -301,116 +289,253 @@ export const FormPage = () => {
     return fileURL;
   }
 
+  const submitFunc = (event: FormEvent) => {
+    event.preventDefault();
+    if (handleSubmit()) {
+      const form = event.target as HTMLFormElement;
+      form.reset();
+    }
+  }
+
   return (
     <section className="form-page" placeholder="formpage">
       {confirm && <Confirmation />}
       <Header currentPage="FORM" />
 
-      <Form submitFunc={handleSubmit}>
-        <Fieldset title="Personal Information">
-          <Input
-            id="firstName"
-            label="First Name"
-            type="text"
-            ref={firstName}
-            handleChange={handleInputChange}
-          />
-          <Input
-            id="lastName"
-            label="Last Name"
-            type="text"
-            ref={lastName}
-            handleChange={handleInputChange}
-          />
-          <Input
-            id="age"
-            label="Birthday"
-            type="date"
-            ref={age}
-            handleChange={handleInputChange}
-          />
-          <Checkbox id="showMyAge" title="Show my age" ref={showMyAge} />
-          <File id="profilePhoto" ref={upload} />
-        </Fieldset>
+      <form placeholder="form" className="form" onSubmit={submitFunc}>
+        <div className="fieldset-wrapper">
+          <fieldset className="fieldset">
+            <h3>Personal Information</h3>
 
-        <Fieldset title="Address">
-          <Input
-            id="zipCode"
-            label="Zip-code"
-            type="text"
-            ref={zipCode}
-            handleChange={handleInputChange}
-          />
-          <Select
-            id="country"
-            multiple={false}
-            label="Country"
-            ref={country}
-            handleChange={handleSelectChange}
-          />
-          <Input
-            id="city"
-            label="City"
-            type="text"
-            ref={city}
-            handleChange={handleInputChange}
-          />
-          <Input
-            id="address"
-            label="Address"
-            type="text"
-            ref={address}
-            handleChange={handleInputChange}
-          />
-        </Fieldset>
+            <div className="input-wrapper">
+              <label htmlFor="firstName" className="label">
+                First Name
+                <input
+                  type="text"
+                  className="input"
+                  id="firstName"
+                  ref={firstName}
+                  onChange={handleInputChange}
+                />
+              </label>
+            </div>
 
-        <Fieldset title="Contacts">
-          <Input
-            id="email"
-            label="E-mail"
-            type="text"
-            ref={email}
-            handleChange={handleInputChange}
-          />
-          <Switcher
-            title="Receive notifications by mail"
-            id="receiveMail"
-            ref={receiveMail}
-          />
-          <Input
-            id="phone"
-            label="Phone"
-            type="text"
-            ref={phone}
-            handleChange={handleInputChange}
-          />
-          <Switcher title="Receive sms" id="receiveSMS" ref={receiveSMS} />
-        </Fieldset>
+            <div className="input-wrapper">
+              <label htmlFor="lastName" className="label">
+                Last Name
+                <input
+                  type="text"
+                  className="input"
+                  id="lastName"
+                  ref={lastName}
+                  onChange={handleInputChange}
+                />
+              </label>
+            </div>
 
-        <Fieldset title="Checkboxes">
-          <Checkbox title="I like this website" id="firstCheckbox" ref={firstCheckbox} />
-          <Checkbox
-            title="I enjoy filling out forms"
-            id="secondCheckbox"
-            ref={secondCheckbox}
-          />
-          <Checkbox
-            title="I like reading good books"
-            id="thirdCheckbox"
-            ref={thirdCheckbox}
-          />
-        </Fieldset>
+            <div className="input-wrapper">
+              <label htmlFor="age" className="label">
+                Birthday
+                <input
+                  type="date"
+                  className="input"
+                  id="age"
+                  ref={age}
+                  onChange={handleInputChange}
+                />
+              </label>
+            </div>
 
-        <Fieldset title="Radios">
-          <Radio
-            title="gender"
-            name="gender"
-            ref={gender}
-            values={['undefined', 'female', 'male', 'other']}
-            handleChange={handleRadioInput}
-          />
-        </Fieldset>
-      </Form>
+            <div className="checkbox-wrapper">
+              <input type="checkbox" id="showMyAge" className="checkbox-input" ref={showMyAge} />
+              <label htmlFor="showMyAge" className="checkbox-label">
+                Show my age
+              </label>
+            </div>
+
+            <div className="input__wrapper">
+              <input type="file" name="file" accept="image/*" id="profilePhoto" className="input__file" />
+              <label htmlFor="profilePhoto" className="input__label">
+                <span className="input__file-icon-wrapper">
+                  <Upload />
+                </span>
+                <span className="input__file-button-text" ref={upload}>
+                  UPLOAD PROFILE PHOTO
+                </span>
+              </label>
+            </div>
+
+          </fieldset>
+        </div>
+
+        <div className="fieldset-wrapper">
+          <fieldset className="fieldset">
+            <h3>Address</h3>
+
+            <div className="input-wrapper">
+              <label htmlFor="zipCode" className="label">
+                Zip-code
+                <input
+                  type="text"
+                  className="input"
+                  id="zipCode"
+                  ref={zipCode}
+                  onChange={handleInputChange}
+                />
+              </label>
+            </div>
+
+            <div className="select-wrapper">
+              Country
+              <select
+                placeholder="country"
+                id="country"
+                multiple={false}
+                onChange={handleSelectChange}
+                className="select"
+                ref={country}
+              >
+                <option className="option" value=""></option>
+                {countries.sort().map((country, index) => (
+                  <option value={country} key={index} className="option">
+                    {country}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+          <div className="input-wrapper">
+              <label htmlFor="city" className="label">
+                City
+                <input
+                  type="text"
+                  className="input"
+                  id="city"
+                  ref={city}
+                  onChange={handleInputChange}
+                />
+              </label>
+            </div>
+
+            <div className="input-wrapper">
+              <label htmlFor="address" className="label">
+                Address
+                <input
+                  type="text"
+                  className="input"
+                  id="address"
+                  ref={address}
+                  onChange={handleInputChange}
+                />
+              </label>
+            </div>
+
+          </fieldset>
+        </div>
+
+        <div className="fieldset-wrapper">
+          <fieldset className="fieldset">
+            <h3>Contacts</h3>
+
+            <div className="input-wrapper">
+              <label htmlFor="email" className="label">
+                E-mail
+                <input
+                  type="text"
+                  className="input"
+                  id="email"
+                  ref={email}
+                  onChange={handleInputChange}
+                />
+              </label>
+            </div>
+
+            <div className="switcher-wrapper">
+              Receive notifications by mail
+              <input type="checkbox" id="receiveMail" className="switcher-input" ref={receiveMail} />
+              <label htmlFor="receiveMail" className="switcher-label"></label>
+            </div>
+
+            <div className="input-wrapper">
+              <label htmlFor="phone" className="label">
+                Phone
+                <input
+                  type="text"
+                  className="input"
+                  id="phone"
+                  ref={phone}
+                  onChange={handleInputChange}
+                />
+              </label>
+            </div>
+
+            <div className="switcher-wrapper">
+              Receive sms
+              <input type="checkbox" id="receiveSMS" className="switcher-input" ref={receiveSMS} />
+              <label htmlFor="receiveSMS" className="switcher-label"></label>
+            </div>
+
+          </fieldset>
+        </div>
+
+        <div className="fieldset-wrapper">
+          <fieldset className="fieldset">
+            <h3>Checkboxes</h3>
+
+            <div className="checkbox-wrapper">
+              <input type="checkbox" id="firstCheckbox" className="checkbox-input" ref={firstCheckbox} />
+              <label htmlFor="firstCheckbox" className="checkbox-label">
+              I like this website
+              </label>
+            </div>
+
+            <div className="checkbox-wrapper">
+              <input type="checkbox" id="secondCheckbox" className="checkbox-input" ref={secondCheckbox} />
+              <label htmlFor="secondCheckbox" className="checkbox-label">
+                I enjoy filling out forms
+              </label>
+            </div>
+
+            <div className="checkbox-wrapper">
+              <input type="checkbox" id="thirdCheckbox" className="checkbox-input" ref={thirdCheckbox} />
+              <label htmlFor="thirdCheckbox" className="checkbox-label">
+                I like reading good books
+              </label>
+            </div>
+
+          </fieldset>
+        </div>
+
+        <div className="fieldset-wrapper">
+          <fieldset className="fieldset">
+            <h3>Radios</h3>
+
+            <div className="radio-super-wrapper">
+              Gender
+              <div className="radio-wrapper" ref={gender} placeholder="radio">
+                {['undefined', 'female', 'male', 'other'].map((value, index) => (
+                  <label className="radio-label" htmlFor={`gender__${index}`} key={index}>
+                    <input
+                      className="radio-input"
+                      id={`gender__${index}`}
+                      type="radio"
+                      value={value}
+                      name="gender"
+                      onChange={handleRadioInput}
+                    />
+                    {['undefined', 'female', 'male', 'other'][index]}
+                  </label>
+                ))}
+              </div>
+            </div>
+
+          </fieldset>
+        </div>
+
+        <div className="submit-wrapper">
+          <input type="submit" className="submit-input" value="SUBMIT" placeholder="submit" />
+        </div>
+    </form>
 
       <div className="cards-section">
         {cards.map((card, index) => (
