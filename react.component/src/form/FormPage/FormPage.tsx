@@ -39,7 +39,7 @@ type ProfileCard = {
 export const FormPage = () => {
   const { register, handleSubmit, reset } = useForm();
 
-  const firstName: MutableRefObject<HTMLInputElement | null> = useRef(null);
+  /*const firstName: MutableRefObject<HTMLInputElement | null> = useRef(null);
   const lastName: MutableRefObject<HTMLInputElement | null> = useRef(null);
   const age: MutableRefObject<HTMLInputElement | null> = useRef(null);
   const showMyAge: MutableRefObject<HTMLInputElement | null> = useRef(null);
@@ -55,7 +55,7 @@ export const FormPage = () => {
   const firstCheckbox: MutableRefObject<HTMLInputElement | null> = useRef(null);
   const secondCheckbox: MutableRefObject<HTMLInputElement | null> = useRef(null);
   const thirdCheckbox: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const gender: MutableRefObject<HTMLDivElement | null> = useRef(null);
+  const gender: MutableRefObject<HTMLDivElement | null> = useRef(null);*/
 
   const [confirm, setConfirm] = useState<boolean>(false);
   const [cards, setCards] = useState<ProfileCard[]>([]);
@@ -92,6 +92,10 @@ export const FormPage = () => {
   const validateForm = () => {
     const arr: boolean[] = [];
 
+    const firstName = document.querySelector('#firstName') as HTMLInputElement;
+    const lastName = document.querySelector('#lastName') as HTMLInputElement;
+    const city = document.querySelector('#city') as HTMLInputElement;
+
     arr.push(validateName(firstName));
     arr.push(validateName(lastName));
     arr.push(validateAge());
@@ -106,153 +110,150 @@ export const FormPage = () => {
     return !arr.includes(false);
   };
 
-  const validateName = (el: RefObject<HTMLInputElement>) => {
-    const value = el.current?.value;
-    if (
+  const validateName = (el: HTMLInputElement) => {
+    const value = el.value;
+    const isError =
       !value ||
       value.length > 50 ||
       value.length < 2 ||
-      value.match(/[\d\s!\*\\@#$%\^\|\~\?\&\(\)\-\+\=\,\.]/)
-    ) {
-      if (el.current && el.current.parentElement) {
-        el.current.classList.add('err');
-        el.current.parentElement.classList.add('parent-error');
-      }
-      return false;
-    } else return true;
-  };
+      value.match(/[\d\s!\*\\@#$%\^\|\~\?\&\(\)\-\+\=\,\.]/) ||
+      value[0].toUpperCase() !== value[0]
+        ? true
+        : false;
+    switch (el.id) {
+      case 'firstName':
+        setFirstNameErr(isError);
+        break;
+      case 'lastName':
+        setLastNameErr(isError);
+        break;
+      case 'firstName':
+        setCityErr(isError);
+        break;
+    }
+    return isError ? false : true;
+  }
 
   const validateCountry = () => {
-    const val = country.current?.value;
-    if (val) {
-      if (countries.includes(val)) return true;
-    }
-    if (country.current && country.current.parentElement) {
-      country.current.classList.add('error');
-      country.current.parentElement.classList.add('error');
-    }
-    return false;
-  };
+    const country = document.querySelector('#country') as HTMLSelectElement;
+    const val = country.value;
+    const isError = val ? !countries.includes(val) : true;
+    setCountryErr(isError);
+    return isError ? false : true;
+  }
 
   const validateAge = () => {
-    const date = age.current?.value;
-    if (date && dateToAge(date) > 0) {
-      return true;
-    } else {
-      if (age.current && age.current.parentElement) {
-        age.current.classList.add('err');
-        age.current.parentElement.classList.add('parent-error');
-      }
-      return false;
-    }
-  };
+    const age = document.querySelector('#age') as HTMLInputElement;
+    const date = age.value;
+    const isError = date ? dateToAge(date) <= 0 : true;
+    setAgeErr(isError);
+    return isError ? false : true;
+  }
 
   const validateZipCode = () => {
-    const zip = zipCode.current?.value;
-    if (zip?.match(/\d{4,10}/)) {
-      return true;
-    } else {
-      if (zipCode.current && zipCode.current.parentElement) {
-        zipCode.current.classList.add('err');
-        zipCode.current.parentElement.classList.add('parent-error');
-      }
-      return false;
-    }
-  };
+    const zipCode = document.querySelector('#zipCode') as HTMLInputElement;
+    const code = zipCode.value;
+    const isError = !code?.match(/\d{4,10}/);
+    setZipCodeErr(isError);
+    return isError ? false : true;
+  }
 
   const validateAddress = () => {
-    const add = address.current?.value;
-    if (
-      !add ||
-      add.length > 100 ||
-      add.length < 10 ||
-      add.match(/[\!\*\\@#\$%\^\|\~\?\&\(\)\+\=]/)
-    ) {
-      if (address.current && address.current.parentElement) {
-        address.current.classList.add('err');
-        address.current.parentElement.classList.add('parent-error');
-      }
-      return false;
-    }
-    return true;
-  };
+    const address = document.querySelector('#address') as HTMLInputElement;
+    const add = address.value;
+    const isError = add
+      ? !(
+          add.length < 100 &&
+          add.length > 10 &&
+          !add.match(/[\!\*\\@#\$%\^\|\~\?\&\(\)\+\=]/)
+        )
+      : true;
+    setAddressErr(isError);
+    return isError ? false : true;
+  }
 
   const validateEmail = () => {
-    const mail = email.current?.value;
-    if (
-      mail?.match(
-        /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/i
-      )
-    ) {
-      return true;
-    } else {
-      if (email.current && email.current.parentElement) {
-        email.current.classList.add('err');
-        email.current.parentElement.classList.add('parent-error');
-      }
-      return false;
-    }
-  };
+    const mail = document.querySelector('#email') as HTMLInputElement;
+    const email = mail.value;
+    const isError = email
+      ? !email.match(
+          /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/i
+        )
+      : true;
+    setEmailErr(isError);
+    return isError ? false : true;
+  }
 
   const validatePhone = () => {
-    const phoneNumber = phone.current?.value;
-    if (phoneNumber?.match(/^\+*\d*\(*[\d-]+\)*([\d-]){5,10}\d$/i)) {
-      return true;
-    } else {
-      if (phone.current && phone.current.parentElement) {
-        phone.current.classList.add('err');
-        phone.current.parentElement.classList.add('parent-error');
-      }
-      return false;
-    }
-  };
+    const telePhone = document.querySelector('#phone') as HTMLInputElement;
+    const phone = telePhone.value;
+    const isError = phone ? !phone.match(/^\+*\d*\(*[\d-]+\)*([\d-]){5,10}\d$/i) : true;
+    setPhoneErr(isError);
+    return isError ? false : true;
+  }
 
   const validateRadio = () => {
-    const genderEl = gender.current;
-    const inputs = genderEl?.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
+    const gender = document.querySelector('.radio-wrapper')as HTMLDivElement;
+    const inputs = gender?.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
     const arr = Array.from(inputs);
     const checked = arr.some((input) => input.checked === true);
-
-    if (checked) {
-      return true;
-    } else {
-      gender.current?.classList.add('error');
-      return false;
-    }
-  };
+    setGenderErr(!checked);
+    return checked ? true : false;
+  }
 
   const radioValue = () => {
-    const genderEl = gender.current;
+    const genderEl = document.querySelector('.radio-wrapper')as HTMLDivElement;
     const inputs = genderEl?.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
     const arr = Array.from(inputs);
     return arr.find((el) => el.checked)?.value;
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = () => {
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+
+    console.log(data);
 
     const arr: ProfileCard[] = cards;
 
-    if (validateForm() && age.current?.value) {
+    const age = document.querySelector('#age') as HTMLInputElement;
+
+    if (validateForm() && age.value) {
       setConfirm(true);
       setTimeout(() => setConfirm(false), 5000);
 
+
+      const firstName = document.querySelector('#firstName') as HTMLInputElement;
+      const lastName = document.querySelector('#lastName') as HTMLInputElement;
+      const city = document.querySelector('#city') as HTMLInputElement;
+      const country = document.querySelector('#country') as HTMLSelectElement;
+      const zipCode = document.querySelector('#zipCode') as HTMLInputElement;
+      const address = document.querySelector('#address') as HTMLInputElement;
+      const email = document.querySelector('#email') as HTMLInputElement;
+      const phone = document.querySelector('#phone') as HTMLInputElement;
+
+      const showMyAge = document.querySelector('#showMyAge') as HTMLInputElement;
+      const receiveMail = document.querySelector('#receiveMail') as HTMLInputElement;
+      const receiveSMS = document.querySelector('#receiveSMS') as HTMLInputElement;
+      const firstCheckbox = document.querySelector('#firstCheckbox') as HTMLInputElement;
+      const secondCheckbox = document.querySelector('#secondCheckbox') as HTMLInputElement;
+      const thirdCheckbox = document.querySelector('#thirdCheckbox') as HTMLInputElement;
+
       const newCard = {
-        firstName: firstName.current?.value,
-        lastName: lastName.current?.value,
-        age: dateToAge(age.current.value),
-        showMyAge: showMyAge.current?.checked,
+        firstName: firstName.value,
+        lastName: lastName.value,
+        age: dateToAge(age.value),
+        showMyAge: showMyAge.checked,
         upload: '',
-        zipCode: zipCode.current?.value,
-        country: country.current?.value,
-        city: city.current?.value,
-        address: address.current?.value,
-        email: email.current?.value,
-        receiveMail: receiveMail.current?.checked,
-        phone: phone.current?.value,
-        receiveSMS: receiveSMS.current?.checked,
-        firstCheckbox: firstCheckbox.current?.checked,
-        secondCheckbox: secondCheckbox.current?.checked,
-        thirdCheckbox: thirdCheckbox.current?.checked,
+        zipCode: zipCode.value,
+        country: country.value,
+        city: city.value,
+        address: address.value,
+        email: email.value,
+        receiveMail: receiveMail.checked,
+        phone: phone.value,
+        receiveSMS: receiveSMS.checked,
+        firstCheckbox: firstCheckbox.checked,
+        secondCheckbox: secondCheckbox.checked,
+        thirdCheckbox: thirdCheckbox.checked,
         gender: radioValue(),
       };
 
@@ -282,8 +283,8 @@ export const FormPage = () => {
 
       return result;
     }
-
-    const input = upload.current?.parentElement?.parentElement?.firstChild as HTMLInputElement;
+    const upload = document.querySelector('.input__file-button-text') as HTMLDivElement;
+    const input = upload.parentElement?.parentElement?.firstChild as HTMLInputElement;
     const files = input.files;
     let fileURL =
       'https://avatars.mds.yandex.net/i?id=3a61f30a8dda7b409f22c83055b5800984f9830c-8242815-images-thumbs&n=13';
@@ -326,8 +327,9 @@ export const FormPage = () => {
                   className="input"
                   name="firstName"
                   id="firstName"
-                  ref={firstName}
+                  {...register}
                 />
+                <span className="error">{firstNameErr && `Error: First name is invalid`}</span>
               </label>
             </div>
 
@@ -339,8 +341,9 @@ export const FormPage = () => {
                   className="input"
                   name="lastName"
                   id="lastName"
-                  ref={lastName}
+                  {...register}
                 />
+                <span className="error">{lastNameErr && `Error: Last name is invalid`}</span>
               </label>
             </div>
 
@@ -352,8 +355,9 @@ export const FormPage = () => {
                   className="input"
                   name="age"
                   id="age"
-                  ref={age}
+                  {...register}
                 />
+                <span className="error">{ageErr && `Error: Birthday is invalid`}</span>
               </label>
             </div>
 
@@ -363,7 +367,7 @@ export const FormPage = () => {
                 id="showMyAge"
                 name="showMyAge"
                 className="checkbox-input"
-                ref={showMyAge}
+                {...register}
               />
               <label htmlFor="showMyAge" className="checkbox-label">
                 Show my age
@@ -377,12 +381,13 @@ export const FormPage = () => {
                 accept="image/*"
                 id="profilePhoto"
                 className="input__file"
+                {...register}
               />
               <label htmlFor="profilePhoto" className="input__label">
                 <span className="input__file-icon-wrapper">
                   <Upload />
                 </span>
-                <span className="input__file-button-text" ref={upload}>
+                <span className="input__file-button-text">
                   UPLOAD PROFILE PHOTO
                 </span>
               </label>
@@ -402,8 +407,9 @@ export const FormPage = () => {
                   className="input"
                   name="zipCode"
                   id="zipCode"
-                  ref={zipCode}
+                  {...register}
                 />
+                <span className="error">{zipCodeErr && `Error: Zip-code is invalid`}</span>
               </label>
             </div>
 
@@ -415,7 +421,7 @@ export const FormPage = () => {
                 id="country"
                 multiple={false}
                 className="select"
-                ref={country}
+                {...register}
               >
                 <option className="option" value=""></option>
                 {countries.sort().map((country, index) => (
@@ -424,6 +430,7 @@ export const FormPage = () => {
                   </option>
                 ))}
               </select>
+                <span className="error">{countryErr && `Error: You are to choose a country`}</span>
             </div>
 
             <div className="input-wrapper">
@@ -434,8 +441,9 @@ export const FormPage = () => {
                   className="input"
                   name="city"
                   id="city"
-                  ref={city}
+                  {...register}
                 />
+                <span className="error">{cityErr && `Error: City is invalid`}</span>
               </label>
             </div>
 
@@ -447,8 +455,9 @@ export const FormPage = () => {
                   className="input"
                   name="address"
                   id="address"
-                  ref={address}
+                  {...register}
                 />
+                <span className="error">{addressErr && `Error: Address is invalid`}</span>
               </label>
             </div>
           </fieldset>
@@ -466,8 +475,9 @@ export const FormPage = () => {
                   className="input"
                   name="email"
                   id="email"
-                  ref={email}
+                  {...register}
                 />
+                <span className="error">{emailErr && `Error: E-mail is invalid`}</span>
               </label>
             </div>
 
@@ -478,7 +488,7 @@ export const FormPage = () => {
                 name="receiveMail"
                 id="receiveMail"
                 className="switcher-input"
-                ref={receiveMail}
+                {...register}
               />
               <label htmlFor="receiveMail" className="switcher-label"></label>
             </div>
@@ -491,8 +501,9 @@ export const FormPage = () => {
                   className="input"
                   name="phone"
                   id="phone"
-                  ref={phone}
+                  {...register}
                 />
+                <span className="error">{phoneErr && `Error: Phone is invalid`}</span>
               </label>
             </div>
 
@@ -503,7 +514,7 @@ export const FormPage = () => {
                 name="receiveSMS"
                 id="receiveSMS"
                 className="switcher-input"
-                ref={receiveSMS}
+                {...register}
               />
               <label htmlFor="receiveSMS" className="switcher-label"></label>
             </div>
@@ -520,7 +531,7 @@ export const FormPage = () => {
                 name="firstCheckbox"
                 id="firstCheckbox"
                 className="checkbox-input"
-                ref={firstCheckbox}
+                {...register}
               />
               <label htmlFor="firstCheckbox" className="checkbox-label">
                 I like this website
@@ -533,7 +544,7 @@ export const FormPage = () => {
                 name="secondCheckbox"
                 id="secondCheckbox"
                 className="checkbox-input"
-                ref={secondCheckbox}
+                {...register}
               />
               <label htmlFor="secondCheckbox" className="checkbox-label">
                 I enjoy filling out forms
@@ -546,7 +557,7 @@ export const FormPage = () => {
                 name="thirdCheckbox"
                 id="thirdCheckbox"
                 className="checkbox-input"
-                ref={thirdCheckbox}
+                {...register}
               />
               <label htmlFor="thirdCheckbox" className="checkbox-label">
                 I like reading good books
@@ -561,10 +572,11 @@ export const FormPage = () => {
 
             <div className="radio-super-wrapper">
               Gender
-              <div className="radio-wrapper" ref={gender} placeholder="radio">
+              <div className="radio-wrapper" placeholder="radio" {...register} >
                 {['undefined', 'female', 'male', 'other'].map((value, index) => (
                   <label className="radio-label" htmlFor={`gender__${index}`} key={index}>
                     <input
+                      {...register}
                       className="radio-input"
                       id={`gender__${index}`}
                       type="radio"
@@ -575,6 +587,7 @@ export const FormPage = () => {
                   </label>
                 ))}
               </div>
+              <span className="error">{genderErr && `Error: choose your gender`}</span>
             </div>
           </fieldset>
         </div>
