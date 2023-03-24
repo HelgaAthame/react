@@ -4,9 +4,9 @@ import './select.scss';
 
 type SelectProps = {
   label: string;
-  handleChange: ChangeEventHandler<HTMLSelectElement>;
   multiple: boolean;
   id: string;
+  err: boolean;
 };
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) => (
@@ -16,7 +16,6 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
       placeholder="country"
       id={props.id}
       multiple={props.multiple}
-      onChange={props.handleChange}
       className="select"
       ref={ref}
     >
@@ -27,5 +26,6 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
         </option>
       ))}
     </select>
+    <span className="error">{props.err && `Error: choose country`}</span>
   </div>
 ));

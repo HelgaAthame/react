@@ -35,6 +35,18 @@ type ProfileCard = {
 interface FormStateType {
   confirm: boolean;
   cards: ProfileCard[];
+
+  firstName: boolean;
+  lastName: boolean;
+  age: boolean;
+  zipCode: boolean;
+  city: boolean;
+  address: boolean;
+  email: boolean;
+  phone: boolean;
+
+  country: boolean;
+  gender: boolean;
 }
 
 export class FormPage extends Component<unknown, FormStateType> {
@@ -78,17 +90,19 @@ export class FormPage extends Component<unknown, FormStateType> {
     this.state = {
       confirm: false,
       cards: [],
+
+      firstName: false,
+      lastName: false,
+      age: false,
+      zipCode: false,
+      city: false,
+      address: false,
+      email: false,
+      phone: false,
+
+      country: false,
+      gender: false,
     };
-  }
-
-  handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-    event.target.classList.remove('err');
-    event.target.parentElement?.classList.remove('parent-error');
-  }
-
-  handleSelectChange(event: ChangeEvent<HTMLSelectElement>) {
-    event.target.classList.remove('error');
-    event.target.parentElement?.classList.remove('error');
   }
 
   dateToAge(date: string) {
@@ -96,20 +110,11 @@ export class FormPage extends Component<unknown, FormStateType> {
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const bd = new Date(date);
     const birthdayThisYear = new Date(today.getFullYear(), bd.getMonth(), bd.getDate());
-    let myage = today.getFullYear() - bd.getFullYear();
+    let myAge = today.getFullYear() - bd.getFullYear();
     if (today < birthdayThisYear) {
-      myage = myage - 1;
+      myAge = myAge - 1;
     }
-    return myage;
-  }
-
-  handleDateChange(event: ChangeEvent<HTMLInputElement>) {
-    event.target.classList.remove('err');
-    event.target.parentElement?.classList.remove('parent-error');
-  }
-
-  handleRadioInput(event: ChangeEvent<HTMLInputElement>) {
-    event.target.parentElement?.parentElement?.classList.remove('error');
+    return myAge;
   }
 
   validateForm() {
@@ -130,104 +135,67 @@ export class FormPage extends Component<unknown, FormStateType> {
   }
 
   validateName(el: RefObject<HTMLInputElement>) {
-    const value = el.current?.value;
-    if (
-      !value ||
-      value.length > 50 ||
-      value.length < 2 ||
-      value.match(/[\d\s!\*\\@#$%\^\|\~\?\&\(\)\-\+\=\,\.]/)
-    ) {
-      if (el.current && el.current.parentElement) {
-        el.current.classList.add('err');
-        el.current.parentElement.classList.add('parent-error');
-      }
-      return false;
-    } else return true;
+      const value = el.current?.value;
+      const st = this.state;
+      const fieldName = el.current?.id as keyof typeof st;
+      const isError = (
+        !value ||
+        value.length > 50 ||
+        value.length < 2 ||
+        value.match(/[\d\s!\*\\@#$%\^\|\~\?\&\(\)\-\+\=\,\.]/) ||
+        value[0].toUpperCase() !== value[0]
+      ) ? true : false;
+      this.setState((prev) => ({...prev, [fieldName]: isError}));
+      return isError ? false : true;
   }
 
   validateCountry() {
     const val = this.country.current?.value;
-    if (val) {
-      if (countries.includes(val)) return true;
-    }
-    if (this.country.current && this.country.current.parentElement) {
-      this.country.current.classList.add('error');
-      this.country.current.parentElement.classList.add('error');
-    }
-    return false;
+    const isError = val ? !countries.includes(val) : true ;
+    this.setState({ country: isError});
+    return isError ? false : true;
   }
 
   validateAge() {
     const date = this.age.current?.value;
-    if (date && this.dateToAge(date) > 0) {
-      return true;
-    } else {
-      if (this.age.current && this.age.current.parentElement) {
-        this.age.current.classList.add('err');
-        this.age.current.parentElement.classList.add('parent-error');
-      }
-      return false;
-    }
+    const isError = date ? this.dateToAge(date) <= 0 : true;
+    this.setState({ age: isError});
+    return isError ? false : true;
   }
 
   validateZipCode() {
     const zipCode = this.zipCode.current?.value;
-    if (zipCode?.match(/\d{4,10}/)) {
-      return true;
-    } else {
-      if (this.zipCode.current && this.zipCode.current.parentElement) {
-        this.zipCode.current.classList.add('err');
-        this.zipCode.current.parentElement.classList.add('parent-error');
-      }
-      return false;
-    }
+    const isError = !zipCode?.match(/\d{4,10}/);
+    this.setState({ zipCode: isError});
+    return isError ? false : true;
   }
 
   validateAddress() {
     const address = this.address.current?.value;
-    if (
-      !address ||
-      address.length > 100 ||
-      address.length < 10 ||
-      address.match(/[\!\*\\@#\$%\^\|\~\?\&\(\)\+\=]/)
-    ) {
-      if (this.address.current && this.address.current.parentElement) {
-        this.address.current.classList.add('err');
-        this.address.current.parentElement.classList.add('parent-error');
-      }
-      return false;
-    }
-    return true;
+    const isError = address ?
+      !(address.length < 100 &&
+      address.length > 10 &&
+      !address.match(/[\!\*\\@#\$%\^\|\~\?\&\(\)\+\=]/))
+      : true;
+    this.setState({ address: isError});
+    return isError ? false : true;
   }
 
   validateEmail() {
     const email = this.email.current?.value;
-    if (
-      email?.match(
-        /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/i
+    const isError = email ? !email.match(
+      /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/i
       )
-    ) {
-      return true;
-    } else {
-      if (this.email.current && this.email.current.parentElement) {
-        this.email.current.classList.add('err');
-        this.email.current.parentElement.classList.add('parent-error');
-      }
-      return false;
-    }
+      : true;
+    this.setState({ email: isError});
+    return isError ? false : true;
   }
 
   validatePhone() {
     const phone = this.phone.current?.value;
-    if (phone?.match(/^\+*\d*\(*[\d-]+\)*([\d-]){5,10}\d$/i)) {
-      return true;
-    } else {
-      if (this.phone.current && this.phone.current.parentElement) {
-        this.phone.current.classList.add('err');
-        this.phone.current.parentElement.classList.add('parent-error');
-      }
-      return false;
-    }
+    const isError = phone ? !phone.match(/^\+*\d*\(*[\d-]+\)*([\d-]){5,10}\d$/i) : true;
+    this.setState({ phone: isError});
+    return isError ? false : true;
   }
 
   validateRadio() {
@@ -235,13 +203,8 @@ export class FormPage extends Component<unknown, FormStateType> {
     const inputs = gender?.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
     const arr = Array.from(inputs);
     const checked = arr.some((input) => input.checked === true);
-
-    if (checked) {
-      return true;
-    } else {
-      this.gender.current?.classList.add('error');
-      return false;
-    }
+    this.setState({ gender: !checked});
+    return checked ? true : false;
   }
 
   radioValue() {
@@ -255,7 +218,9 @@ export class FormPage extends Component<unknown, FormStateType> {
     const arr: ProfileCard[] = this.state.cards;
 
     if (this.validateForm() && this.age.current?.value) {
-      this.setState({ confirm: true });
+      this.setState({
+        confirm: true
+       });
       setTimeout(() => this.setState({ confirm: false }), 5000);
 
       const newCard = {
@@ -335,21 +300,21 @@ export class FormPage extends Component<unknown, FormStateType> {
               label="First Name"
               type="text"
               ref={this.firstName}
-              handleChange={this.handleInputChange.bind(this)}
+              err={this.state.firstName}
             />
             <Input
               id="lastName"
               label="Last Name"
               type="text"
               ref={this.lastName}
-              handleChange={this.handleInputChange.bind(this)}
+              err={this.state.lastName}
             />
             <Input
               id="age"
               label="Birthday"
               type="date"
               ref={this.age}
-              handleChange={this.handleInputChange.bind(this)}
+              err={this.state.age}
             />
             <Checkbox id="showMyAge" title="Show my age" ref={this.showMyAge} />
             <File id="profilePhoto" ref={this.upload} />
@@ -361,28 +326,28 @@ export class FormPage extends Component<unknown, FormStateType> {
               label="Zip-code"
               type="text"
               ref={this.zipCode}
-              handleChange={this.handleInputChange.bind(this)}
+              err={this.state.zipCode}
             />
             <Select
               id="country"
               multiple={false}
               label="Country"
               ref={this.country}
-              handleChange={this.handleSelectChange.bind(this)}
+              err={this.state.country}
             />
             <Input
               id="city"
               label="City"
               type="text"
               ref={this.city}
-              handleChange={this.handleInputChange.bind(this)}
+              err={this.state.city}
             />
             <Input
               id="address"
               label="Address"
               type="text"
               ref={this.address}
-              handleChange={this.handleInputChange.bind(this)}
+              err={this.state.address}
             />
           </Fieldset>
 
@@ -392,7 +357,7 @@ export class FormPage extends Component<unknown, FormStateType> {
               label="E-mail"
               type="text"
               ref={this.email}
-              handleChange={this.handleInputChange.bind(this)}
+              err={this.state.email}
             />
             <Switcher
               title="Receive notifications by mail"
@@ -404,7 +369,7 @@ export class FormPage extends Component<unknown, FormStateType> {
               label="Phone"
               type="text"
               ref={this.phone}
-              handleChange={this.handleInputChange.bind(this)}
+              err={this.state.phone}
             />
             <Switcher title="Receive sms" id="receiveSMS" ref={this.receiveSMS} />
           </Fieldset>
@@ -428,8 +393,8 @@ export class FormPage extends Component<unknown, FormStateType> {
               title="gender"
               name="gender"
               ref={this.gender}
+              err={this.state.gender}
               values={['undefined', 'female', 'male', 'other']}
-              handleChange={this.handleRadioInput.bind(this)}
             />
           </Fieldset>
         </Form>

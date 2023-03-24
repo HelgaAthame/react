@@ -1,4 +1,4 @@
-import { ChangeEventHandler, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import './input.scss';
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => (
@@ -10,15 +10,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => (
         className="input"
         id={props.id}
         ref={ref}
-        onChange={props.handleChange}
       />
+      <span className="error">{props.err && `Error: ${props.label} is invalid`}</span>
     </label>
   </div>
 ));
 
 type InputProps = {
-  handleChange: ChangeEventHandler<HTMLInputElement> | undefined;
   id: string;
   label: string;
   type: string;
+  err: boolean;
 };

@@ -5,7 +5,7 @@ type RadioProps = {
   title: string;
   name: string;
   values: string[];
-  handleChange: ChangeEventHandler<HTMLInputElement> | undefined;
+  err: boolean;
 };
 
 export const Radio = forwardRef<HTMLDivElement, RadioProps>((props, ref) => (
@@ -20,11 +20,11 @@ export const Radio = forwardRef<HTMLDivElement, RadioProps>((props, ref) => (
             type="radio"
             value={value}
             name={props.name}
-            onChange={props.handleChange}
           />
           {props.values[index]}
         </label>
       ))}
     </div>
+    <span className="error">{props.err && `Error: choose your ${props.title}`}</span>
   </div>
 ));
