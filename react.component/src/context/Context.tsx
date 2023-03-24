@@ -12,14 +12,13 @@ type ChildrenProps = {
 
 export const AppContext = createContext<CurrentType>({
   newCards: cards,
-  updateData: (inputValue: string) => {
-    const filtered = cards.filter((card) =>
+  updateData: (inputValue: string) => (cards.filter((card) =>
       Object.values(card).find(
         (value: string | number) =>
           value.toString().toLowerCase().search(inputValue.toLowerCase()) !== -1
       )
-    );
-  },
+    )
+  ),
 });
 
 const reducer = (state: CardT[], action: string) => {

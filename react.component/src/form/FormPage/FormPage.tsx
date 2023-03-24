@@ -1,13 +1,7 @@
 import { Header } from '../../app/Header';
 import {
-  ChangeEvent,
-  Component,
-  createRef,
   FormEvent,
-  MutableRefObject,
-  RefObject,
   useEffect,
-  useRef,
   useState,
 } from 'react';
 import './formPage.scss';
@@ -39,24 +33,6 @@ type ProfileCard = {
 export const FormPage = () => {
   const { register, handleSubmit, reset } = useForm();
 
-  /*const firstName: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const lastName: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const age: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const showMyAge: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const zipCode: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const country: MutableRefObject<HTMLSelectElement | null> = useRef(null);
-  const city: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const address: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const email: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const receiveMail: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const phone: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const receiveSMS: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const upload: MutableRefObject<HTMLSpanElement | null> = useRef(null);
-  const firstCheckbox: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const secondCheckbox: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const thirdCheckbox: MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const gender: MutableRefObject<HTMLDivElement | null> = useRef(null);*/
-
   const [confirm, setConfirm] = useState<boolean>(false);
   const [cards, setCards] = useState<ProfileCard[]>([]);
 
@@ -73,8 +49,8 @@ export const FormPage = () => {
 
   useEffect(() => {
     reset({
-      data: 'test'
-    })
+      data: 'test',
+    });
   }, [confirm]);
 
   const dateToAge = (date: string) => {
@@ -127,12 +103,12 @@ export const FormPage = () => {
       case 'lastName':
         setLastNameErr(isError);
         break;
-      case 'firstName':
+      case 'city':
         setCityErr(isError);
         break;
     }
     return isError ? false : true;
-  }
+  };
 
   const validateCountry = () => {
     const country = document.querySelector('#country') as HTMLSelectElement;
@@ -140,7 +116,7 @@ export const FormPage = () => {
     const isError = val ? !countries.includes(val) : true;
     setCountryErr(isError);
     return isError ? false : true;
-  }
+  };
 
   const validateAge = () => {
     const age = document.querySelector('#age') as HTMLInputElement;
@@ -148,7 +124,7 @@ export const FormPage = () => {
     const isError = date ? dateToAge(date) <= 0 : true;
     setAgeErr(isError);
     return isError ? false : true;
-  }
+  };
 
   const validateZipCode = () => {
     const zipCode = document.querySelector('#zipCode') as HTMLInputElement;
@@ -156,21 +132,17 @@ export const FormPage = () => {
     const isError = !code?.match(/\d{4,10}/);
     setZipCodeErr(isError);
     return isError ? false : true;
-  }
+  };
 
   const validateAddress = () => {
     const address = document.querySelector('#address') as HTMLInputElement;
     const add = address.value;
     const isError = add
-      ? !(
-          add.length < 100 &&
-          add.length > 10 &&
-          !add.match(/[\!\*\\@#\$%\^\|\~\?\&\(\)\+\=]/)
-        )
+      ? !(add.length < 100 && add.length > 10 && !add.match(/[\!\*\\@#\$%\^\|\~\?\&\(\)\+\=]/))
       : true;
     setAddressErr(isError);
     return isError ? false : true;
-  }
+  };
 
   const validateEmail = () => {
     const mail = document.querySelector('#email') as HTMLInputElement;
@@ -182,7 +154,7 @@ export const FormPage = () => {
       : true;
     setEmailErr(isError);
     return isError ? false : true;
-  }
+  };
 
   const validatePhone = () => {
     const telePhone = document.querySelector('#phone') as HTMLInputElement;
@@ -190,26 +162,25 @@ export const FormPage = () => {
     const isError = phone ? !phone.match(/^\+*\d*\(*[\d-]+\)*([\d-]){5,10}\d$/i) : true;
     setPhoneErr(isError);
     return isError ? false : true;
-  }
+  };
 
   const validateRadio = () => {
-    const gender = document.querySelector('.radio-wrapper')as HTMLDivElement;
+    const gender = document.querySelector('.radio-wrapper') as HTMLDivElement;
     const inputs = gender?.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
     const arr = Array.from(inputs);
     const checked = arr.some((input) => input.checked === true);
     setGenderErr(!checked);
     return checked ? true : false;
-  }
+  };
 
   const radioValue = () => {
-    const genderEl = document.querySelector('.radio-wrapper')as HTMLDivElement;
+    const genderEl = document.querySelector('.radio-wrapper') as HTMLDivElement;
     const inputs = genderEl?.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
     const arr = Array.from(inputs);
     return arr.find((el) => el.checked)?.value;
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-
     console.log(data);
 
     const arr: ProfileCard[] = cards;
@@ -218,8 +189,10 @@ export const FormPage = () => {
 
     if (validateForm() && age.value) {
       setConfirm(true);
-      setTimeout(() => setConfirm(false), 5000);
+      const form = document.querySelector('form');
+      if (form) form.reset();
 
+      setTimeout(() => setConfirm(false), 5000);
 
       const firstName = document.querySelector('#firstName') as HTMLInputElement;
       const lastName = document.querySelector('#lastName') as HTMLInputElement;
@@ -301,14 +274,6 @@ export const FormPage = () => {
     return fileURL;
   };
 
-  const submitFunc = (event: FormEvent) => {
-    event.preventDefault();
-    if (/*handleSubmit()*/ true) {
-      const form = event.target as HTMLFormElement;
-      form.reset();
-    }
-  };
-
   return (
     <section className="form-page" placeholder="formpage">
       {confirm && <Confirmation />}
@@ -336,13 +301,7 @@ export const FormPage = () => {
             <div className="input-wrapper">
               <label htmlFor="lastName" className="label">
                 Last Name
-                <input
-                  type="text"
-                  className="input"
-                  name="lastName"
-                  id="lastName"
-                  {...register}
-                />
+                <input type="text" className="input" name="lastName" id="lastName" {...register} />
                 <span className="error">{lastNameErr && `Error: Last name is invalid`}</span>
               </label>
             </div>
@@ -350,13 +309,7 @@ export const FormPage = () => {
             <div className="input-wrapper">
               <label htmlFor="age" className="label">
                 Birthday
-                <input
-                  type="date"
-                  className="input"
-                  name="age"
-                  id="age"
-                  {...register}
-                />
+                <input type="date" className="input" name="age" id="age" {...register} />
                 <span className="error">{ageErr && `Error: Birthday is invalid`}</span>
               </label>
             </div>
@@ -387,9 +340,7 @@ export const FormPage = () => {
                 <span className="input__file-icon-wrapper">
                   <Upload />
                 </span>
-                <span className="input__file-button-text">
-                  UPLOAD PROFILE PHOTO
-                </span>
+                <span className="input__file-button-text">UPLOAD PROFILE PHOTO</span>
               </label>
             </div>
           </fieldset>
@@ -402,13 +353,7 @@ export const FormPage = () => {
             <div className="input-wrapper">
               <label htmlFor="zipCode" className="label">
                 Zip-code
-                <input
-                  type="text"
-                  className="input"
-                  name="zipCode"
-                  id="zipCode"
-                  {...register}
-                />
+                <input type="text" className="input" name="zipCode" id="zipCode" {...register} />
                 <span className="error">{zipCodeErr && `Error: Zip-code is invalid`}</span>
               </label>
             </div>
@@ -430,19 +375,13 @@ export const FormPage = () => {
                   </option>
                 ))}
               </select>
-                <span className="error">{countryErr && `Error: You are to choose a country`}</span>
+              <span className="error">{countryErr && `Error: You are to choose a country`}</span>
             </div>
 
             <div className="input-wrapper">
               <label htmlFor="city" className="label">
                 City
-                <input
-                  type="text"
-                  className="input"
-                  name="city"
-                  id="city"
-                  {...register}
-                />
+                <input type="text" className="input" name="city" id="city" {...register} />
                 <span className="error">{cityErr && `Error: City is invalid`}</span>
               </label>
             </div>
@@ -450,13 +389,7 @@ export const FormPage = () => {
             <div className="input-wrapper">
               <label htmlFor="address" className="label">
                 Address
-                <input
-                  type="text"
-                  className="input"
-                  name="address"
-                  id="address"
-                  {...register}
-                />
+                <input type="text" className="input" name="address" id="address" {...register} />
                 <span className="error">{addressErr && `Error: Address is invalid`}</span>
               </label>
             </div>
@@ -470,13 +403,7 @@ export const FormPage = () => {
             <div className="input-wrapper">
               <label htmlFor="email" className="label">
                 E-mail
-                <input
-                  type="text"
-                  className="input"
-                  name="email"
-                  id="email"
-                  {...register}
-                />
+                <input type="text" className="input" name="email" id="email" {...register} />
                 <span className="error">{emailErr && `Error: E-mail is invalid`}</span>
               </label>
             </div>
@@ -496,13 +423,7 @@ export const FormPage = () => {
             <div className="input-wrapper">
               <label htmlFor="phone" className="label">
                 Phone
-                <input
-                  type="text"
-                  className="input"
-                  name="phone"
-                  id="phone"
-                  {...register}
-                />
+                <input type="text" className="input" name="phone" id="phone" {...register} />
                 <span className="error">{phoneErr && `Error: Phone is invalid`}</span>
               </label>
             </div>
@@ -572,7 +493,7 @@ export const FormPage = () => {
 
             <div className="radio-super-wrapper">
               Gender
-              <div className="radio-wrapper" placeholder="radio" {...register} >
+              <div className="radio-wrapper" placeholder="radio" {...register}>
                 {['undefined', 'female', 'male', 'other'].map((value, index) => (
                   <label className="radio-label" htmlFor={`gender__${index}`} key={index}>
                     <input

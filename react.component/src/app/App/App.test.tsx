@@ -3,7 +3,6 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 
 import { App } from './App';
-import { cards } from '../cards';
 import React from 'react';
 import { ErrorPage } from '../../errorPage';
 import { AboutUs } from '../../aboutUs/aboutus/';
@@ -22,7 +21,6 @@ const routes = [
 const router = createMemoryRouter(routes);
 
 describe('react app', () => {
-
   test('update data method works', () => {
     render(<RouterProvider router={router} />);
     const input = screen.getByRole('searchbox') as HTMLInputElement;

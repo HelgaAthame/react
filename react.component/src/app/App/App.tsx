@@ -6,7 +6,6 @@ import { SearchBar } from '../SearchBar';
 import { AppContextProvider } from '../../context';
 
 export const App = () => {
-
   return (
     <AppContextProvider>
       <div className="app">
