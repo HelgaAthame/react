@@ -4,16 +4,19 @@ import { ReactComponent as Lupa } from '../../assets/lupa.svg';
 import { AppContext } from '../../context';
 
 export const SearchBar = () => {
-
   const { updateData } = useContext(AppContext);
 
   const wrapper: MutableRefObject<HTMLDivElement | null> = useRef(null);
   const input: MutableRefObject<HTMLInputElement | null> = useRef(null);
 
-  const [ inputValue, setInputValue ] = useState(localStorage.getItem('bestbookstore-input-data') ? localStorage.getItem('bestbookstore-input-data') : '');
+  const [inputValue, setInputValue] = useState(
+    localStorage.getItem('bestbookstore-input-data')
+      ? localStorage.getItem('bestbookstore-input-data')
+      : ''
+  );
 
   useEffect(() => {
-      if (inputValue) {
+    if (inputValue) {
       localStorage.setItem('bestbookstore-input-data', inputValue);
     } else {
       localStorage.setItem('bestbookstore-input-data', '');
@@ -23,19 +26,20 @@ export const SearchBar = () => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     updateData(event.target.value);
     setInputValue(event.target.value);
-  }
+  };
 
   const handleFocus = () => {
     if (wrapper.current !== null) wrapper.current.style.flexGrow = '1';
     if (input && input.current) input.current.style.color = '#109966';
-  }
+  };
 
   const handleBlur = () => {
-    if (wrapper.current && input && document.activeElement !== input.current) wrapper.current.style.flexGrow = '0';
+    if (wrapper.current && input && document.activeElement !== input.current)
+      wrapper.current.style.flexGrow = '0';
     if (input && input.current) input.current.style.color = '#105544';
-  }
+  };
 
-  return(
+  return (
     <div className="wrapper">
       <div
         ref={wrapper}
@@ -59,4 +63,4 @@ export const SearchBar = () => {
       </div>
     </div>
   );
-}
+};

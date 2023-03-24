@@ -1,5 +1,15 @@
 import { Header } from '../../app/Header';
-import { ChangeEvent, Component, createRef, FormEvent, MutableRefObject, RefObject, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  Component,
+  createRef,
+  FormEvent,
+  MutableRefObject,
+  RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import './formPage.scss';
 import { countries } from '../countries';
 import { Confirmation } from '../Confirmation';
@@ -27,7 +37,7 @@ type ProfileCard = {
 };
 
 export const FormPage = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const firstName: MutableRefObject<HTMLInputElement | null> = useRef(null);
   const lastName: MutableRefObject<HTMLInputElement | null> = useRef(null);
@@ -47,19 +57,24 @@ export const FormPage = () => {
   const thirdCheckbox: MutableRefObject<HTMLInputElement | null> = useRef(null);
   const gender: MutableRefObject<HTMLDivElement | null> = useRef(null);
 
-  const [ confirm, setConfirm ] = useState<boolean>(false);
-  const [ cards, setCards ] = useState<ProfileCard[]>([]);
+  const [confirm, setConfirm] = useState<boolean>(false);
+  const [cards, setCards] = useState<ProfileCard[]>([]);
 
+  useEffect(() => {
+    reset({
+      data: 'test'
+    })
+  }, [confirm]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.target.classList.remove('err');
     event.target.parentElement?.classList.remove('parent-error');
-  }
+  };
 
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     event.target.classList.remove('error');
     event.target.parentElement?.classList.remove('error');
-  }
+  };
 
   const dateToAge = (date: string) => {
     const now = new Date();
@@ -71,16 +86,11 @@ export const FormPage = () => {
       myage = myage - 1;
     }
     return myage;
-  }
-
-  const handleDateChange = (event: ChangeEvent<HTMLInputElement>) => {
-    event.target.classList.remove('err');
-    event.target.parentElement?.classList.remove('parent-error');
-  }
+  };
 
   const handleRadioInput = (event: ChangeEvent<HTMLInputElement>) => {
     event.target.parentElement?.parentElement?.classList.remove('error');
-  }
+  };
 
   const validateForm = () => {
     const arr: boolean[] = [];
@@ -97,7 +107,7 @@ export const FormPage = () => {
     arr.push(validateRadio());
 
     return !arr.includes(false);
-  }
+  };
 
   const validateName = (el: RefObject<HTMLInputElement>) => {
     const value = el.current?.value;
@@ -113,7 +123,7 @@ export const FormPage = () => {
       }
       return false;
     } else return true;
-  }
+  };
 
   const validateCountry = () => {
     const val = country.current?.value;
@@ -125,7 +135,7 @@ export const FormPage = () => {
       country.current.parentElement.classList.add('error');
     }
     return false;
-  }
+  };
 
   const validateAge = () => {
     const date = age.current?.value;
@@ -138,7 +148,7 @@ export const FormPage = () => {
       }
       return false;
     }
-  }
+  };
 
   const validateZipCode = () => {
     const zip = zipCode.current?.value;
@@ -151,7 +161,7 @@ export const FormPage = () => {
       }
       return false;
     }
-  }
+  };
 
   const validateAddress = () => {
     const add = address.current?.value;
@@ -168,7 +178,7 @@ export const FormPage = () => {
       return false;
     }
     return true;
-  }
+  };
 
   const validateEmail = () => {
     const mail = email.current?.value;
@@ -185,7 +195,7 @@ export const FormPage = () => {
       }
       return false;
     }
-  }
+  };
 
   const validatePhone = () => {
     const phoneNumber = phone.current?.value;
@@ -198,7 +208,7 @@ export const FormPage = () => {
       }
       return false;
     }
-  }
+  };
 
   const validateRadio = () => {
     const genderEl = gender.current;
@@ -212,17 +222,17 @@ export const FormPage = () => {
       gender.current?.classList.add('error');
       return false;
     }
-  }
+  };
 
   const radioValue = () => {
     const genderEl = gender.current;
     const inputs = genderEl?.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
     const arr = Array.from(inputs);
     return arr.find((el) => el.checked)?.value;
-  }
+  };
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FieldValues> = () => {
+
     const arr: ProfileCard[] = cards;
 
     if (validateForm() && age.current?.value) {
@@ -259,7 +269,7 @@ export const FormPage = () => {
       return true;
     }
     return false;
-  }
+  };
 
   const fileToUrl = async () => {
     async function readFileAsDataURL(file: File): Promise<string> {
@@ -291,15 +301,15 @@ export const FormPage = () => {
     }
 
     return fileURL;
-  }
+  };
 
   const submitFunc = (event: FormEvent) => {
     event.preventDefault();
-    if (/*handleSubmit()*/true) {
+    if (/*handleSubmit()*/ true) {
       const form = event.target as HTMLFormElement;
       form.reset();
     }
-  }
+  };
 
   return (
     <section className="form-page" placeholder="formpage">
@@ -354,14 +364,26 @@ export const FormPage = () => {
             </div>
 
             <div className="checkbox-wrapper">
-              <input type="checkbox" id="showMyAge" name="showMyAge" className="checkbox-input" ref={showMyAge} />
+              <input
+                type="checkbox"
+                id="showMyAge"
+                name="showMyAge"
+                className="checkbox-input"
+                ref={showMyAge}
+              />
               <label htmlFor="showMyAge" className="checkbox-label">
                 Show my age
               </label>
             </div>
 
             <div className="input__wrapper">
-              <input type="file" name="file" accept="image/*" id="profilePhoto" className="input__file" />
+              <input
+                type="file"
+                name="file"
+                accept="image/*"
+                id="profilePhoto"
+                className="input__file"
+              />
               <label htmlFor="profilePhoto" className="input__label">
                 <span className="input__file-icon-wrapper">
                   <Upload />
@@ -371,7 +393,6 @@ export const FormPage = () => {
                 </span>
               </label>
             </div>
-
           </fieldset>
         </div>
 
@@ -413,7 +434,7 @@ export const FormPage = () => {
               </select>
             </div>
 
-          <div className="input-wrapper">
+            <div className="input-wrapper">
               <label htmlFor="city" className="label">
                 City
                 <input
@@ -440,7 +461,6 @@ export const FormPage = () => {
                 />
               </label>
             </div>
-
           </fieldset>
         </div>
 
@@ -464,7 +484,13 @@ export const FormPage = () => {
 
             <div className="switcher-wrapper">
               Receive notifications by mail
-              <input type="checkbox" name="receiveMail" id="receiveMail" className="switcher-input" ref={receiveMail} />
+              <input
+                type="checkbox"
+                name="receiveMail"
+                id="receiveMail"
+                className="switcher-input"
+                ref={receiveMail}
+              />
               <label htmlFor="receiveMail" className="switcher-label"></label>
             </div>
 
@@ -484,10 +510,15 @@ export const FormPage = () => {
 
             <div className="switcher-wrapper">
               Receive sms
-              <input type="checkbox" name="receiveSMS" id="receiveSMS" className="switcher-input" ref={receiveSMS} />
+              <input
+                type="checkbox"
+                name="receiveSMS"
+                id="receiveSMS"
+                className="switcher-input"
+                ref={receiveSMS}
+              />
               <label htmlFor="receiveSMS" className="switcher-label"></label>
             </div>
-
           </fieldset>
         </div>
 
@@ -496,26 +527,43 @@ export const FormPage = () => {
             <h3>Checkboxes</h3>
 
             <div className="checkbox-wrapper">
-              <input type="checkbox" name="firstCheckbox" id="firstCheckbox" className="checkbox-input" ref={firstCheckbox} />
+              <input
+                type="checkbox"
+                name="firstCheckbox"
+                id="firstCheckbox"
+                className="checkbox-input"
+                ref={firstCheckbox}
+              />
               <label htmlFor="firstCheckbox" className="checkbox-label">
-              I like this website
+                I like this website
               </label>
             </div>
 
             <div className="checkbox-wrapper">
-              <input type="checkbox" name="secondCheckbox" id="secondCheckbox" className="checkbox-input" ref={secondCheckbox} />
+              <input
+                type="checkbox"
+                name="secondCheckbox"
+                id="secondCheckbox"
+                className="checkbox-input"
+                ref={secondCheckbox}
+              />
               <label htmlFor="secondCheckbox" className="checkbox-label">
                 I enjoy filling out forms
               </label>
             </div>
 
             <div className="checkbox-wrapper">
-              <input type="checkbox" name="thirdCheckbox" id="thirdCheckbox" className="checkbox-input" ref={thirdCheckbox} />
+              <input
+                type="checkbox"
+                name="thirdCheckbox"
+                id="thirdCheckbox"
+                className="checkbox-input"
+                ref={thirdCheckbox}
+              />
               <label htmlFor="thirdCheckbox" className="checkbox-label">
                 I like reading good books
               </label>
             </div>
-
           </fieldset>
         </div>
 
@@ -541,14 +589,13 @@ export const FormPage = () => {
                 ))}
               </div>
             </div>
-
           </fieldset>
         </div>
 
         <div className="submit-wrapper">
           <input type="submit" className="submit-input" value="SUBMIT" placeholder="submit" />
         </div>
-    </form>
+      </form>
 
       <div className="cards-section">
         {cards.map((card, index) => (
@@ -587,4 +634,4 @@ export const FormPage = () => {
       </div>
     </section>
   );
-}
+};

@@ -5,9 +5,10 @@ import { Nav } from '../Nav';
 export const Header = (props: SearchBarProps) => (
   <header className="header">
     <Logo curPage={props.currentPage} />
-      {props.children}
+    {props.children}
     <Nav />
-  </header>);
+  </header>
+);
 
 type SearchBarProps = {
   children?: React.ReactNode;

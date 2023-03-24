@@ -9,7 +9,7 @@ export const Card = (props: CardT) => {
 
   const handleClick = () => {
     setLikes(likes + 1);
-  }
+  };
 
   return (
     <section className="card">
@@ -23,12 +23,7 @@ export const Card = (props: CardT) => {
           <div className="genre">{props.genre}</div>
           <div className="country">{props.country}</div>
         </div>
-        <div
-          ref={heart}
-          placeholder="likes"
-          className="likes"
-          onClick={handleClick}
-        >
+        <div ref={heart} placeholder="likes" className="likes" onClick={handleClick}>
           <Heart />
           &nbsp;
           {likes}
@@ -36,4 +31,4 @@ export const Card = (props: CardT) => {
       </div>
     </section>
   );
-}
+};
