@@ -60,21 +60,22 @@ export const FormPage = () => {
   const [confirm, setConfirm] = useState<boolean>(false);
   const [cards, setCards] = useState<ProfileCard[]>([]);
 
+  const [firstNameErr, setFirstNameErr] = useState<boolean>(false);
+  const [lastNameErr, setLastNameErr] = useState<boolean>(false);
+  const [ageErr, setAgeErr] = useState<boolean>(false);
+  const [zipCodeErr, setZipCodeErr] = useState<boolean>(false);
+  const [cityErr, setCityErr] = useState<boolean>(false);
+  const [addressErr, setAddressErr] = useState<boolean>(false);
+  const [emailErr, setEmailErr] = useState<boolean>(false);
+  const [phoneErr, setPhoneErr] = useState<boolean>(false);
+  const [countryErr, setCountryErr] = useState<boolean>(false);
+  const [genderErr, setGenderErr] = useState<boolean>(false);
+
   useEffect(() => {
     reset({
       data: 'test'
     })
   }, [confirm]);
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    event.target.classList.remove('err');
-    event.target.parentElement?.classList.remove('parent-error');
-  };
-
-  const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    event.target.classList.remove('error');
-    event.target.parentElement?.classList.remove('error');
-  };
 
   const dateToAge = (date: string) => {
     const now = new Date();
@@ -86,10 +87,6 @@ export const FormPage = () => {
       myage = myage - 1;
     }
     return myage;
-  };
-
-  const handleRadioInput = (event: ChangeEvent<HTMLInputElement>) => {
-    event.target.parentElement?.parentElement?.classList.remove('error');
   };
 
   const validateForm = () => {
@@ -330,7 +327,6 @@ export const FormPage = () => {
                   name="firstName"
                   id="firstName"
                   ref={firstName}
-                  onChange={handleInputChange}
                 />
               </label>
             </div>
@@ -344,7 +340,6 @@ export const FormPage = () => {
                   name="lastName"
                   id="lastName"
                   ref={lastName}
-                  onChange={handleInputChange}
                 />
               </label>
             </div>
@@ -358,7 +353,6 @@ export const FormPage = () => {
                   name="age"
                   id="age"
                   ref={age}
-                  onChange={handleInputChange}
                 />
               </label>
             </div>
@@ -409,7 +403,6 @@ export const FormPage = () => {
                   name="zipCode"
                   id="zipCode"
                   ref={zipCode}
-                  onChange={handleInputChange}
                 />
               </label>
             </div>
@@ -421,7 +414,6 @@ export const FormPage = () => {
                 name="country"
                 id="country"
                 multiple={false}
-                onChange={handleSelectChange}
                 className="select"
                 ref={country}
               >
@@ -443,7 +435,6 @@ export const FormPage = () => {
                   name="city"
                   id="city"
                   ref={city}
-                  onChange={handleInputChange}
                 />
               </label>
             </div>
@@ -457,7 +448,6 @@ export const FormPage = () => {
                   name="address"
                   id="address"
                   ref={address}
-                  onChange={handleInputChange}
                 />
               </label>
             </div>
@@ -477,7 +467,6 @@ export const FormPage = () => {
                   name="email"
                   id="email"
                   ref={email}
-                  onChange={handleInputChange}
                 />
               </label>
             </div>
@@ -503,7 +492,6 @@ export const FormPage = () => {
                   name="phone"
                   id="phone"
                   ref={phone}
-                  onChange={handleInputChange}
                 />
               </label>
             </div>
@@ -582,7 +570,6 @@ export const FormPage = () => {
                       type="radio"
                       value={value}
                       name="gender"
-                      onChange={handleRadioInput}
                     />
                     {['undefined', 'female', 'male', 'other'][index]}
                   </label>
