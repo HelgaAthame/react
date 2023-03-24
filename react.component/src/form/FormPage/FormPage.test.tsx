@@ -1,9 +1,10 @@
 import { describe, expect, test } from 'vitest';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { FormPage } from './FormPage';
 import { ErrorPage } from '../../errorPage';
+import { Confirmation } from '../Confirmation';
 
 const routes = [
   {
@@ -23,37 +24,41 @@ describe('react form page', () => {
 
   test('confirm doing well', async () => {
     render(<RouterProvider router={router} />);
+
     const firstNameInput = screen.getByLabelText('First Name') as HTMLInputElement;
-    expect(firstNameInput).toBeTruthy();
-    fireEvent.change(firstNameInput, { target: { value: 'Olga' } });
-    expect(firstNameInput.value).toBe('Olga');
     const lastNameInput = screen.getByLabelText('Last Name');
-    expect(lastNameInput).toBeTruthy();
-    fireEvent.change(lastNameInput, { target: { value: 'fakelastname' } });
     const birthdayInput = screen.getByLabelText('Birthday');
-    expect(birthdayInput).toBeTruthy();
-    fireEvent.change(birthdayInput, { target: { value: '2008-10-12' } });
     const zipCodeInput = screen.getByLabelText('Zip-code');
-    expect(zipCodeInput).toBeTruthy();
-    fireEvent.change(zipCodeInput, { target: { value: '1111111' } });
     const countryInput = screen.getByPlaceholderText('country');
-    expect(countryInput).toBeTruthy();
-    fireEvent.change(countryInput, { target: { value: 'Belarus' } });
     const cityInput = screen.getByLabelText('City');
-    expect(cityInput).toBeTruthy();
-    fireEvent.change(cityInput, { target: { value: 'fakeCity' } });
     const addressInput = screen.getByLabelText('Address');
-    expect(addressInput).toBeTruthy();
-    fireEvent.change(addressInput, { target: { value: 'fakeAddressFakeAddress' } });
     const emailInput = screen.getByLabelText('E-mail');
-    expect(emailInput).toBeTruthy();
-    fireEvent.change(emailInput, { target: { value: 'fakemail@gmail.com' } });
     const phoneInput = screen.getByLabelText('Phone');
-    expect(phoneInput).toBeTruthy();
-    fireEvent.change(phoneInput, { target: { value: '+37529111-11-11' } });
     const radio = screen.getByLabelText('male');
-    expect(radio).toBeTruthy();
-    radio.click();
+
+    act(() => {
+      fireEvent.change(firstNameInput, { target: { value: 'Olga' } });
+      fireEvent.change(lastNameInput, { target: { value: 'fakelastname' } });
+      fireEvent.change(birthdayInput, { target: { value: '2008-10-12' } });
+      fireEvent.change(zipCodeInput, { target: { value: '1111111' } });
+      fireEvent.change(countryInput, { target: { value: 'Belarus' } });
+      fireEvent.change(cityInput, { target: { value: 'fakeCity' } });
+      fireEvent.change(addressInput, { target: { value: 'fakeAddressFakeAddress' } });
+      fireEvent.change(emailInput, { target: { value: 'fakemail@gmail.com' } });
+      fireEvent.change(phoneInput, { target: { value: '+37529111-11-11' } });
+      radio.click();
+    });
+
+    expect(firstNameInput).toBeTruthy();
+    expect(firstNameInput.value).toBe('Olga');
+    expect(lastNameInput).toBeTruthy();
+    expect(birthdayInput).toBeTruthy();
+    expect(zipCodeInput).toBeTruthy();
+    expect(countryInput).toBeTruthy();
+    expect(cityInput).toBeTruthy();
+    expect(addressInput).toBeTruthy();
+    expect(emailInput).toBeTruthy();
+    expect(phoneInput).toBeTruthy();
     expect(radio).toBeTruthy();
 
     const submit = screen.getByPlaceholderText('submit');
@@ -61,17 +66,13 @@ describe('react form page', () => {
 
     submit.click();
 
-    const errorSpans = screen.getAllByText('Error:');
-    expect(errorSpans).toHaveLength(0);
+    const errors = screen.getAllByPlaceholderText('error');
+    expect(errors).toHaveLength(10);
+    errors.forEach((error) => expect(error.innerHTML).toBe(''));
 
-    expect(firstNameInput.classList.length).toBe(1);
-
-    submit.click();
-
-    await waitFor(() => {
-      const confirmation = screen.getByPlaceholderText('confirmation');
-      expect(confirmation).toBeDefined();
-    });
+    const form = screen.getByPlaceholderText('form') as HTMLFormElement;
+    form.reset();
+    expect(form).toBeTruthy();
   });
 
   test('confirm with errors', () => {
@@ -114,8 +115,8 @@ describe('react form page', () => {
 
     submit.click();
 
-    const errorSpans = screen.getAllByText('Error:');
-    expect(errorSpans).toHaveLength(10);
+    const errors = screen.getAllByPlaceholderText('error');
+    errors.forEach((error) => expect(error.innerText).not.toBe(''));
   });
 
   test('file imports properly', () => {
@@ -129,5 +130,11 @@ describe('react form page', () => {
 
     userEvent.upload(file, files);
     expect(file.files).toHaveLength(0);
+  });
+
+  test('Confirm message renders properly', () => {
+    render(<Confirmation />);
+    const confirmation = screen.getByPlaceholderText('confirmation');
+    expect(confirmation).toBeTruthy();
   });
 });

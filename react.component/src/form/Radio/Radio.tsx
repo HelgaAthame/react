@@ -25,6 +25,8 @@ export const Radio = forwardRef<HTMLDivElement, RadioProps>((props, ref) => (
         </label>
       ))}
     </div>
-    <span className="error">{props.err && `Error: choose your ${props.title}`}</span>
+    <span className="error" placeholder="error">
+      {props.err && `Error: choose your ${props.title}`}
+    </span>
   </div>
 ));

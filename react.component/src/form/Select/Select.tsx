@@ -26,6 +26,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
         </option>
       ))}
     </select>
-    <span className="error">{props.err && `Error: choose country`}</span>
+    <span className="error" placeholder="error">
+      {props.err && `Error: choose country`}
+    </span>
   </div>
 ));
