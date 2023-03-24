@@ -1,4 +1,4 @@
-import { ChangeEventHandler, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import './radio.scss';
 
 type RadioProps = {

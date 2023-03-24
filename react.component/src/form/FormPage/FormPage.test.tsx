@@ -54,24 +54,15 @@ describe('react form page', () => {
     const radio = screen.getByLabelText('male');
     expect(radio).toBeTruthy();
     radio.click();
-    const radioWrapper = screen.getByPlaceholderText('radio');
     expect(radio).toBeTruthy();
 
     const submit = screen.getByPlaceholderText('submit');
     expect(submit).toBeTruthy();
 
     submit.click();
-    expect(Array.from(firstNameInput.classList)).not.toContain('err');
-    expect(Array.from(lastNameInput.classList)).not.toContain('err');
-    expect(Array.from(birthdayInput.classList)).not.toContain('err');
-    expect(Array.from(zipCodeInput.classList)).not.toContain('err');
-    expect(Array.from(countryInput.classList)).not.toContain('error');
-    expect(Array.from(cityInput.classList)).not.toContain('err');
-    expect(Array.from(addressInput.classList)).not.toContain('err');
-    expect(Array.from(emailInput.classList)).not.toContain('err');
-    expect(Array.from(phoneInput.classList)).not.toContain('err');
-    expect(Array.from(radioWrapper.classList)).not.toContain('error');
-    console.log(radioWrapper.classList[1]);
+
+    const errorSpans = screen.getAllByText('Error:');
+    expect(errorSpans).toHaveLength(0);
 
     expect(firstNameInput.classList.length).toBe(1);
 
@@ -122,16 +113,9 @@ describe('react form page', () => {
     expect(submit).toBeTruthy();
 
     submit.click();
-    expect(Array.from(firstNameInput.classList)).toContain('err');
-    expect(Array.from(lastNameInput.classList)).toContain('err');
-    expect(Array.from(birthdayInput.classList)).toContain('err');
-    expect(Array.from(zipCodeInput.classList)).toContain('err');
-    expect(Array.from(countryInput.classList)).toContain('error');
-    expect(Array.from(cityInput.classList)).toContain('err');
-    expect(Array.from(addressInput.classList)).toContain('err');
-    expect(Array.from(emailInput.classList)).toContain('err');
-    expect(Array.from(phoneInput.classList)).toContain('err');
-    expect(Array.from(radioWrapper.classList)).toContain('error');
+
+    const errorSpans = screen.getAllByText('Error:');
+    expect(errorSpans).toHaveLength(10);
   });
 
   test('file imports properly', () => {

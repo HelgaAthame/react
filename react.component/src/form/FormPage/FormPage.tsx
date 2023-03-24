@@ -2,7 +2,7 @@ import { Header } from '../../app/Header';
 import { Fieldset } from '../Fieldset';
 import { Form } from '../Form';
 import { Input } from '../Input';
-import { ChangeEvent, Component, createRef, RefObject } from 'react';
+import { Component, createRef, RefObject } from 'react';
 import { Select } from '../Select';
 import { Switcher } from '../Switcher';
 import { File } from '../File';
@@ -135,66 +135,70 @@ export class FormPage extends Component<unknown, FormStateType> {
   }
 
   validateName(el: RefObject<HTMLInputElement>) {
-      const value = el.current?.value;
-      const st = this.state;
-      const fieldName = el.current?.id as keyof typeof st;
-      const isError = (
-        !value ||
-        value.length > 50 ||
-        value.length < 2 ||
-        value.match(/[\d\s!\*\\@#$%\^\|\~\?\&\(\)\-\+\=\,\.]/) ||
-        value[0].toUpperCase() !== value[0]
-      ) ? true : false;
-      this.setState((prev) => ({...prev, [fieldName]: isError}));
-      return isError ? false : true;
+    const value = el.current?.value;
+    const st = this.state;
+    const fieldName = el.current?.id as keyof typeof st;
+    const isError =
+      !value ||
+      value.length > 50 ||
+      value.length < 2 ||
+      value.match(/[\d\s!\*\\@#$%\^\|\~\?\&\(\)\-\+\=\,\.]/) ||
+      value[0].toUpperCase() !== value[0]
+        ? true
+        : false;
+    this.setState((prev) => ({ ...prev, [fieldName]: isError }));
+    return isError ? false : true;
   }
 
   validateCountry() {
     const val = this.country.current?.value;
-    const isError = val ? !countries.includes(val) : true ;
-    this.setState({ country: isError});
+    const isError = val ? !countries.includes(val) : true;
+    this.setState({ country: isError });
     return isError ? false : true;
   }
 
   validateAge() {
     const date = this.age.current?.value;
     const isError = date ? this.dateToAge(date) <= 0 : true;
-    this.setState({ age: isError});
+    this.setState({ age: isError });
     return isError ? false : true;
   }
 
   validateZipCode() {
     const zipCode = this.zipCode.current?.value;
     const isError = !zipCode?.match(/\d{4,10}/);
-    this.setState({ zipCode: isError});
+    this.setState({ zipCode: isError });
     return isError ? false : true;
   }
 
   validateAddress() {
     const address = this.address.current?.value;
-    const isError = address ?
-      !(address.length < 100 &&
-      address.length > 10 &&
-      !address.match(/[\!\*\\@#\$%\^\|\~\?\&\(\)\+\=]/))
+    const isError = address
+      ? !(
+          address.length < 100 &&
+          address.length > 10 &&
+          !address.match(/[\!\*\\@#\$%\^\|\~\?\&\(\)\+\=]/)
+        )
       : true;
-    this.setState({ address: isError});
+    this.setState({ address: isError });
     return isError ? false : true;
   }
 
   validateEmail() {
     const email = this.email.current?.value;
-    const isError = email ? !email.match(
-      /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/i
-      )
+    const isError = email
+      ? !email.match(
+          /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/i
+        )
       : true;
-    this.setState({ email: isError});
+    this.setState({ email: isError });
     return isError ? false : true;
   }
 
   validatePhone() {
     const phone = this.phone.current?.value;
     const isError = phone ? !phone.match(/^\+*\d*\(*[\d-]+\)*([\d-]){5,10}\d$/i) : true;
-    this.setState({ phone: isError});
+    this.setState({ phone: isError });
     return isError ? false : true;
   }
 
@@ -203,7 +207,7 @@ export class FormPage extends Component<unknown, FormStateType> {
     const inputs = gender?.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
     const arr = Array.from(inputs);
     const checked = arr.some((input) => input.checked === true);
-    this.setState({ gender: !checked});
+    this.setState({ gender: !checked });
     return checked ? true : false;
   }
 
@@ -219,8 +223,8 @@ export class FormPage extends Component<unknown, FormStateType> {
 
     if (this.validateForm() && this.age.current?.value) {
       this.setState({
-        confirm: true
-       });
+        confirm: true,
+      });
       setTimeout(() => this.setState({ confirm: false }), 5000);
 
       const newCard = {
@@ -309,13 +313,7 @@ export class FormPage extends Component<unknown, FormStateType> {
               ref={this.lastName}
               err={this.state.lastName}
             />
-            <Input
-              id="age"
-              label="Birthday"
-              type="date"
-              ref={this.age}
-              err={this.state.age}
-            />
+            <Input id="age" label="Birthday" type="date" ref={this.age} err={this.state.age} />
             <Checkbox id="showMyAge" title="Show my age" ref={this.showMyAge} />
             <File id="profilePhoto" ref={this.upload} />
           </Fieldset>
@@ -335,13 +333,7 @@ export class FormPage extends Component<unknown, FormStateType> {
               ref={this.country}
               err={this.state.country}
             />
-            <Input
-              id="city"
-              label="City"
-              type="text"
-              ref={this.city}
-              err={this.state.city}
-            />
+            <Input id="city" label="City" type="text" ref={this.city} err={this.state.city} />
             <Input
               id="address"
               label="Address"
@@ -352,25 +344,13 @@ export class FormPage extends Component<unknown, FormStateType> {
           </Fieldset>
 
           <Fieldset title="Contacts">
-            <Input
-              id="email"
-              label="E-mail"
-              type="text"
-              ref={this.email}
-              err={this.state.email}
-            />
+            <Input id="email" label="E-mail" type="text" ref={this.email} err={this.state.email} />
             <Switcher
               title="Receive notifications by mail"
               id="receiveMail"
               ref={this.receiveMail}
             />
-            <Input
-              id="phone"
-              label="Phone"
-              type="text"
-              ref={this.phone}
-              err={this.state.phone}
-            />
+            <Input id="phone" label="Phone" type="text" ref={this.phone} err={this.state.phone} />
             <Switcher title="Receive sms" id="receiveSMS" ref={this.receiveSMS} />
           </Fieldset>
 

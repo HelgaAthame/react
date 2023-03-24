@@ -1,5 +1,5 @@
 import { countries } from '../countries';
-import { ChangeEventHandler, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import './select.scss';
 
 type SelectProps = {
