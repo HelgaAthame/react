@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 
 import { Card } from './Card';
 import { cards } from '../cards';
@@ -10,8 +10,10 @@ describe('react Card', () => {
     const likes = screen.getAllByPlaceholderText('likes');
     expect(likes).toBeTruthy();
     expect(likes[0].innerHTML.slice(-1)).toBe('3');
-    likes[0].click();
-    expect(likes[0].innerHTML.slice(-1)).toBe('3');
+    act(() => {
+      likes[0].click();
+    });
+    expect(likes[0].innerHTML.slice(-1)).toBe('4');
   });
 
   test('Card inner parts renders properly', () => {
