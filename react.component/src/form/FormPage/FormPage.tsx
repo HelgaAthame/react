@@ -31,7 +31,7 @@ type ProfileCard = {
 };
 
 export const FormPage = () => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, formState: { errors }} = useForm();
 
   const [confirm, setConfirm] = useState<boolean>(false);
   const [cards, setCards] = useState<ProfileCard[]>([]);
@@ -47,11 +47,11 @@ export const FormPage = () => {
   const [countryErr, setCountryErr] = useState<boolean>(false);
   const [genderErr, setGenderErr] = useState<boolean>(false);
 
-  useEffect(() => {
+  /*useEffect(() => {
     reset({
       data: 'test',
     });
-  }, [confirm]);
+  }, [confirm]);*/
 
   const dateToAge = (date: string) => {
     const now = new Date();
@@ -290,11 +290,24 @@ export const FormPage = () => {
                 <input
                   type="text"
                   className="input"
-                  name="firstName"
                   id="firstName"
-                  {...register}
+                  {...register('firstName', {
+                    required: "Required",
+                    minLength: {
+                      value: 2,
+                      message: 'Too short'
+                    },
+                    maxLength: {
+                      value: 20,
+                      message: "Too long"
+                    },
+                    pattern: {
+                      value: /^[A-Z][a-zA-Z]+$/,
+                      message: 'Should consist of letters and start with uppercase letter'
+                    }
+                  })}
                 />
-                <span className="error">{firstNameErr && `Error: First name is invalid`}</span>
+                {errors.firstName && (<span className="error"> {errors.firstName.message}</span>)}
               </label>
             </div>
 
