@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 
 import { App } from './App';
@@ -69,7 +69,9 @@ describe('react app', () => {
   test('update data method works', () => {
     render(<RouterProvider router={router} />);
     const input = screen.getByRole('searchbox') as HTMLInputElement;
-    fireEvent.change(input, { target: { value: 'fakeValue' } });
+    act(() => {
+      fireEvent.change(input, { target: { value: 'fakeValue' } });
+    });
     expect(input.value).toBe('fakeValue');
   });
 });
