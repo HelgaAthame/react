@@ -51,7 +51,6 @@ export const FormPage = () => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-
     const arr: ProfileCard[] = cards;
 
     setConfirm(true);
@@ -152,7 +151,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.firstName && (
-                  <span className="error" placeholder='error'>
+                  <span className="error" placeholder="error">
                     <>{errors.firstName.message}</>
                   </span>
                 )}
@@ -183,7 +182,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.lastName && (
-                  <span className="error" placeholder='error'>
+                  <span className="error" placeholder="error">
                     <>{errors.lastName.message}</>
                   </span>
                 )}
@@ -206,7 +205,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.age && (
-                  <span className="error" placeholder='error'>
+                  <span className="error" placeholder="error">
                     <>{errors.age.message}</>
                   </span>
                 )}
@@ -232,7 +231,7 @@ export const FormPage = () => {
                 accept="image/*"
                 id="profilePhoto"
                 className="input__file"
-                placeholder='file_input'
+                placeholder="file_input"
               />
               <label htmlFor="profilePhoto" className="input__label">
                 <span className="input__file-icon-wrapper">
@@ -274,7 +273,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.zipCode && (
-                  <span className="error" placeholder='error'>
+                  <span className="error" placeholder="error">
                     <>{errors.zipCode.message}</>
                   </span>
                 )}
@@ -302,7 +301,7 @@ export const FormPage = () => {
                 ))}
               </select>
               {errors.country && (
-                <span className="error" placeholder='error'>
+                <span className="error" placeholder="error">
                   <>{errors.country.message}</>
                 </span>
               )}
@@ -333,7 +332,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.city && (
-                  <span className="error" placeholder='error'>
+                  <span className="error" placeholder="error">
                     <>{errors.city.message}</>
                   </span>
                 )}
@@ -364,7 +363,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.address && (
-                  <span className="error" placeholder='error'>
+                  <span className="error" placeholder="error">
                     <>{errors.address.message}</>
                   </span>
                 )}
@@ -394,7 +393,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.email && (
-                  <span className="error" placeholder='error'>
+                  <span className="error" placeholder="error">
                     <>{errors.email.message}</>
                   </span>
                 )}
@@ -405,6 +404,7 @@ export const FormPage = () => {
               Receive notifications by mail
               <input
                 type="checkbox"
+                placeholder="receiveMail"
                 id="receiveMail"
                 className="switcher-input"
                 {...register('receiveMail')}
@@ -428,7 +428,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.phone && (
-                  <span className="error" placeholder='error'>
+                  <span className="error" placeholder="error">
                     <>{errors.phone.message}</>
                   </span>
                 )}
@@ -439,6 +439,7 @@ export const FormPage = () => {
               Receive sms
               <input
                 type="checkbox"
+                placeholder="receiveSMS"
                 id="receiveSMS"
                 className="switcher-input"
                 {...register('receiveSMS')}
@@ -513,7 +514,7 @@ export const FormPage = () => {
                 ))}
               </div>
               {errors.gender && (
-                <span className="error" placeholder='error'>
+                <span className="error" placeholder="error">
                   <>{errors.gender.message}</>
                 </span>
               )}

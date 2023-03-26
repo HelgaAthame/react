@@ -21,7 +21,7 @@ describe('react form page', () => {
     expect(formPage).toBeDefined();
   });
 
-  test('confirm doing well', () => {
+  test('confirm doing well', async () => {
     render(<RouterProvider router={router} />);
 
     const firstNameInput = screen.getByLabelText('First Name') as HTMLInputElement;
@@ -63,17 +63,26 @@ describe('react form page', () => {
     const submit = screen.getByPlaceholderText('submit');
     expect(submit).toBeTruthy();
 
+    const file = screen.getByPlaceholderText('file_input') as HTMLInputElement;
+    expect(file).toBeTruthy();
+    const file1 = new File(['hello'], 'hello.png', { type: 'image/png' });
+    await waitFor(() => expect(file.files).toHaveLength(0));
+    await act(async () => await userEvent.upload(file, file1));
+    await waitFor(() => expect(file.files).toHaveLength(1));
+
     act(() => submit.click());
 
-    const card = screen.getByPlaceholderText('card') as HTMLDivElement;
-    expect(card).toBeTruthy();
+    await waitFor(() => {
+      const confirm = screen.getByPlaceholderText('confirmation');
+      expect(confirm).toBeTruthy();
+    });
 
     const form = screen.getByPlaceholderText('form') as HTMLFormElement;
     act(() => form.reset());
     expect(form).toBeTruthy();
   });
 
-  test('confirm with errors', () => {
+  test('confirm with errors', async () => {
     render(<RouterProvider router={router} />);
 
     const firstNameInput = screen.getByLabelText('First Name') as HTMLInputElement;
@@ -118,21 +127,44 @@ describe('react form page', () => {
 
     act(() => submit.click());
 
-    const errors = screen.getAllByPlaceholderText('error');
-    expect(errors).toHaveLength(10);
-    errors.forEach((error) => expect(error.innerText).not.toBe(''));
-
+    await waitFor(() => {
+      const errors = screen.getAllByPlaceholderText('error');
+      expect(errors).toHaveLength(10);
+      errors.forEach((error) => expect(error.innerText).not.toBe(''));
+    });
   });
 
-  test('file imports properly', async () => {
+  test('checkboxes works', async () => {
     render(<RouterProvider router={router} />);
-    const file = screen.getByPlaceholderText('file_input') as HTMLInputElement;
-    expect(file).toBeTruthy();
-    const files = [
-      new File(['hello'], 'hello.png', { type: 'image/png' }),
-      new File(['there'], 'there.png', { type: 'image/png' }),
-    ];
-    await act(async () => await userEvent.upload(file, files));
-    expect(file.files).toHaveLength(1);
+
+    const showMyAge = screen.getByLabelText('Show my age') as HTMLInputElement;
+    expect(showMyAge).toBeTruthy();
+    act(() => showMyAge.click());
+    await waitFor(() => expect(showMyAge.checked).toBe(true));
+
+    const receiveMail = screen.getByPlaceholderText('receiveMail') as HTMLInputElement;
+    expect(receiveMail).toBeTruthy();
+    act(() => receiveMail.click());
+    await waitFor(() => expect(receiveMail.checked).toBe(true));
+
+    const receiveSMS = screen.getByPlaceholderText('receiveSMS') as HTMLInputElement;
+    expect(receiveSMS).toBeTruthy();
+    act(() => receiveSMS.click());
+    await waitFor(() => expect(receiveSMS.checked).toBe(true));
+
+    const firstCheckbox = screen.getByLabelText('I like this website') as HTMLInputElement;
+    expect(firstCheckbox).toBeTruthy();
+    act(() => firstCheckbox.click());
+    await waitFor(() => expect(firstCheckbox.checked).toBe(true));
+
+    const secondCheckbox = screen.getByLabelText('I enjoy filling out forms') as HTMLInputElement;
+    expect(secondCheckbox).toBeTruthy();
+    act(() => secondCheckbox.click());
+    await waitFor(() => expect(secondCheckbox.checked).toBe(true));
+
+    const thirdCheckbox = screen.getByLabelText('I like reading good books') as HTMLInputElement;
+    expect(thirdCheckbox).toBeTruthy();
+    act(() => thirdCheckbox.click());
+    await waitFor(() => expect(thirdCheckbox.checked).toBe(true));
   });
 });
