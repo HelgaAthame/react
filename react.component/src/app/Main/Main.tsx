@@ -1,16 +1,16 @@
 import { AppContext } from '../../context';
 import { useContext } from 'react';
+import './main.scss'; //<Card key={i.toString()} {...doc} />
+import { BookType } from '../types/';
 import { Card } from '../Card';
-import { CardT } from '../cards';
-import './main.scss';
 
 export const Main = () => {
-  const { newCards } = useContext(AppContext);
+  const { docs } = useContext(AppContext);
 
   return (
     <div className="main">
-      {newCards.map((card: CardT, i: number) => (
-        <Card key={i.toString()} {...card} />
+      {docs.map((doc: BookType) => (
+        <Card key={doc._id} {...doc} />
       ))}
     </div>
   );
