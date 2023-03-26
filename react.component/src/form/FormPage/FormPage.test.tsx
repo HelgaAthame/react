@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { FormPage } from './FormPage';
@@ -21,117 +21,106 @@ describe('react form page', () => {
     expect(formPage).toBeDefined();
   });
 
-  test('confirm doing well', async () => {
+  test('confirm doing well', () => {
     render(<RouterProvider router={router} />);
+
     const firstNameInput = screen.getByLabelText('First Name') as HTMLInputElement;
-    expect(firstNameInput).toBeTruthy();
-    fireEvent.change(firstNameInput, { target: { value: 'Olga' } });
-    expect(firstNameInput.value).toBe('Olga');
     const lastNameInput = screen.getByLabelText('Last Name');
-    expect(lastNameInput).toBeTruthy();
-    fireEvent.change(lastNameInput, { target: { value: 'fakelastname' } });
     const birthdayInput = screen.getByLabelText('Birthday');
-    expect(birthdayInput).toBeTruthy();
-    fireEvent.change(birthdayInput, { target: { value: '2008-10-12' } });
     const zipCodeInput = screen.getByLabelText('Zip-code');
-    expect(zipCodeInput).toBeTruthy();
-    fireEvent.change(zipCodeInput, { target: { value: '1111111' } });
     const countryInput = screen.getByPlaceholderText('country');
-    expect(countryInput).toBeTruthy();
-    fireEvent.change(countryInput, { target: { value: 'Belarus' } });
     const cityInput = screen.getByLabelText('City');
-    expect(cityInput).toBeTruthy();
-    fireEvent.change(cityInput, { target: { value: 'fakeCity' } });
     const addressInput = screen.getByLabelText('Address');
-    expect(addressInput).toBeTruthy();
-    fireEvent.change(addressInput, { target: { value: 'fakeAddressFakeAddress' } });
     const emailInput = screen.getByLabelText('E-mail');
-    expect(emailInput).toBeTruthy();
-    fireEvent.change(emailInput, { target: { value: 'fakemail@gmail.com' } });
     const phoneInput = screen.getByLabelText('Phone');
-    expect(phoneInput).toBeTruthy();
-    fireEvent.change(phoneInput, { target: { value: '+37529111-11-11' } });
     const radio = screen.getByLabelText('male');
-    expect(radio).toBeTruthy();
-    radio.click();
-    const radioWrapper = screen.getByPlaceholderText('radio');
+
+    act(() => {
+      fireEvent.change(firstNameInput, { target: { value: 'Olga' } });
+      fireEvent.change(lastNameInput, { target: { value: 'Fakelastname' } });
+      fireEvent.change(birthdayInput, { target: { value: '2008-10-12' } });
+      fireEvent.change(zipCodeInput, { target: { value: '1111111' } });
+      fireEvent.change(countryInput, { target: { value: 'Belarus' } });
+      fireEvent.change(cityInput, { target: { value: 'FakeCity' } });
+      fireEvent.change(addressInput, { target: { value: 'fakeAddressFakeAddress' } });
+      fireEvent.change(emailInput, { target: { value: 'fakemail@gmail.com' } });
+      fireEvent.change(phoneInput, { target: { value: '+37529111-11-11' } });
+      radio.click();
+    });
+
+    expect(firstNameInput).toBeTruthy();
+    expect(firstNameInput.value).toBe('Olga');
+    expect(lastNameInput).toBeTruthy();
+    expect(birthdayInput).toBeTruthy();
+    expect(zipCodeInput).toBeTruthy();
+    expect(countryInput).toBeTruthy();
+    expect(cityInput).toBeTruthy();
+    expect(addressInput).toBeTruthy();
+    expect(emailInput).toBeTruthy();
+    expect(phoneInput).toBeTruthy();
     expect(radio).toBeTruthy();
 
     const submit = screen.getByPlaceholderText('submit');
     expect(submit).toBeTruthy();
 
-    submit.click();
-    expect(Array.from(firstNameInput.classList)).not.toContain('err');
-    expect(Array.from(lastNameInput.classList)).not.toContain('err');
-    expect(Array.from(birthdayInput.classList)).not.toContain('err');
-    expect(Array.from(zipCodeInput.classList)).not.toContain('err');
-    expect(Array.from(countryInput.classList)).not.toContain('error');
-    expect(Array.from(cityInput.classList)).not.toContain('err');
-    expect(Array.from(addressInput.classList)).not.toContain('err');
-    expect(Array.from(emailInput.classList)).not.toContain('err');
-    expect(Array.from(phoneInput.classList)).not.toContain('err');
-    expect(Array.from(radioWrapper.classList)).not.toContain('error');
-    console.log(radioWrapper.classList[1]);
+    act(() => submit.click());
 
-    expect(firstNameInput.classList.length).toBe(1);
+    const errors = screen.getAllByPlaceholderText('error');
+    expect(errors).toHaveLength(10);
+    errors.forEach((error) => expect(error.innerHTML).toBe(''));
 
-    submit.click();
-
-    await waitFor(() => {
-      const confirmation = screen.getByPlaceholderText('confirmation');
-      expect(confirmation).toBeDefined();
-    });
+    const form = screen.getByPlaceholderText('form') as HTMLFormElement;
+    act(() => form.reset());
+    expect(form).toBeTruthy();
   });
 
   test('confirm with errors', () => {
     render(<RouterProvider router={router} />);
-    const firstNameInput = screen.getByLabelText('First Name') as HTMLInputElement;
-    expect(firstNameInput).toBeTruthy();
-    fireEvent.change(firstNameInput, { target: { value: '7777777777' } });
-    expect(firstNameInput.value).toBe('7777777777');
-    const lastNameInput = screen.getByLabelText('Last Name');
-    expect(lastNameInput).toBeTruthy();
-    fireEvent.change(lastNameInput, { target: { value: '11111' } });
-    const birthdayInput = screen.getByLabelText('Birthday');
-    expect(birthdayInput).toBeTruthy();
-    fireEvent.change(birthdayInput, { target: { value: 'kuku' } });
-    const zipCodeInput = screen.getByLabelText('Zip-code');
-    expect(zipCodeInput).toBeTruthy();
-    fireEvent.change(zipCodeInput, { target: { value: '1' } });
-    const countryInput = screen.getByPlaceholderText('country');
-    expect(countryInput).toBeTruthy();
-    fireEvent.change(countryInput, { target: { value: 'fakeCountry' } });
-    const cityInput = screen.getByLabelText('City');
-    expect(cityInput).toBeTruthy();
-    fireEvent.change(cityInput, { target: { value: '0' } });
-    const addressInput = screen.getByLabelText('Address');
-    expect(addressInput).toBeTruthy();
-    fireEvent.change(addressInput, { target: { value: 'fake' } });
-    const emailInput = screen.getByLabelText('E-mail');
-    expect(emailInput).toBeTruthy();
-    fireEvent.change(emailInput, { target: { value: 'fakemail' } });
-    const phoneInput = screen.getByLabelText('Phone');
-    expect(phoneInput).toBeTruthy();
-    fireEvent.change(phoneInput, { target: { value: 'failPhone' } });
-    const radio = screen.getByLabelText('male');
-    expect(radio).toBeTruthy();
-    const radioWrapper = screen.getByPlaceholderText('radio');
-    expect(radioWrapper).toBeTruthy();
 
+    const firstNameInput = screen.getByLabelText('First Name') as HTMLInputElement;
+    const lastNameInput = screen.getByLabelText('Last Name');
+    const birthdayInput = screen.getByLabelText('Birthday');
+    const zipCodeInput = screen.getByLabelText('Zip-code');
+    const countryInput = screen.getByPlaceholderText('country');
+    const cityInput = screen.getByLabelText('City');
+    const addressInput = screen.getByLabelText('Address');
+    const emailInput = screen.getByLabelText('E-mail');
+    const phoneInput = screen.getByLabelText('Phone');
+    const radio = screen.getByLabelText('male');
+    const radioWrapper = screen.getByPlaceholderText('radio');
     const submit = screen.getByPlaceholderText('submit');
+
+    expect(firstNameInput).toBeTruthy();
+    expect(lastNameInput).toBeTruthy();
+    expect(birthdayInput).toBeTruthy();
+    expect(zipCodeInput).toBeTruthy();
+    expect(countryInput).toBeTruthy();
+    expect(cityInput).toBeTruthy();
+    expect(addressInput).toBeTruthy();
+    expect(emailInput).toBeTruthy();
+    expect(phoneInput).toBeTruthy();
+    expect(radio).toBeTruthy();
+    expect(radioWrapper).toBeTruthy();
     expect(submit).toBeTruthy();
 
-    submit.click();
-    expect(Array.from(firstNameInput.classList)).toContain('err');
-    expect(Array.from(lastNameInput.classList)).toContain('err');
-    expect(Array.from(birthdayInput.classList)).toContain('err');
-    expect(Array.from(zipCodeInput.classList)).toContain('err');
-    expect(Array.from(countryInput.classList)).toContain('error');
-    expect(Array.from(cityInput.classList)).toContain('err');
-    expect(Array.from(addressInput.classList)).toContain('err');
-    expect(Array.from(emailInput.classList)).toContain('err');
-    expect(Array.from(phoneInput.classList)).toContain('err');
-    expect(Array.from(radioWrapper.classList)).toContain('error');
+    act(() => {
+      fireEvent.change(firstNameInput, { target: { value: '7777777777' } });
+      fireEvent.change(lastNameInput, { target: { value: '11111' } });
+      fireEvent.change(birthdayInput, { target: { value: 'kuku' } });
+      fireEvent.change(zipCodeInput, { target: { value: '1' } });
+      fireEvent.change(countryInput, { target: { value: 'fakeCountry' } });
+      fireEvent.change(cityInput, { target: { value: '0' } });
+      fireEvent.change(addressInput, { target: { value: 'fake' } });
+      fireEvent.change(emailInput, { target: { value: 'fakemail' } });
+      fireEvent.change(phoneInput, { target: { value: 'failPhone' } });
+    });
+
+    expect(firstNameInput.value).toBe('7777777777');
+
+    act(() => submit.click());
+
+    const errors = screen.getAllByPlaceholderText('error');
+    errors.forEach((error) => expect(error.innerText).not.toBe(''));
   });
 
   test('file imports properly', () => {
@@ -143,7 +132,7 @@ describe('react form page', () => {
       new File(['there'], 'there.png', { type: 'image/png' }),
     ];
 
-    userEvent.upload(file, files);
+    act(() => userEvent.upload(file, files));
     expect(file.files).toHaveLength(0);
   });
 });

@@ -1,7 +1,5 @@
 import { Header } from '../../app/Header';
 import {
-  FormEvent,
-  useEffect,
   useState,
 } from 'react';
 import './formPage.scss';
@@ -36,22 +34,16 @@ export const FormPage = () => {
   const [confirm, setConfirm] = useState<boolean>(false);
   const [cards, setCards] = useState<ProfileCard[]>([]);
 
-  const [firstNameErr, setFirstNameErr] = useState<boolean>(false);
-  const [lastNameErr, setLastNameErr] = useState<boolean>(false);
-  const [ageErr, setAgeErr] = useState<boolean>(false);
+  //const [firstNameErr, setFirstNameErr] = useState<boolean>(false);
+  // [lastNameErr, setLastNameErr] = useState<boolean>(false);
+  //const [ageErr, setAgeErr] = useState<boolean>(false);
   const [zipCodeErr, setZipCodeErr] = useState<boolean>(false);
-  const [cityErr, setCityErr] = useState<boolean>(false);
+  //const [cityErr, setCityErr] = useState<boolean>(false);
   const [addressErr, setAddressErr] = useState<boolean>(false);
   const [emailErr, setEmailErr] = useState<boolean>(false);
   const [phoneErr, setPhoneErr] = useState<boolean>(false);
-  const [countryErr, setCountryErr] = useState<boolean>(false);
+  //const [countryErr, setCountryErr] = useState<boolean>(false);
   const [genderErr, setGenderErr] = useState<boolean>(false);
-
-  /*useEffect(() => {
-    reset({
-      data: 'test',
-    });
-  }, [confirm]);*/
 
   const dateToAge = (date: string) => {
     const now = new Date();
@@ -72,12 +64,12 @@ export const FormPage = () => {
     const lastName = document.querySelector('#lastName') as HTMLInputElement;
     const city = document.querySelector('#city') as HTMLInputElement;
 
-    arr.push(validateName(firstName));
-    arr.push(validateName(lastName));
-    arr.push(validateAge());
+    //.push(validateName(firstName));
+    //arr.push(validateName(lastName));
+    //arr.push(validateAge());
     arr.push(validateZipCode());
-    arr.push(validateCountry());
-    arr.push(validateName(city));
+    //arr.push(validateCountry());
+    //arr.push(validateName(city));
     arr.push(validateAddress());
     arr.push(validateEmail());
     arr.push(validatePhone());
@@ -86,7 +78,7 @@ export const FormPage = () => {
     return !arr.includes(false);
   };
 
-  const validateName = (el: HTMLInputElement) => {
+  /*const validateName = (el: HTMLInputElement) => {
     const value = el.value;
     const isError =
       !value ||
@@ -108,23 +100,23 @@ export const FormPage = () => {
         break;
     }
     return isError ? false : true;
-  };
+  };*/
 
-  const validateCountry = () => {
+  /*const validateCountry = () => {
     const country = document.querySelector('#country') as HTMLSelectElement;
     const val = country.value;
     const isError = val ? !countries.includes(val) : true;
     setCountryErr(isError);
     return isError ? false : true;
-  };
+  };*/
 
-  const validateAge = () => {
+  /*const validateAge = () => {
     const age = document.querySelector('#age') as HTMLInputElement;
     const date = age.value;
     const isError = date ? dateToAge(date) <= 0 : true;
     setAgeErr(isError);
     return isError ? false : true;
-  };
+  };*/
 
   const validateZipCode = () => {
     const zipCode = document.querySelector('#zipCode') as HTMLInputElement;
@@ -307,23 +299,51 @@ export const FormPage = () => {
                     }
                   })}
                 />
-                {errors.firstName && (<span className="error"> {errors.firstName.message}</span>)}
+                {errors.firstName && (<span className="error"><>{errors.firstName.message}</></span>)}
               </label>
             </div>
 
             <div className="input-wrapper">
               <label htmlFor="lastName" className="label">
                 Last Name
-                <input type="text" className="input" name="lastName" id="lastName" {...register} />
-                <span className="error">{lastNameErr && `Error: Last name is invalid`}</span>
+                <input
+                  type="text"
+                  className="input"
+                  id="lastName"
+                  {...register('lastName', {
+                    required: "Required",
+                    minLength: {
+                      value: 2,
+                      message: 'Too short'
+                    },
+                    maxLength: {
+                      value: 20,
+                      message: "Too long"
+                    },
+                    pattern: {
+                      value: /^[A-Z][a-zA-Z]+$/,
+                      message: 'Should consist of letters and start with uppercase letter'
+                    }
+                  })}
+                />
+                {errors.lastName && (<span className="error"><>{errors.lastName.message}</></span>)}
               </label>
             </div>
 
             <div className="input-wrapper">
               <label htmlFor="age" className="label">
                 Birthday
-                <input type="date" className="input" name="age" id="age" {...register} />
-                <span className="error">{ageErr && `Error: Birthday is invalid`}</span>
+                <input
+                  type="date"
+                  className="input"
+                  id="age"
+                  {...register('age', {
+                    required: "Required",
+                    validate: {
+                      sixPlus: date => dateToAge(date) >= 6 || "Only 6+ users"
+                    }
+                })} />
+                {errors.age && (<span className="error"><>{errors.age.message}</></span>)}
               </label>
             </div>
 
@@ -347,11 +367,12 @@ export const FormPage = () => {
                 accept="image/*"
                 id="profilePhoto"
                 className="input__file"
-                {...register}
               />
               <label htmlFor="profilePhoto" className="input__label">
                 <span className="input__file-icon-wrapper">
+                  <>
                   <Upload />
+                  </>
                 </span>
                 <span className="input__file-button-text">UPLOAD PROFILE PHOTO</span>
               </label>
@@ -366,8 +387,26 @@ export const FormPage = () => {
             <div className="input-wrapper">
               <label htmlFor="zipCode" className="label">
                 Zip-code
-                <input type="text" className="input" name="zipCode" id="zipCode" {...register} />
-                <span className="error">{zipCodeErr && `Error: Zip-code is invalid`}</span>
+                <input
+                  type="text"
+                  className="input"
+                  id="zipCode"
+                  {...register("zipCode", {
+                    required: "Required",
+                    minLength: {
+                      value: 4,
+                      message: "Too short"
+                    },
+                    maxLength: {
+                      value: 10,
+                      message: "Too long"
+                    },
+                    pattern: {
+                      value: /^\d+$/,
+                      message: 'Numbers only'
+                    }
+                  })} />
+                {errors.zipCode && (<span className="error"><>{errors.zipCode.message}</></span>)}
               </label>
             </div>
 
@@ -375,11 +414,15 @@ export const FormPage = () => {
               Country
               <select
                 placeholder="country"
-                name="country"
                 id="country"
                 multiple={false}
                 className="select"
-                {...register}
+                {...register('country', {
+                  validate: {
+                    country: v => countries.includes(v) || 'Required',
+                  }
+                }
+              )}
               >
                 <option className="option" value=""></option>
                 {countries.sort().map((country, index) => (
@@ -388,14 +431,33 @@ export const FormPage = () => {
                   </option>
                 ))}
               </select>
-              <span className="error">{countryErr && `Error: You are to choose a country`}</span>
+              {errors.country && (<span className="error"><>{errors.country.message}</></span>)}
             </div>
 
             <div className="input-wrapper">
               <label htmlFor="city" className="label">
                 City
-                <input type="text" className="input" name="city" id="city" {...register} />
-                <span className="error">{cityErr && `Error: City is invalid`}</span>
+                <input
+                  type="text"
+                  className="input"
+                  id="city"
+                  {...register('city', {
+                    required: "Required",
+                    minLength: {
+                      value: 2,
+                      message: 'Too short'
+                    },
+                    maxLength: {
+                      value: 20,
+                      message: "Too long"
+                    },
+                    pattern: {
+                      value: /^[A-Z][a-zA-Z\s]+[a-z]$/,
+                      message: 'Should consist of letters and spaces and start with uppercase letter'
+                    }
+                  })}
+                />
+                {errors.city && (<span className="error"><>{errors.city.message}</></span>)}
               </label>
             </div>
 
