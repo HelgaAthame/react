@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { FormPage } from './FormPage';
@@ -42,7 +42,7 @@ describe('react form page', () => {
       fireEvent.change(zipCodeInput, { target: { value: '1111111' } });
       fireEvent.change(countryInput, { target: { value: 'Belarus' } });
       fireEvent.change(cityInput, { target: { value: 'FakeCity' } });
-      fireEvent.change(addressInput, { target: { value: 'fakeAddressFakeAddress' } });
+      fireEvent.change(addressInput, { target: { value: 'Fake address' } });
       fireEvent.change(emailInput, { target: { value: 'fakemail@gmail.com' } });
       fireEvent.change(phoneInput, { target: { value: '+37529111-11-11' } });
       radio.click();
@@ -65,9 +65,8 @@ describe('react form page', () => {
 
     act(() => submit.click());
 
-    const errors = screen.getAllByPlaceholderText('error');
-    expect(errors).toHaveLength(10);
-    errors.forEach((error) => expect(error.innerHTML).toBe(''));
+    const card = screen.getByPlaceholderText('card') as HTMLDivElement;
+    expect(card).toBeTruthy();
 
     const form = screen.getByPlaceholderText('form') as HTMLFormElement;
     act(() => form.reset());
@@ -120,19 +119,20 @@ describe('react form page', () => {
     act(() => submit.click());
 
     const errors = screen.getAllByPlaceholderText('error');
+    expect(errors).toHaveLength(10);
     errors.forEach((error) => expect(error.innerText).not.toBe(''));
+
   });
 
-  test('file imports properly', () => {
+  test('file imports properly', async () => {
     render(<RouterProvider router={router} />);
-    const file = screen.getByLabelText('UPLOAD PROFILE PHOTO') as HTMLInputElement;
+    const file = screen.getByPlaceholderText('file_input') as HTMLInputElement;
     expect(file).toBeTruthy();
     const files = [
       new File(['hello'], 'hello.png', { type: 'image/png' }),
       new File(['there'], 'there.png', { type: 'image/png' }),
     ];
-
-    act(() => userEvent.upload(file, files));
-    expect(file.files).toHaveLength(0);
+    await act(async () => await userEvent.upload(file, files));
+    expect(file.files).toHaveLength(1);
   });
 });

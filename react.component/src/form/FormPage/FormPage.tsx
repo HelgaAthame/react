@@ -1,7 +1,5 @@
 import { Header } from '../../app/Header';
-import {
-  useState,
-} from 'react';
+import { useState } from 'react';
 import './formPage.scss';
 import { countries } from '../countries';
 import { Confirmation } from '../Confirmation';
@@ -29,7 +27,11 @@ type ProfileCard = {
 };
 
 export const FormPage = () => {
-  const { register, handleSubmit, formState: { errors }} = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     criteriaMode: 'all',
   });
 
@@ -49,7 +51,6 @@ export const FormPage = () => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
 
     const arr: ProfileCard[] = cards;
 
@@ -58,27 +59,27 @@ export const FormPage = () => {
     setTimeout(() => setConfirm(false), 5000);
 
     const newCard = {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        age: dateToAge(data.age),
-        showMyAge: data.showMyAge,
-        upload: '',
-        zipCode: data.zipCode,
-        country: data.country,
-        city: data.city,
-        address: data.address,
-        email: data.email,
-        receiveMail: data.receiveMail,
-        phone: data.phone,
-        receiveSMS: data.receiveSMS,
-        firstCheckbox: data.firstCheckbox,
-        secondCheckbox: data.secondCheckbox,
-        thirdCheckbox: data.thirdCheckbox,
-        gender: data.gender,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      age: dateToAge(data.age),
+      showMyAge: data.showMyAge,
+      upload: '',
+      zipCode: data.zipCode,
+      country: data.country,
+      city: data.city,
+      address: data.address,
+      email: data.email,
+      receiveMail: data.receiveMail,
+      phone: data.phone,
+      receiveSMS: data.receiveSMS,
+      firstCheckbox: data.firstCheckbox,
+      secondCheckbox: data.secondCheckbox,
+      thirdCheckbox: data.thirdCheckbox,
+      gender: data.gender,
     };
 
     const promise = fileToUrl.call(this);
-      promise.then((result) => {
+    promise.then((result) => {
       newCard.upload = result;
       arr.push(newCard);
       setCards(arr);
@@ -107,11 +108,9 @@ export const FormPage = () => {
     const files = input.files;
     let fileURL =
       'https://avatars.mds.yandex.net/i?id=3a61f30a8dda7b409f22c83055b5800984f9830c-8242815-images-thumbs&n=13';
-
     if (files && files.length > 0) {
       const pattern = /image-*/;
       const file = Array.from(files).at(-1) as File;
-
       if (file.type.match(pattern)) {
         fileURL = await readFileAsDataURL(file);
       }
@@ -137,22 +136,26 @@ export const FormPage = () => {
                   className="input"
                   id="firstName"
                   {...register('firstName', {
-                    required: "Required",
+                    required: 'Required',
                     minLength: {
                       value: 2,
-                      message: 'Too short'
+                      message: 'Too short',
                     },
                     maxLength: {
                       value: 20,
-                      message: "Too long"
+                      message: 'Too long',
                     },
                     pattern: {
                       value: /^[A-Z][a-zA-Z]+$/,
-                      message: 'Should consist of letters and start with uppercase letter'
-                    }
+                      message: 'Should consist of letters and start with uppercase letter',
+                    },
                   })}
                 />
-                {errors.firstName && (<span className="error"><>{errors.firstName.message}</></span>)}
+                {errors.firstName && (
+                  <span className="error" placeholder='error'>
+                    <>{errors.firstName.message}</>
+                  </span>
+                )}
               </label>
             </div>
 
@@ -164,22 +167,26 @@ export const FormPage = () => {
                   className="input"
                   id="lastName"
                   {...register('lastName', {
-                    required: "Required",
+                    required: 'Required',
                     minLength: {
                       value: 2,
-                      message: 'Too short'
+                      message: 'Too short',
                     },
                     maxLength: {
                       value: 20,
-                      message: "Too long"
+                      message: 'Too long',
                     },
                     pattern: {
                       value: /^[A-Z][a-zA-Z]+$/,
-                      message: 'Should consist of letters and start with uppercase letter'
-                    }
+                      message: 'Should consist of letters and start with uppercase letter',
+                    },
                   })}
                 />
-                {errors.lastName && (<span className="error"><>{errors.lastName.message}</></span>)}
+                {errors.lastName && (
+                  <span className="error" placeholder='error'>
+                    <>{errors.lastName.message}</>
+                  </span>
+                )}
               </label>
             </div>
 
@@ -191,13 +198,18 @@ export const FormPage = () => {
                   className="input"
                   id="age"
                   {...register('age', {
-                    required: "Required",
+                    required: 'Required',
                     valueAsDate: true,
                     validate: {
-                      sixPlus: date => dateToAge(date) >= 6 || "Only 6+ users"
-                    }
-                })} />
-                {errors.age && (<span className="error"><>{errors.age.message}</></span>)}
+                      sixPlus: (date) => dateToAge(date) >= 6 || 'Only 6+ users',
+                    },
+                  })}
+                />
+                {errors.age && (
+                  <span className="error" placeholder='error'>
+                    <>{errors.age.message}</>
+                  </span>
+                )}
               </label>
             </div>
 
@@ -220,11 +232,12 @@ export const FormPage = () => {
                 accept="image/*"
                 id="profilePhoto"
                 className="input__file"
+                placeholder='file_input'
               />
               <label htmlFor="profilePhoto" className="input__label">
                 <span className="input__file-icon-wrapper">
                   <>
-                  <Upload />
+                    <Upload />
                   </>
                 </span>
                 <span className="input__file-button-text">UPLOAD PROFILE PHOTO</span>
@@ -244,22 +257,27 @@ export const FormPage = () => {
                   type="text"
                   className="input"
                   id="zipCode"
-                  {...register("zipCode", {
-                    required: "Required",
+                  {...register('zipCode', {
+                    required: 'Required',
                     minLength: {
                       value: 4,
-                      message: "Too short"
+                      message: 'Too short',
                     },
                     maxLength: {
                       value: 10,
-                      message: "Too long"
+                      message: 'Too long',
                     },
                     pattern: {
                       value: /^\d+$/,
-                      message: 'Numbers only'
-                    }
-                  })} />
-                {errors.zipCode && (<span className="error"><>{errors.zipCode.message}</></span>)}
+                      message: 'Numbers only',
+                    },
+                  })}
+                />
+                {errors.zipCode && (
+                  <span className="error" placeholder='error'>
+                    <>{errors.zipCode.message}</>
+                  </span>
+                )}
               </label>
             </div>
 
@@ -272,10 +290,9 @@ export const FormPage = () => {
                 className="select"
                 {...register('country', {
                   validate: {
-                    country: v => countries.includes(v) || 'Required',
-                  }
-                }
-              )}
+                    country: (v) => countries.includes(v) || 'Required',
+                  },
+                })}
               >
                 <option className="option" value=""></option>
                 {countries.sort().map((country, index) => (
@@ -284,7 +301,11 @@ export const FormPage = () => {
                   </option>
                 ))}
               </select>
-              {errors.country && (<span className="error"><>{errors.country.message}</></span>)}
+              {errors.country && (
+                <span className="error" placeholder='error'>
+                  <>{errors.country.message}</>
+                </span>
+              )}
             </div>
 
             <div className="input-wrapper">
@@ -295,22 +316,27 @@ export const FormPage = () => {
                   className="input"
                   id="city"
                   {...register('city', {
-                    required: "Required",
+                    required: 'Required',
                     minLength: {
                       value: 2,
-                      message: 'Too short'
+                      message: 'Too short',
                     },
                     maxLength: {
                       value: 20,
-                      message: "Too long"
+                      message: 'Too long',
                     },
                     pattern: {
                       value: /^[A-Z][a-zA-Z\s]+[a-z]$/,
-                      message: 'Should consist of letters and spaces and start with uppercase letter'
-                    }
+                      message:
+                        'Should consist of letters and spaces and start with uppercase letter',
+                    },
                   })}
                 />
-                {errors.city && (<span className="error"><>{errors.city.message}</></span>)}
+                {errors.city && (
+                  <span className="error" placeholder='error'>
+                    <>{errors.city.message}</>
+                  </span>
+                )}
               </label>
             </div>
 
@@ -320,22 +346,28 @@ export const FormPage = () => {
                 <input
                   type="text"
                   className="input"
-                  id="address" {...register('address', {
-                    required: "Required",
+                  id="address"
+                  {...register('address', {
+                    required: 'Required',
                     minLength: {
                       value: 10,
-                      message: "Too short",
+                      message: 'Too short',
                     },
                     maxLength: {
                       value: 100,
-                      message: "Too long",
+                      message: 'Too long',
                     },
                     pattern: {
                       value: /^[A-Z\d][a-zA-Z\s\d\,\']+[a-z\d]$/,
-                      message: 'Invalid address'
-                    }
-                  })} />
-                {errors.address && (<span className="error"><>{errors.address.message}</></span>)}
+                      message: 'Invalid address',
+                    },
+                  })}
+                />
+                {errors.address && (
+                  <span className="error" placeholder='error'>
+                    <>{errors.address.message}</>
+                  </span>
+                )}
               </label>
             </div>
           </fieldset>
@@ -353,14 +385,19 @@ export const FormPage = () => {
                   className="input"
                   id="email"
                   {...register('email', {
-                    required: "Required",
+                    required: 'Required',
                     pattern: {
-                      value: /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/i,
-                      message: 'Invalid e-mail'
-                    }
+                      value:
+                        /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/i,
+                      message: 'Invalid e-mail',
+                    },
                   })}
                 />
-                {errors.email && (<span className="error"><>{errors.email.message}</></span>)}
+                {errors.email && (
+                  <span className="error" placeholder='error'>
+                    <>{errors.email.message}</>
+                  </span>
+                )}
               </label>
             </div>
 
@@ -386,11 +423,15 @@ export const FormPage = () => {
                     required: 'Required',
                     pattern: {
                       value: /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
-                      message: "Invalid phone number",
-                    }
+                      message: 'Invalid phone number',
+                    },
                   })}
                 />
-                {errors.phone && (<span className="error"><>{errors.phone.message}</></span>)}
+                {errors.phone && (
+                  <span className="error" placeholder='error'>
+                    <>{errors.phone.message}</>
+                  </span>
+                )}
               </label>
             </div>
 
@@ -463,15 +504,19 @@ export const FormPage = () => {
                       id={`gender__${index}`}
                       type="radio"
                       value={value}
-                      {...register("gender", {
-                        required: "Required"
+                      {...register('gender', {
+                        required: 'Required',
                       })}
                     />
                     {['undefined', 'female', 'male', 'other'][index]}
                   </label>
                 ))}
               </div>
-              {errors.gender && (<span className="error"><>{errors.gender.message}</></span>)}
+              {errors.gender && (
+                <span className="error" placeholder='error'>
+                  <>{errors.gender.message}</>
+                </span>
+              )}
             </div>
           </fieldset>
         </div>
@@ -484,7 +529,7 @@ export const FormPage = () => {
       <div className="cards-section">
         {cards.map((card, index) => (
           <div className="form-card-wrapper" key={index}>
-            <div className="form-card">
+            <div className="form-card" placeholder="card">
               <div className="profile-image-wrapper">
                 <img src={card['upload']} />
               </div>
