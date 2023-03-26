@@ -29,21 +29,12 @@ type ProfileCard = {
 };
 
 export const FormPage = () => {
-  const { register, handleSubmit, formState: { errors }} = useForm();
+  const { register, handleSubmit, formState: { errors }} = useForm({
+    criteriaMode: 'all',
+  });
 
   const [confirm, setConfirm] = useState<boolean>(false);
   const [cards, setCards] = useState<ProfileCard[]>([]);
-
-  //const [firstNameErr, setFirstNameErr] = useState<boolean>(false);
-  // [lastNameErr, setLastNameErr] = useState<boolean>(false);
-  //const [ageErr, setAgeErr] = useState<boolean>(false);
-  const [zipCodeErr, setZipCodeErr] = useState<boolean>(false);
-  //const [cityErr, setCityErr] = useState<boolean>(false);
-  const [addressErr, setAddressErr] = useState<boolean>(false);
-  const [emailErr, setEmailErr] = useState<boolean>(false);
-  const [phoneErr, setPhoneErr] = useState<boolean>(false);
-  //const [countryErr, setCountryErr] = useState<boolean>(false);
-  const [genderErr, setGenderErr] = useState<boolean>(false);
 
   const dateToAge = (date: string) => {
     const now = new Date();
@@ -57,181 +48,44 @@ export const FormPage = () => {
     return myage;
   };
 
-  const validateForm = () => {
-    const arr: boolean[] = [];
-
-    const firstName = document.querySelector('#firstName') as HTMLInputElement;
-    const lastName = document.querySelector('#lastName') as HTMLInputElement;
-    const city = document.querySelector('#city') as HTMLInputElement;
-
-    //.push(validateName(firstName));
-    //arr.push(validateName(lastName));
-    //arr.push(validateAge());
-    arr.push(validateZipCode());
-    //arr.push(validateCountry());
-    //arr.push(validateName(city));
-    arr.push(validateAddress());
-    arr.push(validateEmail());
-    arr.push(validatePhone());
-    arr.push(validateRadio());
-
-    return !arr.includes(false);
-  };
-
-  /*const validateName = (el: HTMLInputElement) => {
-    const value = el.value;
-    const isError =
-      !value ||
-      value.length > 50 ||
-      value.length < 2 ||
-      value.match(/[\d\s!\*\\@#$%\^\|\~\?\&\(\)\-\+\=\,\.]/) ||
-      value[0].toUpperCase() !== value[0]
-        ? true
-        : false;
-    switch (el.id) {
-      case 'firstName':
-        setFirstNameErr(isError);
-        break;
-      case 'lastName':
-        setLastNameErr(isError);
-        break;
-      case 'city':
-        setCityErr(isError);
-        break;
-    }
-    return isError ? false : true;
-  };*/
-
-  /*const validateCountry = () => {
-    const country = document.querySelector('#country') as HTMLSelectElement;
-    const val = country.value;
-    const isError = val ? !countries.includes(val) : true;
-    setCountryErr(isError);
-    return isError ? false : true;
-  };*/
-
-  /*const validateAge = () => {
-    const age = document.querySelector('#age') as HTMLInputElement;
-    const date = age.value;
-    const isError = date ? dateToAge(date) <= 0 : true;
-    setAgeErr(isError);
-    return isError ? false : true;
-  };*/
-
-  const validateZipCode = () => {
-    const zipCode = document.querySelector('#zipCode') as HTMLInputElement;
-    const code = zipCode.value;
-    const isError = !code?.match(/\d{4,10}/);
-    setZipCodeErr(isError);
-    return isError ? false : true;
-  };
-
-  const validateAddress = () => {
-    const address = document.querySelector('#address') as HTMLInputElement;
-    const add = address.value;
-    const isError = add
-      ? !(add.length < 100 && add.length > 10 && !add.match(/[\!\*\\@#\$%\^\|\~\?\&\(\)\+\=]/))
-      : true;
-    setAddressErr(isError);
-    return isError ? false : true;
-  };
-
-  const validateEmail = () => {
-    const mail = document.querySelector('#email') as HTMLInputElement;
-    const email = mail.value;
-    const isError = email
-      ? !email.match(
-          /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/i
-        )
-      : true;
-    setEmailErr(isError);
-    return isError ? false : true;
-  };
-
-  const validatePhone = () => {
-    const telePhone = document.querySelector('#phone') as HTMLInputElement;
-    const phone = telePhone.value;
-    const isError = phone ? !phone.match(/^\+*\d*\(*[\d-]+\)*([\d-]){5,10}\d$/i) : true;
-    setPhoneErr(isError);
-    return isError ? false : true;
-  };
-
-  const validateRadio = () => {
-    const gender = document.querySelector('.radio-wrapper') as HTMLDivElement;
-    const inputs = gender?.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
-    const arr = Array.from(inputs);
-    const checked = arr.some((input) => input.checked === true);
-    setGenderErr(!checked);
-    return checked ? true : false;
-  };
-
-  const radioValue = () => {
-    const genderEl = document.querySelector('.radio-wrapper') as HTMLDivElement;
-    const inputs = genderEl?.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
-    const arr = Array.from(inputs);
-    return arr.find((el) => el.checked)?.value;
-  };
-
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
 
     const arr: ProfileCard[] = cards;
 
-    const age = document.querySelector('#age') as HTMLInputElement;
+    setConfirm(true);
 
-    if (validateForm() && age.value) {
-      setConfirm(true);
+    setTimeout(() => setConfirm(false), 5000);
+
+    const newCard = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        age: dateToAge(data.age),
+        showMyAge: data.showMyAge,
+        upload: '',
+        zipCode: data.zipCode,
+        country: data.country,
+        city: data.city,
+        address: data.address,
+        email: data.email,
+        receiveMail: data.receiveMail,
+        phone: data.phone,
+        receiveSMS: data.receiveSMS,
+        firstCheckbox: data.firstCheckbox,
+        secondCheckbox: data.secondCheckbox,
+        thirdCheckbox: data.thirdCheckbox,
+        gender: data.gender,
+    };
+
+    const promise = fileToUrl.call(this);
+      promise.then((result) => {
+      newCard.upload = result;
+      arr.push(newCard);
+      setCards(arr);
+
       const form = document.querySelector('form');
       if (form) form.reset();
-
-      setTimeout(() => setConfirm(false), 5000);
-
-      const firstName = document.querySelector('#firstName') as HTMLInputElement;
-      const lastName = document.querySelector('#lastName') as HTMLInputElement;
-      const city = document.querySelector('#city') as HTMLInputElement;
-      const country = document.querySelector('#country') as HTMLSelectElement;
-      const zipCode = document.querySelector('#zipCode') as HTMLInputElement;
-      const address = document.querySelector('#address') as HTMLInputElement;
-      const email = document.querySelector('#email') as HTMLInputElement;
-      const phone = document.querySelector('#phone') as HTMLInputElement;
-
-      const showMyAge = document.querySelector('#showMyAge') as HTMLInputElement;
-      const receiveMail = document.querySelector('#receiveMail') as HTMLInputElement;
-      const receiveSMS = document.querySelector('#receiveSMS') as HTMLInputElement;
-      const firstCheckbox = document.querySelector('#firstCheckbox') as HTMLInputElement;
-      const secondCheckbox = document.querySelector('#secondCheckbox') as HTMLInputElement;
-      const thirdCheckbox = document.querySelector('#thirdCheckbox') as HTMLInputElement;
-
-      const newCard = {
-        firstName: firstName.value,
-        lastName: lastName.value,
-        age: dateToAge(age.value),
-        showMyAge: showMyAge.checked,
-        upload: '',
-        zipCode: zipCode.value,
-        country: country.value,
-        city: city.value,
-        address: address.value,
-        email: email.value,
-        receiveMail: receiveMail.checked,
-        phone: phone.value,
-        receiveSMS: receiveSMS.checked,
-        firstCheckbox: firstCheckbox.checked,
-        secondCheckbox: secondCheckbox.checked,
-        thirdCheckbox: thirdCheckbox.checked,
-        gender: radioValue(),
-      };
-
-      const promise = fileToUrl.call(this);
-      promise.then((result) => {
-        newCard.upload = result;
-        arr.push(newCard);
-        setCards(arr);
-        return true;
-      });
-      return true;
-    }
-    return false;
+    });
   };
 
   const fileToUrl = async () => {
@@ -262,7 +116,6 @@ export const FormPage = () => {
         fileURL = await readFileAsDataURL(file);
       }
     }
-
     return fileURL;
   };
 
@@ -339,6 +192,7 @@ export const FormPage = () => {
                   id="age"
                   {...register('age', {
                     required: "Required",
+                    valueAsDate: true,
                     validate: {
                       sixPlus: date => dateToAge(date) >= 6 || "Only 6+ users"
                     }
@@ -351,9 +205,8 @@ export const FormPage = () => {
               <input
                 type="checkbox"
                 id="showMyAge"
-                name="showMyAge"
                 className="checkbox-input"
-                {...register}
+                {...register('showMyAge')}
               />
               <label htmlFor="showMyAge" className="checkbox-label">
                 Show my age
@@ -464,8 +317,25 @@ export const FormPage = () => {
             <div className="input-wrapper">
               <label htmlFor="address" className="label">
                 Address
-                <input type="text" className="input" name="address" id="address" {...register} />
-                <span className="error">{addressErr && `Error: Address is invalid`}</span>
+                <input
+                  type="text"
+                  className="input"
+                  id="address" {...register('address', {
+                    required: "Required",
+                    minLength: {
+                      value: 10,
+                      message: "Too short",
+                    },
+                    maxLength: {
+                      value: 100,
+                      message: "Too long",
+                    },
+                    pattern: {
+                      value: /^[A-Z\d][a-zA-Z\s\d\,\']+[a-z\d]$/,
+                      message: 'Invalid address'
+                    }
+                  })} />
+                {errors.address && (<span className="error"><>{errors.address.message}</></span>)}
               </label>
             </div>
           </fieldset>
@@ -478,8 +348,19 @@ export const FormPage = () => {
             <div className="input-wrapper">
               <label htmlFor="email" className="label">
                 E-mail
-                <input type="text" className="input" name="email" id="email" {...register} />
-                <span className="error">{emailErr && `Error: E-mail is invalid`}</span>
+                <input
+                  type="text"
+                  className="input"
+                  id="email"
+                  {...register('email', {
+                    required: "Required",
+                    pattern: {
+                      value: /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/i,
+                      message: 'Invalid e-mail'
+                    }
+                  })}
+                />
+                {errors.email && (<span className="error"><>{errors.email.message}</></span>)}
               </label>
             </div>
 
@@ -487,10 +368,9 @@ export const FormPage = () => {
               Receive notifications by mail
               <input
                 type="checkbox"
-                name="receiveMail"
                 id="receiveMail"
                 className="switcher-input"
-                {...register}
+                {...register('receiveMail')}
               />
               <label htmlFor="receiveMail" className="switcher-label"></label>
             </div>
@@ -498,8 +378,19 @@ export const FormPage = () => {
             <div className="input-wrapper">
               <label htmlFor="phone" className="label">
                 Phone
-                <input type="text" className="input" name="phone" id="phone" {...register} />
-                <span className="error">{phoneErr && `Error: Phone is invalid`}</span>
+                <input
+                  type="text"
+                  className="input"
+                  id="phone"
+                  {...register('phone', {
+                    required: 'Required',
+                    pattern: {
+                      value: /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
+                      message: "Invalid phone number",
+                    }
+                  })}
+                />
+                {errors.phone && (<span className="error"><>{errors.phone.message}</></span>)}
               </label>
             </div>
 
@@ -507,10 +398,9 @@ export const FormPage = () => {
               Receive sms
               <input
                 type="checkbox"
-                name="receiveSMS"
                 id="receiveSMS"
                 className="switcher-input"
-                {...register}
+                {...register('receiveSMS')}
               />
               <label htmlFor="receiveSMS" className="switcher-label"></label>
             </div>
@@ -524,10 +414,9 @@ export const FormPage = () => {
             <div className="checkbox-wrapper">
               <input
                 type="checkbox"
-                name="firstCheckbox"
                 id="firstCheckbox"
                 className="checkbox-input"
-                {...register}
+                {...register('firstCheckbox')}
               />
               <label htmlFor="firstCheckbox" className="checkbox-label">
                 I like this website
@@ -537,10 +426,9 @@ export const FormPage = () => {
             <div className="checkbox-wrapper">
               <input
                 type="checkbox"
-                name="secondCheckbox"
                 id="secondCheckbox"
                 className="checkbox-input"
-                {...register}
+                {...register('secondCheckbox')}
               />
               <label htmlFor="secondCheckbox" className="checkbox-label">
                 I enjoy filling out forms
@@ -550,10 +438,9 @@ export const FormPage = () => {
             <div className="checkbox-wrapper">
               <input
                 type="checkbox"
-                name="thirdCheckbox"
                 id="thirdCheckbox"
                 className="checkbox-input"
-                {...register}
+                {...register('thirdCheckbox')}
               />
               <label htmlFor="thirdCheckbox" className="checkbox-label">
                 I like reading good books
@@ -572,18 +459,19 @@ export const FormPage = () => {
                 {['undefined', 'female', 'male', 'other'].map((value, index) => (
                   <label className="radio-label" htmlFor={`gender__${index}`} key={index}>
                     <input
-                      {...register}
                       className="radio-input"
                       id={`gender__${index}`}
                       type="radio"
                       value={value}
-                      name="gender"
+                      {...register("gender", {
+                        required: "Required"
+                      })}
                     />
                     {['undefined', 'female', 'male', 'other'][index]}
                   </label>
                 ))}
               </div>
-              <span className="error">{genderErr && `Error: choose your gender`}</span>
+              {errors.gender && (<span className="error"><>{errors.gender.message}</></span>)}
             </div>
           </fieldset>
         </div>
