@@ -35,13 +35,14 @@ describe('react form page', () => {
     const phoneInput = screen.getByLabelText('Phone');
     const radio = screen.getByLabelText('male');
     const file = screen.getByLabelText('UPLOAD PROFILE PHOTO') as HTMLInputElement;
+    const firstCB = screen.getByLabelText('I like this website');
 
     const files = [
       new File(['hello'], 'hello.png', { type: 'image/png' }),
       new File(['there'], 'there.png', { type: 'image/png' }),
     ];
 
-    act(() => {
+    await act(async () => {
       fireEvent.change(firstNameInput, { target: { value: 'Olga' } });
       fireEvent.change(lastNameInput, { target: { value: 'Fakelastname' } });
       fireEvent.change(birthdayInput, { target: { value: '2008-10-12' } });
@@ -52,6 +53,7 @@ describe('react form page', () => {
       fireEvent.change(emailInput, { target: { value: 'fakemail@gmail.com' } });
       fireEvent.change(phoneInput, { target: { value: '+37529111-11-11' } });
       radio.click();
+      firstCB.click();
 
       userEvent.upload(file, files);
     });
@@ -69,20 +71,21 @@ describe('react form page', () => {
       expect(phoneInput).toBeTruthy();
       expect(radio).toBeTruthy();
       expect(file).toBeTruthy();
+      expect(firstCB).toBeTruthy();
     });
 
     const submit = screen.getByPlaceholderText('submit');
     expect(submit).toBeTruthy();
 
-    act(() => submit.click());
+    await act(async () => submit.click());
 
     await waitFor(() => {
       const errors = screen.getAllByPlaceholderText('error');
-      expect(errors).toHaveLength(11);
-    })
+      expect(errors).toHaveLength(15);
+    });
 
     const form = screen.getByPlaceholderText('form') as HTMLFormElement;
-    act(() => form.reset());
+    await act(async () => form.reset());
     expect(form).toBeTruthy();
   });
 
@@ -101,6 +104,7 @@ describe('react form page', () => {
     const radio = screen.getByLabelText('male');
     const radioWrapper = screen.getByPlaceholderText('radio');
     const submit = screen.getByPlaceholderText('submit');
+    const firstCB = screen.getByLabelText('I like this website');
 
     expect(firstNameInput).toBeTruthy();
     expect(lastNameInput).toBeTruthy();
@@ -114,6 +118,7 @@ describe('react form page', () => {
     expect(radio).toBeTruthy();
     expect(radioWrapper).toBeTruthy();
     expect(submit).toBeTruthy();
+    expect(firstCB).toBeTruthy();
 
     act(() => {
       fireEvent.change(firstNameInput, { target: { value: '7777777777' } });

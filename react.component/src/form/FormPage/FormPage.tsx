@@ -49,6 +49,8 @@ interface FormStateType {
   gender: boolean;
 
   files: boolean;
+
+  checkbox: boolean;
 }
 
 export class FormPage extends Component<unknown, FormStateType> {
@@ -106,6 +108,8 @@ export class FormPage extends Component<unknown, FormStateType> {
       gender: false,
 
       files: false,
+
+      checkbox: false,
     };
   }
 
@@ -135,6 +139,7 @@ export class FormPage extends Component<unknown, FormStateType> {
     arr.push(this.validatePhone());
     arr.push(this.validateRadio());
     arr.push(this.validatePhoto());
+    arr.push(this.validateFillings());
 
     return !arr.includes(false);
   }
@@ -223,6 +228,13 @@ export class FormPage extends Component<unknown, FormStateType> {
     const file = Array.from(files).at(-1) as File;
     const isError = !(files.length > 0 && file.type.match(pattern));
     this.setState({ files: isError });
+    return isError;
+  }
+
+  validateFillings() {
+    const like = this.firstCheckbox.current as HTMLInputElement;
+    const isError = !like.checked;
+    this.setState({ checkbox: isError });
     return isError;
   }
 
@@ -329,7 +341,7 @@ export class FormPage extends Component<unknown, FormStateType> {
               err={this.state.lastName}
             />
             <Input id="age" label="Birthday" type="date" ref={this.age} err={this.state.age} />
-            <Checkbox id="showMyAge" title="Show my age" ref={this.showMyAge} />
+            <Checkbox id="showMyAge" title="Show my age" ref={this.showMyAge} err={false} />
             <File id="profilePhoto" ref={this.upload} err={this.state.files} />
           </Fieldset>
 
@@ -370,16 +382,23 @@ export class FormPage extends Component<unknown, FormStateType> {
           </Fieldset>
 
           <Fieldset title="Checkboxes">
-            <Checkbox title="I like this website" id="firstCheckbox" ref={this.firstCheckbox} />
+            <Checkbox
+              title="I like this website"
+              id="firstCheckbox"
+              ref={this.firstCheckbox}
+              err={this.state.checkbox}
+            />
             <Checkbox
               title="I enjoy filling out forms"
               id="secondCheckbox"
               ref={this.secondCheckbox}
+              err={false}
             />
             <Checkbox
               title="I like reading good books"
               id="thirdCheckbox"
               ref={this.thirdCheckbox}
+              err={false}
             />
           </Fieldset>
 
