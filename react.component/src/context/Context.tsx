@@ -23,7 +23,7 @@ export const AppContextProvider = ({ children }: ChildrenProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const getDocs = async () => {
-    const response = await fetch(`https://the-one-api.dev/v2/book`, {
+    const response = await fetch(`https://the-one-api.dev/v2/character`, {
       method: 'get',
       headers: new Headers({
           'Authorization': 'Bearer TinzBFnLUdwvfCjMa4hL',
