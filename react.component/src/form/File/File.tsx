@@ -3,6 +3,7 @@ import './file.scss';
 import { ReactComponent as Upload } from '../../assets/upload.svg';
 
 type FileProps = {
+  err: boolean;
   id: string;
 };
 
@@ -15,6 +16,9 @@ export const File = forwardRef<HTMLSpanElement, FileProps>((props, ref) => (
       </span>
       <span className="input__file-button-text" ref={ref}>
         UPLOAD PROFILE PHOTO
+      </span>
+      <span className="error" placeholder="error">
+        {props.err && `Error: Upload a photo, please`}
       </span>
     </label>
   </div>

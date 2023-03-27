@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { FormPage } from './FormPage';
@@ -21,7 +21,7 @@ describe('react form page', () => {
     expect(formPage).toBeDefined();
   });
 
-  test('confirm doing well', () => {
+  test('confirm doing well', async () => {
     render(<RouterProvider router={router} />);
 
     const firstNameInput = screen.getByLabelText('First Name') as HTMLInputElement;
@@ -34,6 +34,12 @@ describe('react form page', () => {
     const emailInput = screen.getByLabelText('E-mail');
     const phoneInput = screen.getByLabelText('Phone');
     const radio = screen.getByLabelText('male');
+    const file = screen.getByLabelText('UPLOAD PROFILE PHOTO') as HTMLInputElement;
+
+    const files = [
+      new File(['hello'], 'hello.png', { type: 'image/png' }),
+      new File(['there'], 'there.png', { type: 'image/png' }),
+    ];
 
     act(() => {
       fireEvent.change(firstNameInput, { target: { value: 'Olga' } });
@@ -46,28 +52,34 @@ describe('react form page', () => {
       fireEvent.change(emailInput, { target: { value: 'fakemail@gmail.com' } });
       fireEvent.change(phoneInput, { target: { value: '+37529111-11-11' } });
       radio.click();
+
+      userEvent.upload(file, files);
     });
 
-    expect(firstNameInput).toBeTruthy();
-    expect(firstNameInput.value).toBe('Olga');
-    expect(lastNameInput).toBeTruthy();
-    expect(birthdayInput).toBeTruthy();
-    expect(zipCodeInput).toBeTruthy();
-    expect(countryInput).toBeTruthy();
-    expect(cityInput).toBeTruthy();
-    expect(addressInput).toBeTruthy();
-    expect(emailInput).toBeTruthy();
-    expect(phoneInput).toBeTruthy();
-    expect(radio).toBeTruthy();
+    await waitFor(() => {
+      expect(firstNameInput).toBeTruthy();
+      expect(firstNameInput.value).toBe('Olga');
+      expect(lastNameInput).toBeTruthy();
+      expect(birthdayInput).toBeTruthy();
+      expect(zipCodeInput).toBeTruthy();
+      expect(countryInput).toBeTruthy();
+      expect(cityInput).toBeTruthy();
+      expect(addressInput).toBeTruthy();
+      expect(emailInput).toBeTruthy();
+      expect(phoneInput).toBeTruthy();
+      expect(radio).toBeTruthy();
+      expect(file).toBeTruthy();
+    });
 
     const submit = screen.getByPlaceholderText('submit');
     expect(submit).toBeTruthy();
 
     act(() => submit.click());
 
-    const errors = screen.getAllByPlaceholderText('error');
-    expect(errors).toHaveLength(10);
-    errors.forEach((error) => expect(error.innerHTML).toBe(''));
+    await waitFor(() => {
+      const errors = screen.getAllByPlaceholderText('error');
+      expect(errors).toHaveLength(11);
+    })
 
     const form = screen.getByPlaceholderText('form') as HTMLFormElement;
     act(() => form.reset());

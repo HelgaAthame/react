@@ -47,6 +47,8 @@ interface FormStateType {
 
   country: boolean;
   gender: boolean;
+
+  files: boolean;
 }
 
 export class FormPage extends Component<unknown, FormStateType> {
@@ -102,6 +104,8 @@ export class FormPage extends Component<unknown, FormStateType> {
 
       country: false,
       gender: false,
+
+      files: false,
     };
   }
 
@@ -130,6 +134,7 @@ export class FormPage extends Component<unknown, FormStateType> {
     arr.push(this.validateEmail());
     arr.push(this.validatePhone());
     arr.push(this.validateRadio());
+    arr.push(this.validatePhoto());
 
     return !arr.includes(false);
   }
@@ -209,6 +214,16 @@ export class FormPage extends Component<unknown, FormStateType> {
     const checked = arr.some((input) => input.checked === true);
     this.setState({ gender: !checked });
     return checked ? true : false;
+  }
+
+  validatePhoto() {
+    const photoInput = document.querySelector('.input__file') as HTMLInputElement;
+    const files = photoInput.files as FileList;
+    const pattern = /image-*/;
+    const file = Array.from(files).at(-1) as File;
+    const isError = !(files.length > 0 && file.type.match(pattern));
+    this.setState({ files: isError });
+    return isError;
   }
 
   radioValue() {
@@ -315,7 +330,7 @@ export class FormPage extends Component<unknown, FormStateType> {
             />
             <Input id="age" label="Birthday" type="date" ref={this.age} err={this.state.age} />
             <Checkbox id="showMyAge" title="Show my age" ref={this.showMyAge} />
-            <File id="profilePhoto" ref={this.upload} />
+            <File id="profilePhoto" ref={this.upload} err={this.state.files} />
           </Fieldset>
 
           <Fieldset title="Address">
