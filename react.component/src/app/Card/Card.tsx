@@ -1,17 +1,30 @@
 import { ReactComponent as Heart } from '../../assets/heart.svg';
-import { useRef, useState } from 'react';
+import { MouseEventHandler, useRef, useState } from 'react';
 import { BookType } from '../types';
 import './card.scss';
 
 export const Card = (props: BookType) => {
   const [ clicked, setClicked ] = useState(false);
-  const handleClick = () => setClicked(!clicked);
+  const handleCloseClick = () => setClicked(false);
+  const handleModalClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    const target = e.target as HTMLDivElement;
+    const val = target.className;
+    if (val === 'modal') setClicked(false);
+  }
+  const handleCardClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    const target = e.target as HTMLDivElement;
+    const val = target.className;
+    if (val === 'card'
+    || val === 'name'
+    || val === 'additional-wrapper'
+    ) setClicked(true);
+  }
   return (
-    <section className="card" onClick={handleClick}>
+    <section className="card" onClick={handleCardClick}>
       <div className="additional-wrapper">
         <div className="name">{props.name}</div>
-      {clicked && <div className="modal">
-        <div className="close" onClick={handleClick}></div>
+        {clicked && <div className="modal" onClick={handleModalClick}>
+        <div className="close" onClick={handleCloseClick}></div>
         <div className="modal-wrapper">
           <div className="modal-content">
             <div className="name">Name: {props.name === '' ? 'unknown' : props.name}</div>

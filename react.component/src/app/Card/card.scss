@@ -72,6 +72,7 @@ $col2: #109966;
         justify-content: center;
         align-items: center;
         color: $color;
+        cursor: initial;
         .close {
           position: absolute;
           right: 42px;
@@ -111,6 +112,10 @@ $col2: #109966;
           border-width: 1px;
           background-color: white;
           padding: $basic 5vw 2rem;
+          transition: 1s;
+          &:hover {
+            transform: scale(1.1);
+          }
           .modal-content {
             div {
               max-width: 90vw;
