@@ -228,14 +228,14 @@ export class FormPage extends Component<unknown, FormStateType> {
     const file = Array.from(files).at(-1) as File;
     const isError = !(files.length > 0 && file.type.match(pattern));
     this.setState({ files: isError });
-    return isError;
+    return isError ? false : true;
   }
 
   validateFillings() {
     const like = this.firstCheckbox.current as HTMLInputElement;
     const isError = !like.checked;
     this.setState({ checkbox: isError });
-    return isError;
+    return isError ? false : true;
   }
 
   radioValue() {
@@ -247,7 +247,6 @@ export class FormPage extends Component<unknown, FormStateType> {
 
   handleSubmit() {
     const arr: ProfileCard[] = this.state.cards;
-
     if (this.validateForm() && this.age.current?.value) {
       this.setState({
         confirm: true,
