@@ -2,7 +2,11 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './logo.scss';
 
-export class Logo extends Component {
+type LogoProps = {
+  curPage: string;
+};
+
+export class Logo extends Component<LogoProps> {
   render() {
     return (
       <div className="logo-wrapper">
@@ -10,6 +14,7 @@ export class Logo extends Component {
           <Link to="/" className="link">
             BEST BOOK STORE
           </Link>
+          <div className="cur-page">Current page is {this.props.curPage}</div>
         </div>
       </div>
     );

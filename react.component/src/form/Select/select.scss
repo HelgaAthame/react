@@ -1,0 +1,31 @@
+$basic: 1rem;
+$color: #105544;
+$col2: #109966;
+.select-wrapper{
+  font-size: $basic;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  .select{
+    height: 1.5rem;
+    flex-grow: 1;
+    color: $color;
+    font-size: $basic;
+    font-family: Regular-font;
+    margin: $basic;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    &:hover{
+      color: $col2;
+    }
+    .option {
+      font-family: Regular-font;
+      font-size: $basic;
+      cursor: pointer;
+    }
+  }
+}
+.error {
+  color: red;
+}

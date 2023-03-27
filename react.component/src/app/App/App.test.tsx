@@ -1,17 +1,12 @@
-import {
-  beforeEach,
-  describe,
-  expect,
-  test,
-} from "vitest";
-import { render, screen } from '@testing-library/react';
-import { createMemoryRouter, RouterProvider } from "react-router-dom";
+import { describe, expect, test } from 'vitest';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 
 import { App } from './App';
 import { cards } from '../cards';
-import React from "react";
-import { ErrorPage } from "../../errorPage";
-import { AboutUs } from "../../aboutUs";
+import React from 'react';
+import { ErrorPage } from '../../errorPage';
+import { AboutUs } from '../../aboutUs/aboutus/';
 
 const props = {};
 const app = new App(props);
@@ -25,12 +20,11 @@ const routes = [
   {
     path: '/about-us',
     element: <AboutUs />,
-  }
+  },
 ];
 const router = createMemoryRouter(routes);
 
 describe('react app', () => {
-
   test('cards imports to app instance correctly', () => {
     expect(app.state.cards).toEqual(cards);
   });
@@ -63,12 +57,21 @@ describe('react app', () => {
         year: 0,
         author: 'Santa Claus',
         likes: Math.PI,
-        picture: 'fake URL 2'
-      }
+        picture: 'fake URL 2',
+      },
     ];
 
-    app.state = {cards: fakeCards};
+    app.state = { cards: fakeCards };
     expect(app.state.cards[0].author).toBe('Jesus Christ');
     expect(app.state.cards[0].name).toBe('Holly Bible');
   });
-})
+
+  test('update data method works', () => {
+    render(<RouterProvider router={router} />);
+    const input = screen.getByRole('searchbox') as HTMLInputElement;
+    act(() => {
+      fireEvent.change(input, { target: { value: 'fakeValue' } });
+    });
+    expect(input.value).toBe('fakeValue');
+  });
+});

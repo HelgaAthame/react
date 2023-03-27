@@ -1,0 +1,21 @@
+.radio-super-wrapper {
+  text-transform: uppercase;
+  .radio-wrapper {
+    text-transform:none;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    .radio-label{
+      padding: 0.25rem;
+      text-align: left;
+      .radio-input {
+
+      }
+    }
+  }
+  .error {
+    color: red;
+    font-size: 1rem;
+    text-transform:none;
+  }
+}

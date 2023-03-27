@@ -4,7 +4,8 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { App } from './app/App';
 import './index.scss';
-import { AboutUs } from './aboutUs/AboutUs';
+import { AboutUs } from './aboutUs/aboutus/AboutUs';
+import { FormPage } from './form/FormPage';
 
 const router = createBrowserRouter([
   {
@@ -16,10 +17,14 @@ const router = createBrowserRouter([
     path: '/about-us',
     element: <AboutUs />,
   },
+  {
+    path: '/form',
+    element: <FormPage />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  //<React.StrictMode>
+  <React.StrictMode>
     <RouterProvider router={router} />
-  //</React.StrictMode>
+  </React.StrictMode>
 );

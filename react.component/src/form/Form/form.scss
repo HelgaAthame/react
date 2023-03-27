@@ -1,0 +1,66 @@
+$color: #105544;
+$col2: #109966;
+$basic: 1rem;
+@mixin animated-border {
+  &::before{
+    content: '';
+    position:absolute;
+    background-image: conic-gradient(white 0%,$color 0%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    transition: 1s;
+  }
+  &:hover::before {
+    background-image: conic-gradient(white 10%,$color 20%);
+    animation: 750ms forwards ease-in-out button;
+  }
+
+  @keyframes button {
+    0% {
+      transform: scale(6) rotate(0deg);
+      background-image: conic-gradient($color 80%, white 90%);
+    }
+    99% {
+      transform: scale(6) rotate(360deg);
+      background-image: conic-gradient($col2 80%, white 90%);
+    }
+    100% {
+      transform: scale(6) rotate(360deg);
+      background-image: conic-gradient($col2 100%, white 0%);
+    }
+  }
+}
+
+.form {
+  margin: 0 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  .submit-wrapper {
+    display: flex;
+    align-items: stretch;
+    margin: 0.5rem;
+    outline: none;
+    overflow: hidden;
+    position:relative;
+    border-radius: 3px;
+    @include animated-border;
+    height: min-content;
+    .submit-input {
+      color: $color;
+      border: none;
+      background-color: white;
+      margin: 1px;
+      border-radius: 2px;
+      padding: 1.2rem 1rem 0.8rem;
+      transition: 1s;
+      font-size: 2rem;
+      font-family: Light-font;
+      &:hover {
+        color: $col2;
+      }
+    }
+  }
+}
