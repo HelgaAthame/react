@@ -110,14 +110,14 @@ $col2: #109966;
           border-style: solid;
           border-width: 1px;
           background-color: white;
-          padding: $basic 3rem 2rem;
+          padding: $basic 5vw 2rem;
           .modal-content {
             div {
-              width: 16rem;
+              max-width: 90vw;
               text-align: left;
               font-size: 1rem;
               font-family: Regular-font;
-              padding: 0.5rem 0;
+              padding: 0.3rem 0;
             }
             .name {
               flex-grow: 1;
