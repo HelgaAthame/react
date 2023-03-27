@@ -1,32 +1,28 @@
-import { ChangeEvent, MutableRefObject, useContext, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, MutableRefObject, useContext, useEffect, useRef, useState } from 'react';
 import './searchbar.scss';
 import { ReactComponent as Lupa } from '../../assets/lupa.svg';
 import { AppContext } from '../../context';
+import { BookType } from '../types';
 
 export const SearchBar = () => {
-  const { updateData } = useContext(AppContext);
+  const { docs, isLoading, setIsLoading, getDocs, setDocs } = useContext(AppContext);
 
   const wrapper: MutableRefObject<HTMLDivElement | null> = useRef(null);
   const input: MutableRefObject<HTMLInputElement | null> = useRef(null);
 
-  const [inputValue, setInputValue] = useState(
-    localStorage.getItem('bestbookstore-input-data')
-      ? localStorage.getItem('bestbookstore-input-data')
-      : ''
-  );
-
-  useEffect(() => {
-    if (inputValue) {
-      localStorage.setItem('bestbookstore-input-data', inputValue);
-    } else {
-      localStorage.setItem('bestbookstore-input-data', '');
+  const handleKeyUp = async (e: any) => {
+    if (e.code === "Enter" && !isLoading) {
+      const inputValue = e.target.value;
+      setIsLoading(true);
+      const books = await getDocs() as BookType[];
+      const filtered = books.filter((book) =>
+        Object.values(book).find(
+          (value: string | number) =>
+            value.toString().toLowerCase().search(inputValue.toLowerCase()) !== -1
+        ))
+      setDocs(filtered);
     }
-  }, [inputValue]);
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    updateData(event.target.value);
-    setInputValue(event.target.value);
-  };
+  }
 
   const handleFocus = () => {
     if (wrapper.current !== null) wrapper.current.style.flexGrow = '1';
@@ -51,11 +47,10 @@ export const SearchBar = () => {
           <Lupa />
         </div>
         <input
-          value={inputValue as string}
           ref={input}
           type="search"
           className="input"
-          onChange={handleChange}
+          onKeyUp={handleKeyUp}
           onFocus={handleFocus}
           onBlur={handleBlur}
           required

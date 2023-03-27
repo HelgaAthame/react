@@ -2,6 +2,8 @@ import { BookType } from '../app/types';
 import { createContext, ReactNode, useEffect, useReducer, useState } from 'react';
 
 interface CurrentType {
+  setIsLoading: (value: boolean)=> void;
+  isLoading: boolean;
   docs: BookType[];
 }
 
@@ -9,26 +11,36 @@ type ChildrenProps = {
   children: ReactNode;
 };
 
-export const AppContext = createContext<CurrentType>({
+export const AppContext = createContext<any>({
+  setIsLoading: () => {},
+  isLoading: true,
   docs: [],
 });
 
 export const AppContextProvider = ({ children }: ChildrenProps) => {
 
   const [docs, setDocs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    fetch('https://the-one-api.dev/v2/book', {
+  const getDocs = async () => {
+    const response = await fetch(`https://the-one-api.dev/v2/book`, {
       method: 'get',
       headers: new Headers({
           'Authorization': 'Bearer TinzBFnLUdwvfCjMa4hL',
       }),
-    })
-    .then(response => response.json())
-    .then(data => {setDocs(data.docs); console.log(data.docs)});
+    });
+    const data = await response.json();
+    setIsLoading(false);
+    console.log(data.docs);
+    return data.docs;
+  }
+
+  useEffect(() => {
+    getDocs()
+    .then(docs => setDocs(docs))
   }, []);
 
-  const value = { docs };
+  const value = { docs, setDocs, getDocs, isLoading, setIsLoading };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
