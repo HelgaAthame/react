@@ -6,7 +6,7 @@ import { Card } from '../Card';
 import { Loading } from '../Loading';
 
 export const Main = () => {
-  const { docs, isLoading } = useContext(AppContext);
+  const { docs, isLoading, error } = useContext(AppContext);
 
   return (
     <div className="main">
@@ -14,6 +14,7 @@ export const Main = () => {
         <Card key={doc._id} {...doc} />
       ))}
       {isLoading && <Loading />}
+      {error && <div className="error">{error}</div>}
     </div>
   );
 };

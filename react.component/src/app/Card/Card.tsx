@@ -20,7 +20,7 @@ export const Card = (props: BookType) => {
     ) setClicked(true);
   }
   return (
-    <section className="card" onClick={handleCardClick}>
+    <section className="card" onClick={handleCardClick} placeholder="card">
       <div className="additional-wrapper">
         <div className="name">{props.name}</div>
         {clicked && <div className="modal" onClick={handleModalClick}>
@@ -36,7 +36,7 @@ export const Card = (props: BookType) => {
             <div className="race">Race: {props.race === '' ? 'unknown' : props.race}</div>
             <div className="realm">Realm: {props.realm === '' ? 'unknown' : props.realm}</div>
             <div className="spouse">Spouse: {props.spouse === '' ? 'unknown' : props.spouse}</div>
-            <div className="wiki-url">URL: {props.wikiUrl === '' ? 'unknown' : props.wikiUrl}</div>
+            <div className="wiki-url">URL: <a href={props.wikiUrl}>{props.wikiUrl === '' ? 'unknown' : props.wikiUrl}</a></div>
             <div className="id">ID: {props._id === '' ? 'unknown' : props._id}</div>
           </div>
         </div>
