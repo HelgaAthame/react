@@ -157,6 +157,10 @@ $basic: 1rem;
     margin: 0.5rem 0;
     display: flex;
     padding: 0.5rem 0;
+    .error {
+      font-size: $basic;
+      color: red;
+    }
     .checkbox-label {
       flex-grow: 1;
       font-size: $basic;

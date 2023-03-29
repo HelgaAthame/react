@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import './nav.scss';
 
 export const Nav = () => (
-  <div className="nav">
+  <nav className="nav">
     <div className="link-wrapper">
       <div className="l-div">
         <Link to="/about-us" className="link">
@@ -17,5 +17,5 @@ export const Nav = () => (
         </Link>
       </div>
     </div>
-  </div>
+  </nav>
 );

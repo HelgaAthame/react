@@ -8,10 +8,10 @@ export const Main = () => {
   const { newCards } = useContext(AppContext);
 
   return (
-    <div className="main">
+    <main className="main">
       {newCards.map((card: CardT, i: number) => (
         <Card key={i.toString()} {...card} />
       ))}
-    </div>
+    </main>
   );
 };

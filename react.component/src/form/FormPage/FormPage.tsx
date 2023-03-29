@@ -218,11 +218,18 @@ export const FormPage = () => {
                 type="checkbox"
                 id="showMyAge"
                 className="checkbox-input"
-                {...register('showMyAge')}
+                {...register('showMyAge', {
+                  required: "Error: Show your age, please"
+                })}
               />
               <label htmlFor="showMyAge" className="checkbox-label">
                 Show my age
               </label>
+                {errors.showMyAge && (
+                  <span className="error" placeholder="error">
+                    <>{errors.showMyAge.message}</>
+                  </span>
+                )}
             </div>
 
             <div className="input__wrapper">
@@ -531,7 +538,6 @@ export const FormPage = () => {
       <div className="cards-section">
         {cards.map((card, index) => (
           <FromCard card={card} index={index} />
-
         ))}
       </div>
     </section>
