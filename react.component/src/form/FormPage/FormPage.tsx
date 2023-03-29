@@ -5,7 +5,7 @@ import { countries } from '../countries';
 import { Confirmation } from '../Confirmation';
 import { ReactComponent as Upload } from '../../assets/upload.svg';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { FromCard } from '../FormCard';
+import { FormCard } from '../FormCard';
 
 export type ProfileCard = {
   gender: string | undefined;
@@ -93,7 +93,6 @@ export const FormPage = () => {
     });
   };
 
-
   const validatePhoto = () => {
     const photoInput = document.querySelector('.input__file') as HTMLInputElement;
     const files = photoInput.files as FileList;
@@ -102,7 +101,7 @@ export const FormPage = () => {
     const isError = !(files.length > 0 && file.type.match(pattern));
     setFileError(isError);
     return isError ? false : true;
-  }
+  };
 
   const fileToUrl = async () => {
     async function readFileAsDataURL(file: File): Promise<string> {
@@ -235,17 +234,17 @@ export const FormPage = () => {
                 id="showMyAge"
                 className="checkbox-input"
                 {...register('showMyAge', {
-                  required: "Error: Show your age, please"
+                  required: 'Error: Show your age, please',
                 })}
               />
               <label htmlFor="showMyAge" className="checkbox-label">
                 Show my age
               </label>
-                {errors.showMyAge && (
-                  <span className="error" placeholder="error">
-                    <>{errors.showMyAge.message}</>
-                  </span>
-                )}
+              {errors.showMyAge && (
+                <span className="error" placeholder="error">
+                  <>{errors.showMyAge.message}</>
+                </span>
+              )}
             </div>
 
             <div className="input__wrapper">
@@ -256,7 +255,7 @@ export const FormPage = () => {
                 className="input__file"
                 placeholder="file_input"
                 {...register('file', {
-                  required: "Required",
+                  required: 'Required',
                 })}
               />
               <label htmlFor="profilePhoto" className="input__label">
@@ -266,7 +265,11 @@ export const FormPage = () => {
                   </>
                 </span>
                 <span className="input__file-button-text">UPLOAD PROFILE PHOTO</span>
-                {errors.file && <span className="error"><>{errors.file.message}</></span>}
+                {errors.file && (
+                  <span className="error">
+                    <>{errors.file.message}</>
+                  </span>
+                )}
                 {fileError && <span className="error">Error: upload an image</span>}
               </label>
             </div>
@@ -557,7 +560,7 @@ export const FormPage = () => {
 
       <div className="cards-section">
         {cards.map((card, index) => (
-          <FromCard card={card} index={index} />
+          <FormCard card={card} index={index} key={index} />
         ))}
       </div>
     </section>
