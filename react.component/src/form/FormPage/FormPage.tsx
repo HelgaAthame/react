@@ -39,6 +39,8 @@ export const FormPage = () => {
   const [confirm, setConfirm] = useState<boolean>(false);
   const [cards, setCards] = useState<ProfileCard[]>([]);
 
+  const [fileError, setFileError] = useState<boolean>(false);
+
   const dateToAge = (date: string) => {
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -53,6 +55,8 @@ export const FormPage = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const arr: ProfileCard[] = cards;
+
+    if (!validatePhoto()) return;
 
     setConfirm(true);
 
@@ -88,6 +92,17 @@ export const FormPage = () => {
       if (form) form.reset();
     });
   };
+
+
+  const validatePhoto = () => {
+    const photoInput = document.querySelector('.input__file') as HTMLInputElement;
+    const files = photoInput.files as FileList;
+    const pattern = /image-*/;
+    const file = Array.from(files).at(-1) as File;
+    const isError = !(files.length > 0 && file.type.match(pattern));
+    setFileError(isError);
+    return isError ? false : true;
+  }
 
   const fileToUrl = async () => {
     async function readFileAsDataURL(file: File): Promise<string> {
@@ -202,6 +217,7 @@ export const FormPage = () => {
                     valueAsDate: true,
                     validate: {
                       sixPlus: (date) => dateToAge(date) >= 6 || 'Only 6+ users',
+                      immortal: (date) => dateToAge(date) <= 150 || 'Are you immortal?',
                     },
                   })}
                 />
@@ -235,11 +251,13 @@ export const FormPage = () => {
             <div className="input__wrapper">
               <input
                 type="file"
-                name="file"
                 accept="image/*"
                 id="profilePhoto"
                 className="input__file"
                 placeholder="file_input"
+                {...register('file', {
+                  required: "Required",
+                })}
               />
               <label htmlFor="profilePhoto" className="input__label">
                 <span className="input__file-icon-wrapper">
@@ -248,6 +266,8 @@ export const FormPage = () => {
                   </>
                 </span>
                 <span className="input__file-button-text">UPLOAD PROFILE PHOTO</span>
+                {errors.file && <span className="error"><>{errors.file.message}</></span>}
+                {fileError && <span className="error">Error: upload an image</span>}
               </label>
             </div>
           </fieldset>
