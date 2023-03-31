@@ -7,6 +7,9 @@ import './index.scss';
 import { AboutUs } from './aboutUs/aboutus/AboutUs';
 import { FormPage } from './form/FormPage';
 
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -25,6 +28,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
