@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, Slice, SliceCaseReducers } from '@reduxjs/toolkit'
-import { getDocs } from '../../getDox';
-import { BookType } from '../../../app/types';
+import { getDocs } from './getDox';
+import { BookType } from '../app/types';
 
 const cards: BookType[] = await getDocs();
 
@@ -13,7 +13,7 @@ interface CardsState {
 
 const initialState: CardsState = {
   //isLoading: true,
-  cards: cards,
+  cards: [],
   searchValue: localStorage.getItem('best-book-store') ? localStorage.getItem('best-book-store') : '',
 }
 
@@ -29,11 +29,11 @@ export const searchSlice: Slice<CardsState, SliceCaseReducers<CardsState>, "sear
         ));
         console.log(state.cards);
       },
-    /*setIsLoading(state, action: PayloadAction<boolean>) {
-      state.isLoading = action.payload;
-    }*/
+    setCards(state, action: PayloadAction<BookType[]>) {
+      state.cards = action.payload;
+    }
   }
 });
 
-export const { sortCards, setIsLoading } = searchSlice.actions;
+export const { sortCards, setCards } = searchSlice.actions;
 export default searchSlice.reducer;

@@ -6,11 +6,14 @@ import { BookType } from '../types';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { sortCards, setIsLoading } from '../../redux/features/search/searchSlice';
+import { sortCards } from '../../redux/searchSlice';
+
+import { useGetCharsQuery } from '../../redux/api';
 
 export const SearchBar = () => {
-  const isLoading = useSelector((state: RootState) => state.isLoading);
-  const dispatch = useDispatch();
+
+  const { isLoading, isError, error, data=[] } = useGetCharsQuery();
+  //const dispatch = useDispatch();
 
   //const { docs, isLoading, setIsLoading, getDocs, setDocs } = useContext(AppContext);
 
@@ -22,7 +25,7 @@ export const SearchBar = () => {
       const inputValue = e.target.value;
       //setIsLoading(true);
       //dispatch(setIsLoading(true));
-      dispatch(sortCards(inputValue));
+      ////dispatch(sortCards(inputValue));
       //dispatch(setIsLoading(false));
 
       /*const books = await getDocs() as BookType[];
