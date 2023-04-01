@@ -8,17 +8,24 @@ import { setCards, sortCards } from '../../redux/searchSlice';
 
 export const SearchBar = () => {
 
-  const { data, isLoading, isError, error, isFetching } = useGetCharsQuery();
+  const { data, isLoading, isError, error, isFetching } = useGetCharsQuery(null);
   const dispatch = useDispatch();
 
   const wrapper: MutableRefObject<HTMLDivElement | null> = useRef(null);
   const input: MutableRefObject<HTMLInputElement | null> = useRef(null);
+
+  useEffect(() => {
+    const val = localStorage.getItem('bestbookstore-input-data') ? localStorage.getItem('bestbookstore-input-data') : '';
+    const inpUt = input.current as HTMLInputElement;
+    inpUt.value = val as string;
+  }, []);
 
   const handleKeyUp = async (e: any) => {
     if (e.code === "Enter") {
       const inputValue = e.target.value;
       if (data) dispatch(setCards(data.docs))
       dispatch(sortCards(inputValue));
+      localStorage.setItem('bestbookstore-input-data', inputValue);
     }
   }
 

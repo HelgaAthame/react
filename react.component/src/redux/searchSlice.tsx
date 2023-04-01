@@ -4,13 +4,11 @@ import { BookType } from '../app/types';
 interface CardsState {
   [x: string]: any;
   cards: BookType[];
-  searchValue: string | null;
 }
 
 const initialState: CardsState = {
   //isLoading: true,
   cards: [],
-  searchValue: localStorage.getItem('best-book-store') ? localStorage.getItem('best-book-store') : '',
 }
 
 export const searchSlice: Slice<CardsState, SliceCaseReducers<CardsState>, "search"> = createSlice({
