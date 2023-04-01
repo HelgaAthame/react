@@ -9,7 +9,7 @@ const fakeUpdateData = () => {
 
 describe('react Search Bar', () => {
   test('SearchBar renders properly', () => {
-    const searchbar = render(<SearchBar updateData={fakeUpdateData.bind(this)} />);
+    const searchbar = render(<SearchBar />);
     expect(searchbar).toBeTruthy();
     const input = screen.getByRole('searchbox') as HTMLInputElement;
     expect(input.type).toBe('search');
@@ -19,7 +19,7 @@ describe('react Search Bar', () => {
   });
 
   test('focus and blur input', () => {
-    render(<SearchBar updateData={fakeUpdateData.bind(this)} />);
+    render(<SearchBar />);
     const input = screen.getByRole('searchbox') as HTMLInputElement;
     fireEvent.focus(input);
     expect(input.style.color).toBe('rgb(16, 153, 102)');
