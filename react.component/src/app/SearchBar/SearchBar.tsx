@@ -18,13 +18,13 @@ export const SearchBar = () => {
   useEffect(() => {
     if (inputValue) {
       localStorage.setItem('bestbookstore-input-data', inputValue);
+      updateData(inputValue);
     } else {
       localStorage.setItem('bestbookstore-input-data', '');
     }
-  }, [inputValue]);
+  }, [inputValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    updateData(event.target.value);
     setInputValue(event.target.value);
   };
 
