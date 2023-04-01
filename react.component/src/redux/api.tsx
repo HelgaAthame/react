@@ -1,5 +1,6 @@
-import { RootState } from '@reduxjs/toolkit';
+//import { RootState } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BookType } from 'app/types';
 
 export const myApi = createApi({
   reducerPath: 'myApi',
@@ -10,8 +11,8 @@ export const myApi = createApi({
       return headers;
     },
   }),
-  endpoints: (build) => ({
-    getChars: build.query({
+  endpoints: (builder) => ({
+    getChars: builder.query({
       query: () => 'character',
     })
   }),

@@ -1,21 +1,15 @@
 import { ChangeEvent, KeyboardEvent, MutableRefObject, useContext, useEffect, useRef, useState } from 'react';
 import './searchbar.scss';
 import { ReactComponent as Lupa } from '../../assets/lupa.svg';
-//import { AppContext } from '../../context';
-import { BookType } from '../types';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { sortCards } from '../../redux/searchSlice';
-
+import { useDispatch } from 'react-redux';
 import { useGetCharsQuery } from '../../redux/api';
+import { setCards, sortCards } from '../../redux/searchSlice';
 
 export const SearchBar = () => {
 
-  const { isLoading, isError, error, data=[] } = useGetCharsQuery();
-  //const dispatch = useDispatch();
-
-  //const { docs, isLoading, setIsLoading, getDocs, setDocs } = useContext(AppContext);
+  const { data, isLoading, isError, error, isFetching } = useGetCharsQuery();
+  const dispatch = useDispatch();
 
   const wrapper: MutableRefObject<HTMLDivElement | null> = useRef(null);
   const input: MutableRefObject<HTMLInputElement | null> = useRef(null);
@@ -23,18 +17,8 @@ export const SearchBar = () => {
   const handleKeyUp = async (e: any) => {
     if (e.code === "Enter") {
       const inputValue = e.target.value;
-      //setIsLoading(true);
-      //dispatch(setIsLoading(true));
-      ////dispatch(sortCards(inputValue));
-      //dispatch(setIsLoading(false));
-
-      /*const books = await getDocs() as BookType[];
-      const filtered = books.filter((book) =>
-        Object.values(book).find(
-          (value: string | number) =>
-            value.toString().toLowerCase().search(inputValue.toLowerCase()) !== -1
-        ))
-      setDocs(filtered);*/
+      if (data) dispatch(setCards(data.docs))
+      dispatch(sortCards(inputValue));
     }
   }
 

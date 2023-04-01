@@ -4,11 +4,11 @@ import cardsReducer from './searchSlice';
 
 export const store = configureStore({
   reducer: {
-    [myApi.reducerPath]: cardsReducer,
+    [myApi.reducerPath]: myApi.reducer,
     cards: cardsReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(myApi.middleware)
 });
 
-export type RootState = ReturnType<typeof store.getState >;
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
