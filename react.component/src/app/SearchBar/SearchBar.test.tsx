@@ -3,10 +3,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 
 import { SearchBar } from './SearchBar';
 
-const fakeUpdateData = () => {
-  console.log('this is fake update data');
-};
-
 describe('react Search Bar', () => {
   test('SearchBar renders properly', () => {
     const searchbar = render(<SearchBar />);
@@ -19,7 +15,7 @@ describe('react Search Bar', () => {
   });
 
   test('focus and blur input', () => {
-    render(<SearchBar  />);
+    render(<SearchBar />);
     const input = screen.getByRole('searchbox') as HTMLInputElement;
     fireEvent.focus(input);
     expect(input.style.color).toBe('rgb(16, 153, 102)');

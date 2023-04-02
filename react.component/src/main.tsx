@@ -8,13 +8,13 @@ import { AboutUs } from './aboutUs/aboutus/AboutUs';
 import { FormPage } from './form/FormPage';
 
 import { Provider } from 'react-redux';
-import { store } from './redux';
+import { store } from './redux-folder';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    //errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/about-us',

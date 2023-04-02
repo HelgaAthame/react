@@ -7,7 +7,7 @@ export const store = configureStore({
     [myApi.reducerPath]: myApi.reducer,
     cards: cardsReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(myApi.middleware)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(myApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

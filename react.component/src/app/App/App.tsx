@@ -7,12 +7,12 @@ import { SearchBar } from '../SearchBar';
 export const App = () => {
   return (
     //<AppContextProvider>
-      <div className="app">
-        <Header currentPage="MAIN">
-          <SearchBar />
-        </Header>
-        <Main />
-      </div>
+    <div className="app">
+      <Header currentPage="MAIN">
+        <SearchBar />
+      </Header>
+      <Main />
+    </div>
     //</AppContextProvider>
   );
 };
