@@ -233,6 +233,9 @@ $basic: 1rem;
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      .error{
+        color: red;
+      }
       &:hover {
         cursor: pointer;
       }
@@ -337,6 +340,7 @@ $basic: 1rem;
   display: flex;
   flex-wrap: wrap;
   .form-card-wrapper{
+    max-width: 20rem;
     flex-basis: min-content;
     flex-grow: 1;
     overflow: hidden;
@@ -357,6 +361,8 @@ $basic: 1rem;
       padding: $basic;
       color: $color;
       transition: 1s;
+      display: flex;
+      flex-direction: column;
       &:hover {
         color: $col2;
         input {
@@ -364,12 +370,15 @@ $basic: 1rem;
         }
       }
       .profile-image-wrapper {
+        flex-grow: 1;
         width: 100%;
         text-align: center;
-        height: 15rem;
         overflow: hidden;
+        display: flex;
         img {
-          width: 15rem;
+          width: 5rem;
+          flex-grow: 1;
+          height: min-content;
         }
       }
       div {
