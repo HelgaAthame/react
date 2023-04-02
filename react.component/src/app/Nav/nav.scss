@@ -4,11 +4,11 @@ $basic: 1rem;
 
 .nav {
   display: flex;
+  flex-wrap: wrap;
   .link-wrapper{
     margin: $basic 0.5rem 0 ;
     display: flex;
     border-radius: 3px;
-    flex-grow: 1;
     display: flex;
     overflow: hidden;
     position:relative;

@@ -81,6 +81,7 @@ $basic: 1rem;
           display: flex;
           margin: 0.5rem 0;
           transition: 1s;
+          flex-wrap: wrap;
           .input {
             overflow: visible;
             flex-grow: 1;
@@ -90,6 +91,8 @@ $basic: 1rem;
             transition: 1s;
             margin-left: 0.5rem;
             color: $color;
+            width: 50%;
+            background-color: white;
             &:focus {
               color: $col2;
               border-bottom: 1px solid $col2;
@@ -157,6 +160,7 @@ $basic: 1rem;
     margin: 0.5rem 0;
     display: flex;
     padding: 0.5rem 0;
+    flex-wrap: wrap;
     .error {
       font-size: $basic;
       color: red;
@@ -254,6 +258,7 @@ $basic: 1rem;
     text-align: left;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     .select{
       height: 1.5rem;
       flex-grow: 1;
@@ -263,7 +268,9 @@ $basic: 1rem;
       margin: $basic;
       outline: none;
       border: none;
+      background-color: white;
       cursor: pointer;
+      width: 50%;
       &:hover{
         color: $col2;
       }
@@ -283,6 +290,7 @@ $basic: 1rem;
     flex-wrap: nowrap;
     align-items: center;
     font-size: $basic;
+    text-align: left;
 
     .switcher-input{
       height: 0;
