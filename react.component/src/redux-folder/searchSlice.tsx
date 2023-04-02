@@ -1,12 +1,15 @@
 import { createSlice, PayloadAction, Slice, SliceCaseReducers } from '@reduxjs/toolkit';
 import { BookType } from '../app/types';
+import { ProfileCard } from '../form/FormPage';
 
 interface CardsState {
   cards: BookType[];
+  profileCards: ProfileCard[];
 }
 
 const initialState: CardsState = {
   cards: [],
+  profileCards: [],
 };
 
 export const searchSlice: Slice<CardsState, SliceCaseReducers<CardsState>, 'search'> = createSlice({
@@ -24,8 +27,11 @@ export const searchSlice: Slice<CardsState, SliceCaseReducers<CardsState>, 'sear
     setCards(state, action: PayloadAction<BookType[]>) {
       state.cards = action.payload;
     },
+    addProfileCard(state, action: PayloadAction<ProfileCard>) {
+      state.profileCards.push(action.payload);
+    }
   },
 });
 
-export const { sortCards, setCards } = searchSlice.actions;
+export const { sortCards, setCards, addProfileCard } = searchSlice.actions;
 export default searchSlice.reducer;

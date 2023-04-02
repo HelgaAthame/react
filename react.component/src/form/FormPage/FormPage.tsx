@@ -5,8 +5,11 @@ import { countries } from '../countries';
 import { Confirmation } from '../Confirmation';
 import { ReactComponent as Upload } from '../../assets/upload.svg';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { useSelector, useDispatch } from 'react-redux';
+import { addProfileCard } from '../../redux-folder';
+import { RootState } from '../../redux-folder';
 
-type ProfileCard = {
+export type ProfileCard = {
   gender: string | undefined;
   firstName: string | undefined;
   lastName: string | undefined;
@@ -35,8 +38,11 @@ export const FormPage = () => {
     criteriaMode: 'all',
   });
 
+
+  const cards = useSelector((state: RootState) => state.cards);
+  const dispatch = useDispatch();
+
   const [confirm, setConfirm] = useState<boolean>(false);
-  const [cards, setCards] = useState<ProfileCard[]>([]);
 
   const [fileError, setFileError] = useState<boolean>(false);
 
@@ -53,7 +59,6 @@ export const FormPage = () => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    const arr: ProfileCard[] = cards;
 
     if (!validatePhoto()) return;
 
@@ -84,8 +89,7 @@ export const FormPage = () => {
     const promise = fileToUrl.call(this);
     promise.then((result) => {
       newCard.upload = result;
-      arr.push(newCard);
-      setCards(arr);
+      dispatch(addProfileCard(newCard));
 
       const form = document.querySelector('form');
       if (form) form.reset();
@@ -557,7 +561,7 @@ export const FormPage = () => {
       </form>
 
       <div className="cards-section">
-        {cards.map((card, index) => (
+        {cards.profileCards.map((card, index) => (
           <div className="form-card-wrapper" key={index}>
             <div className="form-card" placeholder="card">
               <div className="profile-image-wrapper">
