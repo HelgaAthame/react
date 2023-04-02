@@ -76,6 +76,7 @@ $basic: 1rem;
         font-family: Regular-font;
         display: flex;
         .label {
+          flex-wrap: wrap;
           text-align: left;
           flex-grow: 1;
           display: flex;
@@ -90,6 +91,8 @@ $basic: 1rem;
             transition: 1s;
             margin-left: 0.5rem;
             color: $color;
+            background-color: white;
+            width: 50%;
             &:focus {
               color: $col2;
               border-bottom: 1px solid $col2;
@@ -157,6 +160,10 @@ $basic: 1rem;
     margin: 0.5rem 0;
     display: flex;
     padding: 0.5rem 0;
+    .error {
+      color: red;
+      font-size: $basic;
+    }
     .checkbox-label {
       flex-grow: 1;
       font-size: $basic;
@@ -247,6 +254,7 @@ $basic: 1rem;
     text-align: left;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     .select{
       height: 1.5rem;
       flex-grow: 1;
@@ -257,6 +265,8 @@ $basic: 1rem;
       outline: none;
       border: none;
       cursor: pointer;
+      background-color: white;
+      width: 50%;
       &:hover{
         color: $col2;
       }
@@ -276,6 +286,7 @@ $basic: 1rem;
     flex-wrap: nowrap;
     align-items: center;
     font-size: $basic;
+    text-align: left;
 
     .switcher-input{
       height: 0;

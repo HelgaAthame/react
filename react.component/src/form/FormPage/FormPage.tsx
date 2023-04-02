@@ -217,11 +217,18 @@ export const FormPage = () => {
                 type="checkbox"
                 id="showMyAge"
                 className="checkbox-input"
-                {...register('showMyAge')}
+                {...register('showMyAge', {
+                  required: "Required",
+                })}
               />
               <label htmlFor="showMyAge" className="checkbox-label">
                 Show my age
               </label>
+              {errors.showMyAge && (
+                <span className="error" placeholder="error">
+                  <>{errors.showMyAge.message}</>
+                </span>
+              )}
             </div>
 
             <div className="input__wrapper">
