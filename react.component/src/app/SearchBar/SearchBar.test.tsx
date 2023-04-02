@@ -3,10 +3,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 
 import { SearchBar } from './SearchBar';
 
-const fakeUpdateData = () => {
-  console.log('this is fake update data');
-};
-
 describe('react Search Bar', () => {
   test('SearchBar renders properly', () => {
     const searchbar = render(<SearchBar />);
