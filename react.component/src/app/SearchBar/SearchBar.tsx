@@ -1,28 +1,30 @@
-import { ChangeEvent, KeyboardEvent, MutableRefObject, useContext, useEffect, useRef, useState } from 'react';
+import { KeyboardEvent, MutableRefObject, useContext, useRef } from 'react';
 import './searchbar.scss';
 import { ReactComponent as Lupa } from '../../assets/lupa.svg';
 import { AppContext } from '../../context';
 import { BookType } from '../types';
 
 export const SearchBar = () => {
-  const { docs, isLoading, setIsLoading, getDocs, setDocs } = useContext(AppContext);
+  const { isLoading, setIsLoading, getDocs, setDocs } = useContext(AppContext);
 
   const wrapper: MutableRefObject<HTMLDivElement | null> = useRef(null);
   const input: MutableRefObject<HTMLInputElement | null> = useRef(null);
 
-  const handleKeyUp = async (e: any) => {
-    if (e.code === "Enter" && !isLoading) {
-      const inputValue = e.target.value;
+  const handleKeyUp = async (e: KeyboardEvent) => {
+    if (e.code === 'Enter' && !isLoading) {
+      const inputEl = e.target as HTMLInputElement;
+      const inputValue = inputEl.value;
       setIsLoading(true);
-      const books = await getDocs() as BookType[];
+      const books = (await getDocs()) as BookType[];
       const filtered = books.filter((book) =>
         Object.values(book).find(
           (value: string | number) =>
             value.toString().toLowerCase().search(inputValue.toLowerCase()) !== -1
-        ))
+        )
+      );
       setDocs(filtered);
     }
-  }
+  };
 
   const handleFocus = () => {
     if (wrapper.current !== null) wrapper.current.style.flexGrow = '1';

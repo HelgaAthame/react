@@ -10,4 +10,4 @@ export type BookType = {
   race: string;
   spouse: string;
   wikiUrl: string;
-}
+};

@@ -10,9 +10,7 @@ export const Main = () => {
 
   return (
     <div className="main">
-      {docs && !isLoading && docs.map((doc: BookType) => (
-        <Card key={doc._id} {...doc} />
-      ))}
+      {docs && !isLoading && docs.map((doc: BookType) => <Card key={doc._id} {...doc} />)}
       {isLoading && <Loading />}
       {error && <div className="error">{error}</div>}
     </div>

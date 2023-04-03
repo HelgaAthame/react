@@ -16,8 +16,8 @@ const fakeInfo = {
   realm: 'fakeRealm',
   spouse: 'fakeSpouse',
   wikiUrl: 'fakewikiurl',
-  _id: 'fakeID'
-}
+  _id: 'fakeID',
+};
 
 const fakeCard1 = {
   key: 'fakeKey1',
@@ -47,41 +47,40 @@ const mrUnknown = {
   realm: '',
   spouse: '',
   wikiUrl: '',
-  _id: ''
-}
+  _id: '',
+};
 
 const handlers = [
-  rest.get(`https://the-one-api.dev/v2/character`, (req, res, ctx) => res(
-  ctx.status(200),
-  ctx.json({
-    docs: [
-    fakeCard1,
-    fakeCard2,
-    fakeCard3,
-    mrUnknown
-  ]}),
-  ))
+  rest.get(`https://the-one-api.dev/v2/character`, (req, res, ctx) =>
+    res(
+      ctx.status(200),
+      ctx.json({
+        docs: [fakeCard1, fakeCard2, fakeCard3, mrUnknown],
+      })
+    )
+  ),
 ];
 
 const server = setupServer(...handlers);
 
-  beforeAll(() => server.listen({
-    onUnhandledRequest: 'error'
-  }));
-  afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
+beforeAll(() =>
+  server.listen({
+    onUnhandledRequest: 'error',
+  })
+);
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
-  const routes = [
-    {
-      path: '/',
-      element: <App />,
-      errorElement: <ErrorPage />,
-    }
-  ];
-  const router = createMemoryRouter(routes);
+const routes = [
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <ErrorPage />,
+  },
+];
+const router = createMemoryRouter(routes);
 
 describe('mock to API', () => {
-
   test('loading after Enter press', async () => {
     const main = render(<RouterProvider router={router} />);
     const input = screen.getByRole('searchbox') as HTMLInputElement;
@@ -90,17 +89,16 @@ describe('mock to API', () => {
     await waitFor(() => {
       const cards = main.getAllByText(/fakeName/i);
       expect(cards).toHaveLength(3);
-      cards.forEach(card => expect(card).toBeTruthy());
+      cards.forEach((card) => expect(card).toBeTruthy());
     });
 
-
     act(() => fireEvent.change(input, { target: { value: 'fakeName1' } }));
-    act(() => fireEvent.keyUp(input, {key: 'Enter', code: 'Enter', charCode: 13}));
+    act(() => fireEvent.keyUp(input, { key: 'Enter', code: 'Enter', charCode: 13 }));
 
     await waitFor(() => {
       const cards = main.getAllByText(/fakeName/i);
       expect(cards).toHaveLength(1);
-      cards.forEach(card => expect(card).toBeTruthy());
+      cards.forEach((card) => expect(card).toBeTruthy());
     });
-  })
-})
+  });
+});
