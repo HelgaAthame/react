@@ -27,7 +27,7 @@ export const Main = () => {
     }
   }, [data]);
 
-  const cards = useSelector((state: RootState) => state.cards);
+  const curState = useSelector((state: RootState) => state.curState);
 
   console.log(`main renders ${i} time`);
   i++;
@@ -35,9 +35,9 @@ export const Main = () => {
   return (
     <div className="main">
       {data &&
-        cards &&
+        curState &&
         !isLoading &&
-        cards.cards.map((doc: BookType) => <Card key={doc._id} {...doc} />)}
+        curState.cards.map((doc: BookType) => <Card key={doc._id} {...doc} />)}
       {(isLoading || isFetching) && <Loading />}
       {isError && error}
     </div>

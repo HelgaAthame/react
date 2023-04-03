@@ -5,11 +5,13 @@ import { ProfileCard } from '../form/FormPage';
 interface CardsState {
   cards: BookType[];
   profileCards: ProfileCard[];
+  searchText: string;
 }
 
 const initialState: CardsState = {
   cards: [],
   profileCards: [],
+  searchText: '',
 };
 
 export const searchSlice: Slice<CardsState, SliceCaseReducers<CardsState>, 'search'> = createSlice({
@@ -29,6 +31,9 @@ export const searchSlice: Slice<CardsState, SliceCaseReducers<CardsState>, 'sear
     },
     addProfileCard(state, action: PayloadAction<ProfileCard>) {
       state.profileCards.push(action.payload);
+    },
+    changeSearchText(state, action: PayloadAction<string>) {
+      state.searchText = action.payload;
     }
   },
 });

@@ -39,7 +39,7 @@ export const FormPage = () => {
   });
 
 
-  const cards = useSelector((state: RootState) => state.cards);
+  const curState = useSelector((state: RootState) => state.curState);
   const dispatch = useDispatch();
 
   const [confirm, setConfirm] = useState<boolean>(false);
@@ -561,7 +561,7 @@ export const FormPage = () => {
       </form>
 
       <div className="cards-section">
-        {cards.profileCards.map((card, index) => (
+        {curState.profileCards.map((card, index) => (
           <div className="form-card-wrapper" key={index}>
             <div className="form-card" placeholder="card">
               <div className="profile-image-wrapper">
