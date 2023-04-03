@@ -8,18 +8,16 @@ export const Card = (props: BookType) => {
   const handleCloseClick = () => setClicked(false);
   const handleModalClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
-    const val = target.className;
-    if (val === 'modal') setClicked(false);
+    if (target.dataset.name === 'close') setClicked(false);
   };
   const handleCardClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
-    const val = target.className;
-    if (val === 'card' || val === 'name' || val === 'additional-wrapper') setClicked(true);
+    if (target.dataset.name === 'open') setClicked(true);
   };
   return (
-    <section className="card" onClick={handleCardClick} placeholder="card">
-      <div className="additional-wrapper">
-        <div className="name">{props.name}</div>
+    <section className="card" data-name="open" onClick={handleCardClick} placeholder="card">
+      <div className="additional-wrapper" data-name="open">
+        <div className="name" data-name="open">{props.name}</div>
         {clicked && <Modal
           handleModalClick={handleModalClick}
           handleCloseClick={handleCloseClick}

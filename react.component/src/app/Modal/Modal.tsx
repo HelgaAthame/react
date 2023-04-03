@@ -8,11 +8,11 @@ interface ModalProps extends BookType {
 }
 
 export const Modal = (props: ModalProps) => (
-          <div className="modal" onClick={props.handleModalClick}>
+          <div className="modal" data-name="close" onClick={props.handleModalClick}>
             <div className="close" onClick={props.handleCloseClick}></div>
             <div className="modal-wrapper">
               <div className="modal-content">
-                <div className="name">Name: {props.name === '' ? 'unknown' : props.name}</div>
+                <div className="name" data-name="open">Name: {props.name === '' ? 'unknown' : props.name}</div>
                 <div className="birth">Birth: {props.birth === '' ? 'unknown' : props.birth}</div>
                 <div className="death">Death: {props.death === '' ? 'unknown' : props.death}</div>
                 <div className="gender">
