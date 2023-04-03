@@ -1,5 +1,6 @@
 import { BookType } from "../types";
 import { MouseEventHandler } from 'react';
+import './modal.scss';
 
 interface ModalProps extends BookType {
   handleModalClick: MouseEventHandler<HTMLDivElement>,
