@@ -1,5 +1,5 @@
 import { Header } from '../../app/Header';
-import { useState } from 'react';
+import { MutableRefObject, useRef, useState } from 'react';
 import './formPage.scss';
 import { countries } from '../countries';
 import { Confirmation } from '../Confirmation';
@@ -34,12 +34,18 @@ export const FormPage = () => {
     formState: { errors },
   } = useForm({
     criteriaMode: 'all',
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
   });
 
   const [confirm, setConfirm] = useState<boolean>(false);
   const [cards, setCards] = useState<ProfileCard[]>([]);
 
   const [fileError, setFileError] = useState<boolean>(false);
+
+  const form = useRef() as MutableRefObject<HTMLFormElement>;
+  const photoInputWrapper = useRef() as MutableRefObject<HTMLInputElement>;
+  const buttonText = useRef() as MutableRefObject<HTMLSpanElement>;
 
   const dateToAge = (date: string) => {
     const now = new Date();
@@ -88,13 +94,12 @@ export const FormPage = () => {
       arr.push(newCard);
       setCards(arr);
 
-      const form = document.querySelector('form');
-      if (form) form.reset();
+      if (form.current) form.current.reset();
     });
   };
 
   const validatePhoto = () => {
-    const photoInput = document.querySelector('.input__file') as HTMLInputElement;
+    const photoInput = photoInputWrapper.current.firstChild as HTMLInputElement;
     const files = photoInput.files as FileList;
     const pattern = /image-*/;
     const file = Array.from(files).at(-1) as File;
@@ -117,7 +122,7 @@ export const FormPage = () => {
 
       return result;
     }
-    const upload = document.querySelector('.input__file-button-text') as HTMLDivElement;
+    const upload = buttonText.current;
     const input = upload.parentElement?.parentElement?.firstChild as HTMLInputElement;
     const files = input.files;
     let fileURL =
@@ -137,7 +142,13 @@ export const FormPage = () => {
       {confirm && <Confirmation />}
       <Header currentPage="FORM" />
 
-      <form placeholder="form" className="form" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        placeholder="form"
+        className="form"
+        ref={form}
+        autoComplete="off"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="fieldset-wrapper">
           <fieldset className="fieldset">
             <h3>Personal Information</h3>
@@ -247,7 +258,7 @@ export const FormPage = () => {
               )}
             </div>
 
-            <div className="input__wrapper">
+            <div className="input__wrapper" ref={photoInputWrapper}>
               <input
                 type="file"
                 accept="image/*"
@@ -264,7 +275,9 @@ export const FormPage = () => {
                     <Upload />
                   </>
                 </span>
-                <span className="input__file-button-text">UPLOAD PROFILE PHOTO</span>
+                <span className="input__file-button-text" ref={buttonText}>
+                  UPLOAD PROFILE PHOTO
+                </span>
                 {errors.file && (
                   <span className="error">
                     <>{errors.file.message}</>

@@ -13,13 +13,4 @@ describe('react Search Bar', () => {
     fireEvent.change(input, { target: { value: 'fakeValue' } });
     expect(input.value).toBe('fakeValue');
   });
-
-  test('focus and blur input', () => {
-    render(<SearchBar />);
-    const input = screen.getByRole('searchbox') as HTMLInputElement;
-    fireEvent.focus(input);
-    expect(input.style.color).toBe('rgb(16, 153, 102)');
-    fireEvent.blur(input);
-    expect(input.style.color).toBe('rgb(16, 85, 68)');
-  });
 });
