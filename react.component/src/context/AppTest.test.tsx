@@ -5,6 +5,11 @@ import { render, screen, waitFor, act, fireEvent } from '@testing-library/react'
 import { App } from '../app/App';
 import { ErrorPage } from '../errorPage';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { BookType } from '../app/types';
+
+interface FakeType extends BookType {
+  key: string;
+}
 
 const fakeInfo = {
   birth: 'fakebirth',
@@ -19,17 +24,17 @@ const fakeInfo = {
   _id: 'fakeID',
 };
 
-const fakeCard1 = {
+const fakeCard1: FakeType = {
   key: 'fakeKey1',
   name: 'fakeName1',
   ...fakeInfo,
 };
-const fakeCard2 = {
+const fakeCard2: FakeType = {
   key: 'fakeKey2',
   name: 'fakeName2',
   ...fakeInfo,
 };
-const fakeCard3 = {
+const fakeCard3: FakeType = {
   key: 'fakeKey3',
   name: 'fakeName3',
   ...fakeInfo,

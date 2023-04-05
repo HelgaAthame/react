@@ -1,12 +1,13 @@
 import { filterFunc } from '../app/SearchBar';
 import { BookType } from '../app/types';
 import { createContext, ReactNode, SetStateAction, useEffect, useState } from 'react';
+import { getDocs } from './getDocs';
 
 type ChildrenProps = {
   children: ReactNode;
 };
 
-type ContextType = {
+export type ContextT = {
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setDocs: React.Dispatch<React.SetStateAction<BookType[]>>;
@@ -15,7 +16,7 @@ type ContextType = {
   getDocs: () => Promise<BookType[]>;
 };
 
-export const AppContext = createContext<ContextType>({
+export const AppContext = createContext<ContextT>({
   isLoading: true,
   docs: [],
   setIsLoading: function (value: SetStateAction<boolean>): void {
@@ -31,11 +32,12 @@ export const AppContext = createContext<ContextType>({
 });
 
 export const AppContextProvider = ({ children }: ChildrenProps) => {
+
   const [docs, setDocs] = useState<BookType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const getDocs = async (): Promise<BookType[]> => {
+  /*const getDocs = async (): Promise<BookType[]> => {
     const response = await fetch(`https://the-one-api.dev/v2/character`, {
       method: 'get',
       headers: new Headers({
@@ -46,11 +48,12 @@ export const AppContextProvider = ({ children }: ChildrenProps) => {
     const data = await response.json();
     setIsLoading(false);
     return data.docs;
-  };
+  };*/
 
   useEffect(() => {
     getDocs()
       .then((docs) => {
+        setIsLoading(false);
         const sortValue = localStorage.getItem('bestbookstore-input-data') || '';
         const sortedDocs = filterFunc(docs, sortValue);
         setDocs(sortedDocs);
