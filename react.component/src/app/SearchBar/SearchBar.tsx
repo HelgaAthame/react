@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useEffect, useState,  KeyboardEventHandler } from 'react';
+import { ChangeEvent, useContext, useEffect, useState, KeyboardEventHandler } from 'react';
 import './searchbar.scss';
 import { ReactComponent as SearchIcon } from '../../assets/searchIcon.svg';
 import { AppContext } from '../../context';
@@ -11,7 +11,7 @@ export const filterFunc = (toFilter: BookType[], sortVal: string) => {
         value.toString().toLowerCase().search(sortVal.toLowerCase()) !== -1
     )
   );
-}
+};
 
 export const SearchBar = () => {
   const { isLoading, setIsLoading, getDocs, setDocs } = useContext(AppContext);
@@ -22,13 +22,13 @@ export const SearchBar = () => {
 
   useEffect(() => {
     return () => {
-    if (inputValue) {
-      localStorage.setItem('bestbookstore-input-data', inputValue);
-    } else {
-      localStorage.setItem('bestbookstore-input-data', '');
-    }
-  };
-}, [inputValue]);
+      if (inputValue) {
+        localStorage.setItem('bestbookstore-input-data', inputValue);
+      } else {
+        localStorage.setItem('bestbookstore-input-data', '');
+      }
+    };
+  }, [inputValue]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -36,7 +36,6 @@ export const SearchBar = () => {
 
   const handleKeyUp: KeyboardEventHandler<HTMLInputElement> = async (e) => {
     if (e.code === 'Enter' && !isLoading) {
-      const inputEl = e.target as HTMLInputElement;
       setIsLoading(true);
       const books = (await getDocs()) as BookType[];
       const filtered = filterFunc(books, inputValue);

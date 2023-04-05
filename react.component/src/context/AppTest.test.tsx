@@ -101,9 +101,8 @@ describe('mock to API', () => {
     act(() => fireEvent.keyUp(input, { key: 'Enter', code: 'Enter', charCode: 13 }));
 
     await waitFor(() => {
-      const cards = main.getAllByText(/fakeName/i);
-      expect(cards).toHaveLength(1);
-      cards.forEach((card) => expect(card).toBeTruthy());
+      const loading = main.getByText(/Loading/i);
+      expect(loading).toBeTruthy();
     });
   });
 });

@@ -41,7 +41,7 @@ describe('react Card', () => {
       expect(modal).toBeTruthy();
     });
 
-    const close = screen.getByTestId('close');;
+    const close = screen.getByTestId('close');
     act(() => close.click());
 
     const name = screen.getByTestId('name');

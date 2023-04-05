@@ -17,12 +17,16 @@ export const Card = (props: BookType) => {
   return (
     <section className="card" data-name="open" onClick={handleCardClick} data-testid="card">
       <div className="additional-wrapper" data-testid="additional-wrapper" data-name="open">
-        <div className="name" data-testid="name" data-name="open">{props.name}</div>
-        {clicked && <Modal
-          handleModalClick={handleModalClick}
-          handleCloseClick={handleCloseClick}
-          {...props}
-        />}
+        <div className="name" data-testid="name" data-name="open">
+          {props.name}
+        </div>
+        {clicked && (
+          <Modal
+            handleModalClick={handleModalClick}
+            handleCloseClick={handleCloseClick}
+            {...props}
+          />
+        )}
       </div>
     </section>
   );

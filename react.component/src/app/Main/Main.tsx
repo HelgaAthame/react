@@ -1,4 +1,4 @@
-import { AppContext, ContextT } from '../../context';
+import { AppContext } from '../../context';
 import { useContext } from 'react';
 import './main.scss';
 import { BookType } from '../types/';

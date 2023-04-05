@@ -32,7 +32,6 @@ export const AppContext = createContext<ContextT>({
 });
 
 export const AppContextProvider = ({ children }: ChildrenProps) => {
-
   const [docs, setDocs] = useState<BookType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
