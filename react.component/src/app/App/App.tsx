@@ -1,27 +1,18 @@
-import { Component } from 'react';
 import './App.scss';
 import { Header } from '../Header';
 import { Main } from '../Main';
-import { cards, CardT } from '../cards';
 import { SearchBar } from '../SearchBar';
+import { AppContextProvider } from '../../context';
 
-export class App extends Component {
-  state = {
-    cards: cards,
-  };
-
-  updateData(cards: CardT[]) {
-    this.setState({ cards: cards });
-  }
-
-  render() {
-    return (
+export const App = () => {
+  return (
+    <AppContextProvider>
       <div className="app">
-        <Header cards={[]}>
-          <SearchBar cards={this.state.cards} updateData={this.updateData.bind(this)} />
+        <Header currentPage="MAIN">
+          <SearchBar />
         </Header>
-        <Main cards={this.state.cards} updateData={this.updateData.bind(this)}/>
+        <Main />
       </div>
-    );
-  }
-}
+    </AppContextProvider>
+  );
+};

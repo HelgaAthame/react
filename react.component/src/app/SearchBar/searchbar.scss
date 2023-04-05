@@ -9,6 +9,7 @@ $basic: 1rem;
   justify-content: flex-start;
   margin: $basic 0.5rem 0;
   .search_wrapper{
+    background-color: white;
     padding: $basic;
     border-radius: 2px;
     border-width: 1px;
@@ -25,6 +26,7 @@ $basic: 1rem;
     transition: 1s;
     &:hover {
       border-color: $col2;
+      flex-grow: 1;
     }
     .lupa {
       width: 2rem;
@@ -42,4 +44,18 @@ $basic: 1rem;
       transition: 1s;
     }
   }
+
+
+.search_wrapper:has(.input:focus) {
+  flex-grow: 1;
+  .input {
+    color: $color;
+  }
+}
+.search_wrapper:has(.input:hover) {
+  flex-grow: 1;
+  .input {
+    color: $color;
+  }
+}
 }

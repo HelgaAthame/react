@@ -1,21 +1,17 @@
-import { Component } from 'react';
+import { AppContext } from '../../context';
+import { useContext } from 'react';
 import { Card } from '../Card';
 import { CardT } from '../cards';
 import './main.scss';
 
-type PropT = {
-  cards: CardT[];
-  updateData: (cards: CardT[]) => void;
-};
+export const Main = () => {
+  const { newCards } = useContext(AppContext);
 
-export class Main extends Component<PropT> {
-  render() {
-    return (
-      <div className="main">
-        {this.props.cards.map((card: CardT, i: number) => (
-          <Card key={i.toString()} {...card} cards={this.props.cards} updateData = {this.props.updateData} />
-        ))}
-      </div>
-    );
-  }
-}
+  return (
+    <main className="main">
+      {newCards.map((card: CardT, i: number) => (
+        <Card key={i.toString()} {...card} />
+      ))}
+    </main>
+  );
+};
