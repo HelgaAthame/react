@@ -1,3 +1,4 @@
+import { filterFunc } from '../app/SearchBar';
 import { BookType } from '../app/types';
 import { createContext, ReactNode, SetStateAction, useEffect, useState } from 'react';
 
@@ -50,7 +51,9 @@ export const AppContextProvider = ({ children }: ChildrenProps) => {
   useEffect(() => {
     getDocs()
       .then((docs) => {
-        setDocs(docs);
+        const sortValue = localStorage.getItem('bestbookstore-input-data') || '';
+        const sortedDocs = filterFunc(docs, sortValue);
+        setDocs(sortedDocs);
         setError(null);
       })
       .catch((e) => {

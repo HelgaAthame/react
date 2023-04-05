@@ -1,60 +1,66 @@
-import { KeyboardEvent, MutableRefObject, useContext, useRef } from 'react';
+import { ChangeEvent, MutableRefObject, useContext, useEffect, useRef, useState,  KeyboardEventHandler } from 'react';
 import './searchbar.scss';
 import { ReactComponent as Lupa } from '../../assets/lupa.svg';
 import { AppContext } from '../../context';
 import { BookType } from '../types';
 
+export const filterFunc = (toFilter: BookType[], sortVal: string) => {
+  return toFilter.filter((el) =>
+    Object.values(el).find(
+      (value: string | number) =>
+        value.toString().toLowerCase().search(sortVal.toLowerCase()) !== -1
+    )
+  );
+}
+
 export const SearchBar = () => {
   const { isLoading, setIsLoading, getDocs, setDocs } = useContext(AppContext);
 
-  const wrapper: MutableRefObject<HTMLDivElement | null> = useRef(null);
-  const input: MutableRefObject<HTMLInputElement | null> = useRef(null);
+  const [inputValue, setInputValue] = useState<string>(
+    localStorage.getItem('bestbookstore-input-data') || ''
+  );
 
-  const handleKeyUp = async (e: KeyboardEvent) => {
+  useEffect(() => {
+    return () => {
+    if (inputValue) {
+      localStorage.setItem('bestbookstore-input-data', inputValue);
+    } else {
+      localStorage.setItem('bestbookstore-input-data', '');
+    }
+  };
+}, [inputValue]);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleKeyUp: KeyboardEventHandler<HTMLInputElement> = async (e) => {
     if (e.code === 'Enter' && !isLoading) {
       const inputEl = e.target as HTMLInputElement;
-      const inputValue = inputEl.value;
       setIsLoading(true);
       const books = (await getDocs()) as BookType[];
-      const filtered = books.filter((book) =>
+      const filtered = filterFunc(books, inputValue);/*books.filter((book) =>
         Object.values(book).find(
           (value: string | number) =>
             value.toString().toLowerCase().search(inputValue.toLowerCase()) !== -1
         )
-      );
+      );*/
       setDocs(filtered);
     }
   };
 
-  const handleFocus = () => {
-    if (wrapper.current !== null) wrapper.current.style.flexGrow = '1';
-    if (input && input.current) input.current.style.color = '#109966';
-  };
-
-  const handleBlur = () => {
-    if (wrapper.current && input && document.activeElement !== input.current)
-      wrapper.current.style.flexGrow = '0';
-    if (input && input.current) input.current.style.color = '#105544';
-  };
-
   return (
     <div className="wrapper">
-      <div
-        ref={wrapper}
-        className="search_wrapper"
-        onMouseOver={handleFocus}
-        onMouseOut={handleBlur}
-      >
+      <div className="search_wrapper">
         <div className="lupa">
           <Lupa />
         </div>
         <input
-          ref={input}
+          value={inputValue}
           type="search"
           className="input"
+          onChange={handleChange}
           onKeyUp={handleKeyUp}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
           required
         />
       </div>

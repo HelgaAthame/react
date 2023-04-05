@@ -1,12 +1,13 @@
 import { Header } from '../../app/Header';
-import { useState } from 'react';
+import { MutableRefObject, useRef, useState } from 'react';
 import './formPage.scss';
 import { countries } from '../countries';
 import { Confirmation } from '../Confirmation';
 import { ReactComponent as Upload } from '../../assets/upload.svg';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { FormCard } from '../FormCard';
 
-type ProfileCard = {
+export type ProfileCard = {
   gender: string | undefined;
   firstName: string | undefined;
   lastName: string | undefined;
@@ -33,10 +34,18 @@ export const FormPage = () => {
     formState: { errors },
   } = useForm({
     criteriaMode: 'all',
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
   });
 
   const [confirm, setConfirm] = useState<boolean>(false);
   const [cards, setCards] = useState<ProfileCard[]>([]);
+
+  const [fileError, setFileError] = useState<boolean>(false);
+
+  const form = useRef() as MutableRefObject<HTMLFormElement>;
+  const photoInputWrapper = useRef() as MutableRefObject<HTMLInputElement>;
+  const buttonText = useRef() as MutableRefObject<HTMLSpanElement>;
 
   const dateToAge = (date: string) => {
     const now = new Date();
@@ -52,6 +61,8 @@ export const FormPage = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const arr: ProfileCard[] = cards;
+
+    if (!validatePhoto()) return;
 
     setConfirm(true);
 
@@ -83,9 +94,18 @@ export const FormPage = () => {
       arr.push(newCard);
       setCards(arr);
 
-      const form = document.querySelector('form');
-      if (form) form.reset();
+      if (form.current) form.current.reset();
     });
+  };
+
+  const validatePhoto = () => {
+    const photoInput = photoInputWrapper.current.firstChild as HTMLInputElement;
+    const files = photoInput.files as FileList;
+    const pattern = /image-*/;
+    const file = Array.from(files).at(-1) as File;
+    const isError = !(files.length > 0 && file.type.match(pattern));
+    setFileError(isError);
+    return isError ? false : true;
   };
 
   const fileToUrl = async () => {
@@ -102,7 +122,7 @@ export const FormPage = () => {
 
       return result;
     }
-    const upload = document.querySelector('.input__file-button-text') as HTMLDivElement;
+    const upload = buttonText.current;
     const input = upload.parentElement?.parentElement?.firstChild as HTMLInputElement;
     const files = input.files;
     let fileURL =
@@ -122,7 +142,13 @@ export const FormPage = () => {
       {confirm && <Confirmation />}
       <Header currentPage="FORM" />
 
-      <form placeholder="form" className="form" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        placeholder="form"
+        className="form"
+        ref={form}
+        autoComplete="off"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="fieldset-wrapper">
           <fieldset className="fieldset">
             <h3>Personal Information</h3>
@@ -201,6 +227,7 @@ export const FormPage = () => {
                     valueAsDate: true,
                     validate: {
                       sixPlus: (date) => dateToAge(date) >= 6 || 'Only 6+ users',
+                      immortal: (date) => dateToAge(date) <= 150 || 'Are you immortal?',
                     },
                   })}
                 />
@@ -217,21 +244,30 @@ export const FormPage = () => {
                 type="checkbox"
                 id="showMyAge"
                 className="checkbox-input"
-                {...register('showMyAge')}
+                {...register('showMyAge', {
+                  required: 'Error: Show your age, please',
+                })}
               />
               <label htmlFor="showMyAge" className="checkbox-label">
                 Show my age
               </label>
+              {errors.showMyAge && (
+                <span className="error" placeholder="error">
+                  <>{errors.showMyAge.message}</>
+                </span>
+              )}
             </div>
 
-            <div className="input__wrapper">
+            <div className="input__wrapper" ref={photoInputWrapper}>
               <input
                 type="file"
-                name="file"
                 accept="image/*"
                 id="profilePhoto"
                 className="input__file"
                 placeholder="file_input"
+                {...register('file', {
+                  required: 'Required',
+                })}
               />
               <label htmlFor="profilePhoto" className="input__label">
                 <span className="input__file-icon-wrapper">
@@ -239,7 +275,15 @@ export const FormPage = () => {
                     <Upload />
                   </>
                 </span>
-                <span className="input__file-button-text">UPLOAD PROFILE PHOTO</span>
+                <span className="input__file-button-text" ref={buttonText}>
+                  UPLOAD PROFILE PHOTO
+                </span>
+                {errors.file && (
+                  <span className="error">
+                    <>{errors.file.message}</>
+                  </span>
+                )}
+                {fileError && <span className="error">Error: upload an image</span>}
               </label>
             </div>
           </fieldset>
@@ -529,37 +573,7 @@ export const FormPage = () => {
 
       <div className="cards-section">
         {cards.map((card, index) => (
-          <div className="form-card-wrapper" key={index}>
-            <div className="form-card" placeholder="card">
-              <div className="profile-image-wrapper">
-                <img src={card['upload']} />
-              </div>
-              <div className="form-card__name">Name: {card.firstName + ' ' + card.lastName}</div>
-              <div className="form-card__age">Age: {card.showMyAge ? card.age : 'hidden'}</div>
-              <div className="form-card__age">Gender: {card.gender}</div>
-              <div className="form-card__address">
-                Address:{' '}
-                {card.zipCode + ', ' + card.country + ', ' + card.city + ', ' + card.address}
-              </div>
-              <div className="form-card__email">
-                E-mail: {card.email}&nbsp;
-                {card.receiveMail ? 'R' : "Don't r"}eceive mails
-              </div>
-              <div className="form-card__phone">
-                Phone: {card.phone}&nbsp;
-                {card.receiveSMS ? 'R' : "Don't r"}eceive sms
-              </div>
-              <div className="form-card__first">
-                I{card.firstCheckbox ? ' ' : " don't "}like this website
-              </div>
-              <div className="form-card__second">
-                I{card.secondCheckbox ? ' ' : " don't "}enjoy filling out forms
-              </div>
-              <div className="form-card__third">
-                I{card.thirdCheckbox ? ' ' : " don't "}like reading good books
-              </div>
-            </div>
-          </div>
+          <FormCard card={card} index={index} key={index} />
         ))}
       </div>
     </section>
