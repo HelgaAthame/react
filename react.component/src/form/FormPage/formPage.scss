@@ -338,8 +338,6 @@ $basic: 1rem;
   display: flex;
   flex-wrap: wrap;
   .form-card-wrapper{
-    flex-basis: min-content;
-    flex-grow: 1;
     overflow: hidden;
     position:relative;
     @include animated-border;
@@ -358,6 +356,8 @@ $basic: 1rem;
       padding: $basic;
       color: $color;
       transition: 1s;
+      display:flex;
+      flex-direction: column;
       &:hover {
         color: $col2;
         input {
@@ -365,12 +365,12 @@ $basic: 1rem;
         }
       }
       .profile-image-wrapper {
+        flex-grow: 1;
         width: 100%;
         text-align: center;
-        height: 15rem;
         overflow: hidden;
         img {
-          width: 15rem;
+          width: 100%;
         }
       }
       div {

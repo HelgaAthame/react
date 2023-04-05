@@ -14,7 +14,7 @@ export const filterFunc = (toFilter: BookType[], sortVal: string) => {
 };
 
 export const SearchBar = () => {
-  const { isLoading, setIsLoading, getDocs, setDocs } = useContext(AppContext);
+  const { isLoading, setIsLoading, getDocs, setDocs, setError } = useContext(AppContext);
 
   const [inputValue, setInputValue] = useState<string>(
     localStorage.getItem('bestbookstore-input-data') || ''
@@ -37,9 +37,15 @@ export const SearchBar = () => {
   const handleKeyUp: KeyboardEventHandler<HTMLInputElement> = async (e) => {
     if (e.code === 'Enter' && !isLoading) {
       setIsLoading(true);
-      const books = (await getDocs()) as BookType[];
-      const filtered = filterFunc(books, inputValue);
-      setDocs(filtered);
+      setError(null);
+      try {
+        const books = (await getDocs()) as BookType[];
+        const filtered = filterFunc(books, inputValue);
+        setDocs(filtered);
+      } catch (e: unknown) {
+        if (e instanceof Error) setError(e.message);
+      }
+      setIsLoading(false);
     }
   };
 

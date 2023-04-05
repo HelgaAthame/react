@@ -10,6 +10,7 @@ type ChildrenProps = {
 export type ContextT = {
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setError: React.Dispatch<React.SetStateAction<string | null>>;
   setDocs: React.Dispatch<React.SetStateAction<BookType[]>>;
   docs: BookType[];
   error: string | null;
@@ -20,6 +21,9 @@ export const AppContext = createContext<ContextT>({
   isLoading: true,
   docs: [],
   setIsLoading: function (value: SetStateAction<boolean>): void {
+    throw new Error(`Function not implemented. ${value}`);
+  },
+  setError: function (value: SetStateAction<string | null>): void {
     throw new Error(`Function not implemented. ${value}`);
   },
   setDocs: function (value: SetStateAction<BookType[]>): void {
@@ -36,19 +40,6 @@ export const AppContextProvider = ({ children }: ChildrenProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  /*const getDocs = async (): Promise<BookType[]> => {
-    const response = await fetch(`https://the-one-api.dev/v2/character`, {
-      method: 'get',
-      headers: new Headers({
-        Authorization: 'Bearer TinzBFnLUdwvfCjMa4hL',
-      }),
-    });
-    if (!response.ok) throw new Error('Could not fetch the data from the resourse');
-    const data = await response.json();
-    setIsLoading(false);
-    return data.docs;
-  };*/
-
   useEffect(() => {
     getDocs()
       .then((docs) => {
@@ -64,7 +55,7 @@ export const AppContextProvider = ({ children }: ChildrenProps) => {
       });
   }, []);
 
-  const value = { docs, setDocs, getDocs, isLoading, setIsLoading, error };
+  const value = { docs, setDocs, getDocs, isLoading, setIsLoading, error, setError };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
