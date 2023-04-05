@@ -44,7 +44,7 @@ describe('FormCard test', () => {
     };
     render(<FormCard card={fakeCard1} index={100} />);
     render(<FormCard card={fakeCard2} index={101} />);
-    const cards = screen.getAllByPlaceholderText('card');
+    const cards = screen.getAllByTestId('card');
     expect(cards).toHaveLength(2);
     cards.forEach((card) => expect(card).toBeTruthy());
   });

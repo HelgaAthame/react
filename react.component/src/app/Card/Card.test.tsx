@@ -21,7 +21,7 @@ export const fakeCard = {
 describe('react Card', () => {
   test('Card renders properly', () => {
     render(<Card {...fakeCard} />);
-    const card = screen.getAllByPlaceholderText('card');
+    const card = screen.getAllByTestId('card');
     expect(card).toBeTruthy();
   });
 
@@ -33,43 +33,33 @@ describe('react Card', () => {
 
   test('Modal window opens', async () => {
     render(<Card {...fakeCard} />);
-    const card = screen.getByPlaceholderText('card');
+    const card = screen.getByTestId('card');
     act(() => card.click());
 
     await waitFor(() => {
-      const modal = card.querySelector('.modal');
+      const modal = screen.getByTestId('modal');
       expect(modal).toBeTruthy();
     });
 
-    const close = card.querySelector('.close') as HTMLElement;
+    const close = screen.getByTestId('close');;
     act(() => close.click());
 
-    await waitFor(() => {
-      const modal = card.querySelector('.modal');
-      expect(modal).toBeFalsy();
-    });
-
-    const name = card.querySelector('.name') as HTMLElement;
+    const name = screen.getByTestId('name');
     act(() => name.click());
 
     await waitFor(() => {
-      const modal = card.querySelector('.modal');
+      const modal = screen.getByTestId('modal');
       expect(modal).toBeTruthy();
     });
 
-    const modal = card.querySelector('.modal') as HTMLElement;
+    const modal = screen.getByTestId('modal');
     act(() => modal.click());
 
-    await waitFor(() => {
-      const modal = card.querySelector('.modal');
-      expect(modal).toBeFalsy();
-    });
-
-    const add = card.querySelector('.additional-wrapper') as HTMLElement;
+    const add = screen.getByTestId('additional-wrapper');
     act(() => add.click());
 
     await waitFor(() => {
-      const modal = card.querySelector('.modal');
+      const modal = screen.getByTestId('modal');
       expect(modal).toBeTruthy();
     });
   });

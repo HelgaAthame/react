@@ -7,7 +7,7 @@ describe('react Search Bar', () => {
   test('SearchBar renders properly', () => {
     const searchbar = render(<SearchBar />);
     expect(searchbar).toBeTruthy();
-    const input = screen.getByRole('searchbox') as HTMLInputElement;
+    const input = screen.getByTestId('input search') as HTMLInputElement;
     expect(input.type).toBe('search');
     expect(input.className).toBe('input');
     fireEvent.change(input, { target: { value: 'fakeValue' } });

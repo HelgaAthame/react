@@ -1,5 +1,5 @@
 import { Header } from '../../app/Header';
-import { MutableRefObject, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import './formPage.scss';
 import { countries } from '../countries';
 import { Confirmation } from '../Confirmation';
@@ -43,9 +43,9 @@ export const FormPage = () => {
 
   const [fileError, setFileError] = useState<boolean>(false);
 
-  const form = useRef() as MutableRefObject<HTMLFormElement>;
-  const photoInputWrapper = useRef() as MutableRefObject<HTMLInputElement>;
-  const buttonText = useRef() as MutableRefObject<HTMLSpanElement>;
+  const form = useRef<HTMLFormElement | null>(null);
+  const photoInputWrapper = useRef<HTMLInputElement | null>(null);
+  const buttonText = useRef<HTMLSpanElement | null>(null);
 
   const dateToAge = (date: string) => {
     const now = new Date();
@@ -99,7 +99,7 @@ export const FormPage = () => {
   };
 
   const validatePhoto = () => {
-    const photoInput = photoInputWrapper.current.firstChild as HTMLInputElement;
+    const photoInput = photoInputWrapper.current?.firstChild as HTMLInputElement;
     const files = photoInput.files as FileList;
     const pattern = /image-*/;
     const file = Array.from(files).at(-1) as File;
@@ -123,7 +123,7 @@ export const FormPage = () => {
       return result;
     }
     const upload = buttonText.current;
-    const input = upload.parentElement?.parentElement?.firstChild as HTMLInputElement;
+    const input = upload?.parentElement?.parentElement?.firstChild as HTMLInputElement;
     const files = input.files;
     let fileURL =
       'https://avatars.mds.yandex.net/i?id=3a61f30a8dda7b409f22c83055b5800984f9830c-8242815-images-thumbs&n=13';
@@ -138,12 +138,12 @@ export const FormPage = () => {
   };
 
   return (
-    <section className="form-page" placeholder="formpage">
+    <section className="form-page" data-testid="formpage">
       {confirm && <Confirmation />}
       <Header currentPage="FORM" />
 
       <form
-        placeholder="form"
+        data-testid="form"
         className="form"
         ref={form}
         autoComplete="off"
@@ -177,7 +177,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.firstName && (
-                  <span className="error" placeholder="error">
+                  <span className="error" data-testid="error">
                     <>{errors.firstName.message}</>
                   </span>
                 )}
@@ -208,7 +208,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.lastName && (
-                  <span className="error" placeholder="error">
+                  <span className="error" data-testid="error">
                     <>{errors.lastName.message}</>
                   </span>
                 )}
@@ -232,7 +232,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.age && (
-                  <span className="error" placeholder="error">
+                  <span className="error" data-testid="error">
                     <>{errors.age.message}</>
                   </span>
                 )}
@@ -252,7 +252,7 @@ export const FormPage = () => {
                 Show my age
               </label>
               {errors.showMyAge && (
-                <span className="error" placeholder="error">
+                <span className="error" data-testid="error">
                   <>{errors.showMyAge.message}</>
                 </span>
               )}
@@ -264,7 +264,7 @@ export const FormPage = () => {
                 accept="image/*"
                 id="profilePhoto"
                 className="input__file"
-                placeholder="file_input"
+                data-testid="file_input"
                 {...register('file', {
                   required: 'Required',
                 })}
@@ -317,7 +317,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.zipCode && (
-                  <span className="error" placeholder="error">
+                  <span className="error" data-testid="error">
                     <>{errors.zipCode.message}</>
                   </span>
                 )}
@@ -327,7 +327,7 @@ export const FormPage = () => {
             <div className="select-wrapper">
               Country
               <select
-                placeholder="country"
+                data-testid="country"
                 id="country"
                 multiple={false}
                 className="select"
@@ -345,7 +345,7 @@ export const FormPage = () => {
                 ))}
               </select>
               {errors.country && (
-                <span className="error" placeholder="error">
+                <span className="error" data-testid="error">
                   <>{errors.country.message}</>
                 </span>
               )}
@@ -376,7 +376,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.city && (
-                  <span className="error" placeholder="error">
+                  <span className="error" data-testid="error">
                     <>{errors.city.message}</>
                   </span>
                 )}
@@ -407,7 +407,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.address && (
-                  <span className="error" placeholder="error">
+                  <span className="error" data-testid="error">
                     <>{errors.address.message}</>
                   </span>
                 )}
@@ -437,7 +437,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.email && (
-                  <span className="error" placeholder="error">
+                  <span className="error" data-testid="error">
                     <>{errors.email.message}</>
                   </span>
                 )}
@@ -448,7 +448,7 @@ export const FormPage = () => {
               Receive notifications by mail
               <input
                 type="checkbox"
-                placeholder="receiveMail"
+                data-testid="receiveMail"
                 id="receiveMail"
                 className="switcher-input"
                 {...register('receiveMail')}
@@ -472,7 +472,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.phone && (
-                  <span className="error" placeholder="error">
+                  <span className="error" data-testid="error">
                     <>{errors.phone.message}</>
                   </span>
                 )}
@@ -483,7 +483,7 @@ export const FormPage = () => {
               Receive sms
               <input
                 type="checkbox"
-                placeholder="receiveSMS"
+                data-testid="receiveSMS"
                 id="receiveSMS"
                 className="switcher-input"
                 {...register('receiveSMS')}
@@ -541,7 +541,7 @@ export const FormPage = () => {
 
             <div className="radio-super-wrapper">
               Gender
-              <div className="radio-wrapper" placeholder="radio" {...register}>
+              <div className="radio-wrapper" data-testid="radio" {...register}>
                 {['undefined', 'female', 'male', 'other'].map((value, index) => (
                   <label className="radio-label" htmlFor={`gender__${index}`} key={index}>
                     <input
@@ -558,7 +558,7 @@ export const FormPage = () => {
                 ))}
               </div>
               {errors.gender && (
-                <span className="error" placeholder="error">
+                <span className="error" data-testid="error">
                   <>{errors.gender.message}</>
                 </span>
               )}
@@ -567,7 +567,7 @@ export const FormPage = () => {
         </div>
 
         <div className="submit-wrapper">
-          <input type="submit" className="submit-input" value="SUBMIT" placeholder="submit" />
+          <input type="submit" className="submit-input" value="SUBMIT" data-testid="submit" />
         </div>
       </form>
 

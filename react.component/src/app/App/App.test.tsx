@@ -23,7 +23,7 @@ const router = createMemoryRouter(routes);
 describe('react app', () => {
   test('update data method works', () => {
     render(<RouterProvider router={router} />);
-    const input = screen.getByRole('searchbox') as HTMLInputElement;
+    const input = screen.getByTestId('input search') as HTMLInputElement;
     fireEvent.change(input, { target: { value: 'fakeValue' } });
     expect(input.value).toBe('fakeValue');
   });

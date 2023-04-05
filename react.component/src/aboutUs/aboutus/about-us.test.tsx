@@ -17,7 +17,7 @@ const router = createMemoryRouter(fakeroutes);
 describe('react about-us page', () => {
   test('about-us page renders correctly', () => {
     render(<RouterProvider router={router} />);
-    const aboutUs = screen.getByPlaceholderText('about us');
+    const aboutUs = screen.getByTestId('about us');
     expect(aboutUs).toBeTruthy;
   });
 });

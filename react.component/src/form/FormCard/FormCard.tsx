@@ -7,7 +7,7 @@ type FromCardProps = {
 
 export const FormCard = ({ card, index }: FromCardProps) => (
   <div className="form-card-wrapper" key={index}>
-    <div className="form-card" placeholder="card">
+    <div className="form-card" data-testid="card">
       <div className="profile-image-wrapper">
         <img src={card['upload']} />
       </div>

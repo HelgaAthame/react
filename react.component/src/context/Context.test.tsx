@@ -83,7 +83,7 @@ const router = createMemoryRouter(routes);
 describe('mock to API', () => {
   test('loading after Enter press', async () => {
     const main = render(<RouterProvider router={router} />);
-    const input = screen.getByRole('searchbox') as HTMLInputElement;
+    const input = screen.getByTestId('input search') as HTMLInputElement;
     expect(input).toBeTruthy();
 
     await waitFor(() => {

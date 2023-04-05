@@ -17,7 +17,7 @@ describe('react error page', () => {
     render(<RouterProvider router={router} />);
     history.replaceState({}, '', 'fakeURL');
     window.location.assign(window.location.origin + '/fakePath');
-    const errorDiv = screen.getByPlaceholderText('error-text');
+    const errorDiv = screen.getByTestId('error-text');
     expect(errorDiv.innerHTML).toBe("Sorry, this page doesn't exist.");
   });
 });

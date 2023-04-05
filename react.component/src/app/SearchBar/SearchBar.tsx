@@ -1,6 +1,6 @@
-import { ChangeEvent, MutableRefObject, useContext, useEffect, useRef, useState,  KeyboardEventHandler } from 'react';
+import { ChangeEvent, useContext, useEffect, useState,  KeyboardEventHandler } from 'react';
 import './searchbar.scss';
-import { ReactComponent as Lupa } from '../../assets/lupa.svg';
+import { ReactComponent as SearchIcon } from '../../assets/searchIcon.svg';
 import { AppContext } from '../../context';
 import { BookType } from '../types';
 
@@ -39,12 +39,7 @@ export const SearchBar = () => {
       const inputEl = e.target as HTMLInputElement;
       setIsLoading(true);
       const books = (await getDocs()) as BookType[];
-      const filtered = filterFunc(books, inputValue);/*books.filter((book) =>
-        Object.values(book).find(
-          (value: string | number) =>
-            value.toString().toLowerCase().search(inputValue.toLowerCase()) !== -1
-        )
-      );*/
+      const filtered = filterFunc(books, inputValue);
       setDocs(filtered);
     }
   };
@@ -52,10 +47,11 @@ export const SearchBar = () => {
   return (
     <div className="wrapper">
       <div className="search_wrapper">
-        <div className="lupa">
-          <Lupa />
+        <div className="searchIcon">
+          <SearchIcon />
         </div>
         <input
+          data-testid="input search"
           value={inputValue}
           type="search"
           className="input"

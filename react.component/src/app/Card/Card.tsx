@@ -15,9 +15,9 @@ export const Card = (props: BookType) => {
     if (target.dataset.name === 'open') setClicked(true);
   };
   return (
-    <section className="card" data-name="open" onClick={handleCardClick} placeholder="card">
-      <div className="additional-wrapper" data-name="open">
-        <div className="name" data-name="open">{props.name}</div>
+    <section className="card" data-name="open" onClick={handleCardClick} data-testid="card">
+      <div className="additional-wrapper" data-testid="additional-wrapper" data-name="open">
+        <div className="name" data-testid="name" data-name="open">{props.name}</div>
         {clicked && <Modal
           handleModalClick={handleModalClick}
           handleCloseClick={handleCloseClick}
