@@ -4,15 +4,6 @@ import { ReactComponent as SearchIcon } from '../../assets/searchIcon.svg';
 import { AppContext } from '../../context';
 import { BookType } from '../types';
 
-export const filterFunc = (toFilter: BookType[], sortVal: string) => {
-  return toFilter.filter((el) =>
-    Object.values(el).find(
-      (value: string | number) =>
-        value.toString().toLowerCase().search(sortVal.toLowerCase()) !== -1
-    )
-  );
-};
-
 export const SearchBar = () => {
   const { isLoading, setIsLoading, getDocs, setDocs, setError } = useContext(AppContext);
 
@@ -39,9 +30,8 @@ export const SearchBar = () => {
       setIsLoading(true);
       setError(null);
       try {
-        const books = (await getDocs()) as BookType[];
-        const filtered = filterFunc(books, inputValue);
-        setDocs(filtered);
+        const books = (await getDocs(inputValue)) as BookType[];
+        setDocs(books);
       } catch (e: unknown) {
         if (e instanceof Error) setError(e.message);
       }

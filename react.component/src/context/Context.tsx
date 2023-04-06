@@ -1,4 +1,3 @@
-import { filterFunc } from '../app/SearchBar';
 import { BookType } from '../app/types';
 import { createContext, ReactNode, SetStateAction, useEffect, useState } from 'react';
 import { getDocs } from './getDocs';
@@ -14,7 +13,7 @@ export type ContextT = {
   setDocs: React.Dispatch<React.SetStateAction<BookType[]>>;
   docs: BookType[];
   error: string | null;
-  getDocs: () => Promise<BookType[]>;
+  getDocs: (searchStr: string) => Promise<BookType[]>;
 };
 
 export const AppContext = createContext<ContextT>({
@@ -24,14 +23,15 @@ export const AppContext = createContext<ContextT>({
     throw new Error(`Function not implemented. ${value}`);
   },
   setError: function (value: SetStateAction<string | null>): void {
-    throw new Error(`Function not implemented. ${value}`);
+    console.log(value);
+    return;
   },
   setDocs: function (value: SetStateAction<BookType[]>): void {
     throw new Error(`Function not implemented. ${value}`);
   },
   error: null,
-  getDocs: function (): Promise<BookType[]> {
-    throw new Error('Function not implemented.');
+  getDocs: function (searchStr: string): Promise<BookType[]> {
+    throw new Error(`Function not implemented.${searchStr}`);
   },
 });
 
@@ -41,12 +41,10 @@ export const AppContextProvider = ({ children }: ChildrenProps) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getDocs()
+    getDocs(localStorage.getItem('bestbookstore-input-data') || '')
       .then((docs) => {
         setIsLoading(false);
-        const sortValue = localStorage.getItem('bestbookstore-input-data') || '';
-        const sortedDocs = filterFunc(docs, sortValue);
-        setDocs(sortedDocs);
+        setDocs(docs);
         setError(null);
       })
       .catch((e) => {

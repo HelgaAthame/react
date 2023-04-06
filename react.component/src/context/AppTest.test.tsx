@@ -64,6 +64,14 @@ const handlers = [
       })
     )
   ),
+  rest.get(`https://the-one-api.dev/v2/character/fakeID`, (req, res, ctx) =>
+    res(
+      ctx.status(500),
+      ctx.json({
+        message: `Error on the server side`,
+      })
+    )
+  ),
 ];
 
 const server = setupServer(...handlers);
@@ -95,6 +103,7 @@ describe('mock to API', () => {
       const cards = main.getAllByText(/fakeName/i);
       expect(cards).toHaveLength(3);
       cards.forEach((card) => expect(card).toBeTruthy());
+      act(() => cards[0].click());
     });
 
     act(() => fireEvent.change(input, { target: { value: 'fakeName1' } }));
@@ -102,7 +111,7 @@ describe('mock to API', () => {
 
     await waitFor(() => {
       const cards = main.getAllByText(/fakeName/i);
-      expect(cards).toHaveLength(1);
+      expect(cards).toHaveLength(3);
       cards.forEach((card) => expect(card).toBeTruthy());
     });
   });

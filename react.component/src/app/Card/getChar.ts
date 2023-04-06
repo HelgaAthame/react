@@ -1,7 +1,7 @@
-import { BookType } from '../app/types';
+import { BookType } from '../types';
 
-export const getDocs = async (searchStr: string): Promise<BookType[]> => {
-  const response = await fetch(`https://the-one-api.dev/v2/character?name=/^.*${searchStr}.*$/`, {
+export const getChar = async (searchId: string): Promise<BookType> => {
+  const response = await fetch(`https://the-one-api.dev/v2/character/${searchId}`, {
     method: 'get',
     headers: new Headers({
       Authorization: 'Bearer TinzBFnLUdwvfCjMa4hL',
@@ -9,5 +9,5 @@ export const getDocs = async (searchStr: string): Promise<BookType[]> => {
   });
   if (!response.ok) throw new Error('Could not fetch the data from the resourse');
   const data = await response.json();
-  return data.docs;
+  return data.docs[0];
 };
