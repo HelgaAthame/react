@@ -24,10 +24,12 @@ $basic: 1rem;
     font-size: 1.75rem;
     align-items: center;
     transition: 1s;
+    flex-grow: 0;
     &:hover {
       border-color: $col2;
+      flex-grow: 1;
     }
-    .lupa {
+    .searchIcon {
       width: 2rem;
       height: 1.75rem;
     }
@@ -41,6 +43,19 @@ $basic: 1rem;
       width: 100%;
       margin: 0 $basic;
       transition: 1s;
+    }
+  }
+
+  .search_wrapper:has(.input:focus) {
+    flex-grow: 1;
+    .input {
+      color: $color;
+    }
+  }
+  .search_wrapper:has(.input:hover) {
+    flex-grow: 1;
+    .input {
+      color: $color;
     }
   }
 }

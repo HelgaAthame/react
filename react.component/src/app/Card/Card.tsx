@@ -1,52 +1,63 @@
-import { MouseEventHandler, useState } from 'react';
+import { AppDispatch, store, fetchCharById } from '../../redux-folder';
+import { Modal } from '../Modal';
 import { BookType } from '../types';
 import './card.scss';
+import { MouseEventHandler, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export const Card = (props: BookType) => {
   const [clicked, setClicked] = useState(false);
+  //const [properties, setProperties] = useState(props);
+
+  const { searchText, curChar } = store.getState().curState;
+  const dispatch = useDispatch<AppDispatch>();
+
   const handleCloseClick = () => setClicked(false);
   const handleModalClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
-    const val = target.className;
-    if (val === 'modal') setClicked(false);
+    if (target.dataset.name === 'close') setClicked(false);
   };
-  const handleCardClick: MouseEventHandler<HTMLDivElement> = (e) => {
+
+  const handleCardClick: MouseEventHandler<HTMLDivElement> = async (e) => {
     const target = e.target as HTMLDivElement;
-    const val = target.className;
-    if (val === 'card' || val === 'name' || val === 'additional-wrapper') setClicked(true);
+    const searchId = target.closest('section')?.id;
+    if (searchId) dispatch(fetchCharById(searchId));
+      //const result = await getChar(searchId || '');
+      //setProperties(result);
+    if (target.dataset.name === 'open') {
+      console.log('clicck set true!!!')
+      setClicked(true);
+    }
   };
+
   return (
-    <section className="card" onClick={handleCardClick} placeholder="card">
-      <div className="additional-wrapper">
-        <div className="name">{props.name}</div>
+    <section
+      className="card"
+      data-name="open"
+      id={props._id}
+      onClick={handleCardClick}
+      data-testid="card"
+    >
+      <div className="additional-wrapper" data-testid="additional-wrapper" data-name="open">
+        <div className="name" data-testid="name" data-name="open">
+          {props.name}
+        </div>
         {clicked && (
-          <div className="modal" onClick={handleModalClick}>
-            <div className="close" onClick={handleCloseClick}></div>
-            <div className="modal-wrapper">
-              <div className="modal-content">
-                <div className="name">Name: {props.name === '' ? 'unknown' : props.name}</div>
-                <div className="birth">Birth: {props.birth === '' ? 'unknown' : props.birth}</div>
-                <div className="death">Death: {props.death === '' ? 'unknown' : props.death}</div>
-                <div className="gender">
-                  Gender: {props.gender === '' ? 'unknown' : props.gender}
-                </div>
-                <div className="hair">Hair: {props.hair === '' ? 'unknown' : props.hair}</div>
-                <div className="height">
-                  Height: {props.height === '' ? 'unknown' : props.height}
-                </div>
-                <div className="race">Race: {props.race === '' ? 'unknown' : props.race}</div>
-                <div className="realm">Realm: {props.realm === '' ? 'unknown' : props.realm}</div>
-                <div className="spouse">
-                  Spouse: {props.spouse === '' ? 'unknown' : props.spouse}
-                </div>
-                <div className="wiki-url">
-                  URL:{' '}
-                  <a href={props.wikiUrl}>{props.wikiUrl === '' ? 'unknown' : props.wikiUrl}</a>
-                </div>
-                <div className="id">ID: {props._id === '' ? 'unknown' : props._id}</div>
-              </div>
-            </div>
-          </div>
+          <Modal
+            handleModalClick={handleModalClick}
+            handleCloseClick={handleCloseClick}
+            _id={curChar?._id || ''}
+            name={curChar?.name || ''}
+            birth={curChar?.birth || ''}
+            death={curChar?.death || ''}
+            gender={curChar?.gender || ''}
+            hair={curChar?.hair || ''}
+            height={curChar?.height || ''}
+            race={curChar?.race || ''}
+            realm={curChar?.realm || ''}
+            spouse={curChar?.spouse || ''}
+            wikiUrl={curChar?.wikiUrl || ''}
+          />
         )}
       </div>
     </section>
