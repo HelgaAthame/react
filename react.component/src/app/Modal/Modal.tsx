@@ -1,7 +1,9 @@
 import { BookType } from '../types';
 import { MouseEventHandler } from 'react';
 import './modal.scss';
-import { store } from '../../redux-folder';
+import { RootState, store } from '../../redux-folder';
+import { Loading } from '../Loading';
+import { useSelector } from 'react-redux';
 
 interface ModalProps extends BookType {
   handleModalClick: MouseEventHandler<HTMLDivElement>;
@@ -9,42 +11,52 @@ interface ModalProps extends BookType {
 }
 
 export const Modal = (props: ModalProps) => {
-  const { error } = store.getState().curState;
+  const { smallError, smallLoading } = useSelector((state: RootState) => state.curState);
 
   return (
     <div className="modal" data-name="close" data-testid="modal" onClick={props.handleModalClick}>
-    <div className="close" data-testid="close" onClick={props.handleCloseClick}></div>
-    <div className="modal-wrapper">
-      <div className="modal-content">
-        {!error && (
-          <>
-            <div className="name" data-name="open">
-              Name: {props.name === '' ? 'unknown' : props.name}
-            </div>
-            <div className="birth">Birth: {props.birth === '' ? 'unknown' : props.birth}</div>
-            <div className="death">Death: {props.death === '' ? 'unknown' : props.death}</div>
-            <div className="gender">
-              Gender: {props.gender === '' ? 'unknown' : props.gender}
-            </div>
-            <div className="hair">Hair: {props.hair === '' ? 'unknown' : props.hair}</div>
-            <div className="height">
-              Height: {props.height === '' ? 'unknown' : props.height}
-            </div>
-            <div className="race">Race: {props.race === '' ? 'unknown' : props.race}</div>
-            <div className="realm">Realm: {props.realm === '' ? 'unknown' : props.realm}</div>
-            <div className="spouse">
-              Spouse: {props.spouse === '' ? 'unknown' : props.spouse}
-            </div>
-            <div className="wiki-url">
-              URL:{' '}
-              <a href={props.wikiUrl}>{props.wikiUrl === '' ? 'unknown' : props.wikiUrl}</a>
-            </div>
-            <div className="id">ID: {props._id === '' ? 'unknown' : props._id}</div>
-          </>
-        )}
-        {error && <div className="error">{error}</div>}
+      <div className="close" data-testid="close" onClick={props.handleCloseClick}></div>
+      <div className="modal-wrapper">
+        <div className="modal-content">
+          {!smallError && !smallLoading && (
+            <>
+              <div className="name" data-name="open">
+                Name: {props.name === '' ? 'unknown' : props.name}
+              </div>
+              <div className="birth modal-div">
+                Birth: {props.birth === '' ? 'unknown' : props.birth}
+              </div>
+              <div className="death modal-div">
+                Death: {props.death === '' ? 'unknown' : props.death}
+              </div>
+              <div className="gender modal-div">
+                Gender: {props.gender === '' ? 'unknown' : props.gender}
+              </div>
+              <div className="hair modal-div">
+                Hair: {props.hair === '' ? 'unknown' : props.hair}
+              </div>
+              <div className="height modal-div">
+                Height: {props.height === '' ? 'unknown' : props.height}
+              </div>
+              <div className="race modal-div">
+                Race: {props.race === '' ? 'unknown' : props.race}
+              </div>
+              <div className="realm modal-div">
+                Realm: {props.realm === '' ? 'unknown' : props.realm}
+              </div>
+              <div className="spouse modal-div">
+                Spouse: {props.spouse === '' ? 'unknown' : props.spouse}
+              </div>
+              <div className="wiki-url modal-div">
+                URL: <a href={props.wikiUrl}>{props.wikiUrl === '' ? 'unknown' : props.wikiUrl}</a>
+              </div>
+              <div className="id modal-div">ID: {props._id === '' ? 'unknown' : props._id}</div>
+            </>
+          )}
+          {smallError && <div className="error">{smallError}</div>}
+          {smallLoading && <Loading />}
+        </div>
       </div>
     </div>
-  </div>
-  )
+  );
 };

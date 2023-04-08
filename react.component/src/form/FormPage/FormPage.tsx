@@ -38,7 +38,6 @@ export const FormPage = () => {
     criteriaMode: 'all',
   });
 
-
   const curState = useSelector((state: RootState) => state.curState);
   const dispatch = useDispatch();
 
@@ -59,7 +58,6 @@ export const FormPage = () => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-
     if (!validatePhoto()) return;
 
     setConfirm(true);
@@ -236,7 +234,7 @@ export const FormPage = () => {
                 id="showMyAge"
                 className="checkbox-input"
                 {...register('showMyAge', {
-                  required: "Required",
+                  required: 'Required',
                 })}
               />
               <label htmlFor="showMyAge" className="checkbox-label">

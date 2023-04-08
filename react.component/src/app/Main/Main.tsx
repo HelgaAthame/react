@@ -4,19 +4,25 @@ import { BookType } from '../types/';
 import { Card } from '../Card';
 import { Loading } from '../Loading';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState, store } from '../../redux-folder';
-import { fetchChars } from "../../redux-folder";
+import { fetchChars } from '../../redux-folder';
 
 export const Main = () => {
-  const { cards, searchText, error, loading } = store.getState().curState;
+
+  const { cards, error, loading } = useSelector((state: RootState) => state.curState);
+
+  console.log(store.getState().curState);
   const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {
-    dispatch(fetchChars(localStorage.getItem('bestbookstore-input-data') || ''));
-  }, []);
+  /*useEffect(() => {
+    dispatch(fetchChars(''));
+  }, []);*/
 
-  const curState = useSelector((state: RootState) => state.curState);
+  if (!cards) dispatch(fetchChars(''));
+
+  console.log(`from main`);
+  console.log(store.getState().curState);
 
   return (
     <div className="main">

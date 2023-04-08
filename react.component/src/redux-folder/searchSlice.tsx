@@ -10,6 +10,7 @@ interface CardsState {
   error: string | null;
   smallError: string | null;
   loading: boolean;
+  smallLoading: boolean;
   curChar: BookType | null;
 }
 
@@ -20,6 +21,7 @@ const initialState: CardsState = {
   error: null,
   smallError: null,
   loading: false,
+  smallLoading: false,
   curChar: null,
 };
 
@@ -27,14 +29,6 @@ export const searchSlice: Slice<CardsState, SliceCaseReducers<CardsState>, 'sear
   name: 'search',
   initialState,
   reducers: {
-    sortCards(state, action: PayloadAction<string>) {
-      if (state.cards) state.cards = state.cards.filter((card) =>
-        Object.values(card).find(
-          (value: string | number) =>
-            value.toString().toLowerCase().search(action.payload.toLowerCase()) !== -1
-        )
-      );
-    },
     setCards(state, action: PayloadAction<BookType[]>) {
       state.cards = action.payload;
     },
@@ -42,43 +36,37 @@ export const searchSlice: Slice<CardsState, SliceCaseReducers<CardsState>, 'sear
       state.profileCards.push(action.payload);
     },
     changeSearchText(state, action: PayloadAction<string>) {
-      console.log(`action payload = ${action.payload}`);
       state.searchText = action.payload;
-
-      console.log(`state.searchText = ${state.searchText}`);
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchChars.pending, (state) => {
       state.loading = true;
       state.error = null;
     });
-    builder.addCase(fetchChars.fulfilled,
-      (state, { payload }) => {
+    builder.addCase(fetchChars.fulfilled, (state, { payload }) => {
       state.cards = payload;
       state.loading = false;
+      console.log(`state.cards from slice`);
+      console.log(state.cards);
     });
-    builder.addCase(fetchChars.rejected,
-      (state, { error }) => {
+    builder.addCase(fetchChars.rejected, (state, { error }) => {
       if (error.message) state.error = error.message;
       state.loading = false;
     });
     builder.addCase(fetchCharById.pending, (state) => {
-      state.loading = true;
+      state.smallLoading = true;
       state.smallError = null;
     });
-    builder.addCase(fetchCharById.fulfilled,
-      (state, { payload }) => {
+    builder.addCase(fetchCharById.fulfilled, (state, { payload }) => {
       state.curChar = payload;
-      state.loading = false;
+      state.smallLoading = false;
     });
-    builder.addCase(fetchCharById.rejected,
-      (state, { error }) => {
-        if (error.message) state.smallError = error.message;
-        state.loading = false;
+    builder.addCase(fetchCharById.rejected, (state, { error }) => {
+      if (error.message) state.smallError = error.message;
+      state.smallLoading = false;
     });
   },
-
 });
 
 export const { sortCards, setCards, addProfileCard, changeSearchText } = searchSlice.actions;

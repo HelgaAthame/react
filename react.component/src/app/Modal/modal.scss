@@ -55,10 +55,10 @@ $basic: 1rem;
     padding: $basic 5vw 2rem;
     transition: 1s;
     &:hover {
-      transform: scale(1.1);
+      //transform: scale(1.1);
     }
     .modal-content {
-      div {
+      .modal-div {
         max-width: 90vw;
         text-align: left;
         font-size: 1rem;

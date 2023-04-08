@@ -7,9 +7,8 @@ import { useDispatch } from 'react-redux';
 
 export const Card = (props: BookType) => {
   const [clicked, setClicked] = useState(false);
-  //const [properties, setProperties] = useState(props);
 
-  const { searchText, curChar } = store.getState().curState;
+  const { curChar } = store.getState().curState;
   const dispatch = useDispatch<AppDispatch>();
 
   const handleCloseClick = () => setClicked(false);
@@ -20,12 +19,9 @@ export const Card = (props: BookType) => {
 
   const handleCardClick: MouseEventHandler<HTMLDivElement> = async (e) => {
     const target = e.target as HTMLDivElement;
-    const searchId = target.closest('section')?.id;
+    const searchId = target.dataset.name === 'open' ? target.closest('section')?.id : null;
     if (searchId) dispatch(fetchCharById(searchId));
-      //const result = await getChar(searchId || '');
-      //setProperties(result);
     if (target.dataset.name === 'open') {
-      console.log('clicck set true!!!')
       setClicked(true);
     }
   };
