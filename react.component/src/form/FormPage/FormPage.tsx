@@ -134,11 +134,11 @@ export const FormPage = () => {
   };
 
   return (
-    <section className="form-page" placeholder="formpage">
+    <section className="form-page">
       {confirm && <Confirmation />}
       <Header currentPage="FORM" />
 
-      <form placeholder="form" className="form" onSubmit={handleSubmit(onSubmit)}>
+      <form data-testid="form" className="form" onSubmit={handleSubmit(onSubmit)}>
         <div className="fieldset-wrapper">
           <fieldset className="fieldset">
             <h3>Personal Information</h3>
@@ -167,7 +167,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.firstName && (
-                  <span className="error" placeholder="error">
+                  <span className="error" data-testid="error">
                     <>{errors.firstName.message}</>
                   </span>
                 )}
@@ -198,7 +198,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.lastName && (
-                  <span className="error" placeholder="error">
+                  <span className="error" data-testid="error">
                     <>{errors.lastName.message}</>
                   </span>
                 )}
@@ -221,7 +221,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.age && (
-                  <span className="error" placeholder="error">
+                  <span className="error" data-testid="error">
                     <>{errors.age.message}</>
                   </span>
                 )}
@@ -241,7 +241,7 @@ export const FormPage = () => {
                 Show my age
               </label>
               {errors.showMyAge && (
-                <span className="error" placeholder="error">
+                <span className="error" data-testid="error">
                   <>{errors.showMyAge.message}</>
                 </span>
               )}
@@ -256,7 +256,7 @@ export const FormPage = () => {
                 accept="image/*"
                 id="profilePhoto"
                 className="input__file"
-                placeholder="file_input"
+                data-testid="file_input"
               />
               <label htmlFor="profilePhoto" className="input__label">
                 <span className="input__file-icon-wrapper">
@@ -270,7 +270,7 @@ export const FormPage = () => {
                     <>{errors.file.message}</>
                   </span>
                 )}
-                {fileError && <span className="error">Error: upload an image</span>}
+                {fileError && <span className="error" data-testid="file-error">Error: upload an image</span>}
               </label>
             </div>
           </fieldset>
@@ -304,7 +304,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.zipCode && (
-                  <span className="error" placeholder="error">
+                  <span className="error" data-testid="error">
                     <>{errors.zipCode.message}</>
                   </span>
                 )}
@@ -314,7 +314,7 @@ export const FormPage = () => {
             <div className="select-wrapper">
               Country
               <select
-                placeholder="country"
+                data-testid="country"
                 id="country"
                 multiple={false}
                 className="select"
@@ -332,7 +332,7 @@ export const FormPage = () => {
                 ))}
               </select>
               {errors.country && (
-                <span className="error" placeholder="error">
+                <span className="error" data-testid="error">
                   <>{errors.country.message}</>
                 </span>
               )}
@@ -363,7 +363,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.city && (
-                  <span className="error" placeholder="error">
+                  <span className="error" data-testid="error">
                     <>{errors.city.message}</>
                   </span>
                 )}
@@ -394,7 +394,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.address && (
-                  <span className="error" placeholder="error">
+                  <span className="error" data-testid="error">
                     <>{errors.address.message}</>
                   </span>
                 )}
@@ -424,7 +424,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.email && (
-                  <span className="error" placeholder="error">
+                  <span className="error" data-testid="error">
                     <>{errors.email.message}</>
                   </span>
                 )}
@@ -435,7 +435,7 @@ export const FormPage = () => {
               Receive notifications by mail
               <input
                 type="checkbox"
-                placeholder="receiveMail"
+                data-testid="receiveMail"
                 id="receiveMail"
                 className="switcher-input"
                 {...register('receiveMail')}
@@ -459,7 +459,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.phone && (
-                  <span className="error" placeholder="error">
+                  <span className="error" data-testid="error">
                     <>{errors.phone.message}</>
                   </span>
                 )}
@@ -470,7 +470,7 @@ export const FormPage = () => {
               Receive sms
               <input
                 type="checkbox"
-                placeholder="receiveSMS"
+                data-testid="receiveSMS"
                 id="receiveSMS"
                 className="switcher-input"
                 {...register('receiveSMS')}
@@ -528,7 +528,7 @@ export const FormPage = () => {
 
             <div className="radio-super-wrapper">
               Gender
-              <div className="radio-wrapper" placeholder="radio" {...register}>
+              <div className="radio-wrapper" data-testid="radio" {...register}>
                 {['undefined', 'female', 'male', 'other'].map((value, index) => (
                   <label className="radio-label" htmlFor={`gender__${index}`} key={index}>
                     <input
@@ -545,7 +545,7 @@ export const FormPage = () => {
                 ))}
               </div>
               {errors.gender && (
-                <span className="error" placeholder="error">
+                <span className="error" data-testid="error">
                   <>{errors.gender.message}</>
                 </span>
               )}
@@ -554,14 +554,14 @@ export const FormPage = () => {
         </div>
 
         <div className="submit-wrapper">
-          <input type="submit" className="submit-input" value="SUBMIT" placeholder="submit" />
+          <input type="submit" className="submit-input" value="SUBMIT" data-testid="submit" />
         </div>
       </form>
 
       <div className="cards-section">
         {curState.profileCards.map((card, index) => (
           <div className="form-card-wrapper" key={index}>
-            <div className="form-card" placeholder="card">
+            <div className="form-card" data-testid="card">
               <div className="profile-image-wrapper">
                 <img src={card['upload']} />
               </div>

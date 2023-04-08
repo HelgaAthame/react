@@ -1,9 +1,12 @@
-import { describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { FormPage } from './FormPage';
 import { ErrorPage } from '../../errorPage';
+
+import { Provider } from 'react-redux';
+import { store } from '../../redux-folder';
 
 const routes = [
   {
@@ -14,28 +17,28 @@ const routes = [
 ];
 const router = createMemoryRouter(routes);
 
+beforeEach(() => {
+  render(
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  );
+});
+
 describe('react form page', () => {
-  test('form page renders properly', () => {
-    render(<RouterProvider router={router} />);
-    const formPage = screen.getAllByPlaceholderText('formpage');
-    expect(formPage).toBeDefined();
-  });
-
   test('confirm doing well', async () => {
-    render(<RouterProvider router={router} />);
-
     const firstNameInput = screen.getByLabelText('First Name') as HTMLInputElement;
     const lastNameInput = screen.getByLabelText('Last Name');
     const birthdayInput = screen.getByLabelText('Birthday');
     const zipCodeInput = screen.getByLabelText('Zip-code');
-    const countryInput = screen.getByPlaceholderText('country');
+    const countryInput = screen.getByTestId('country');
     const cityInput = screen.getByLabelText('City');
     const addressInput = screen.getByLabelText('Address');
     const emailInput = screen.getByLabelText('E-mail');
     const phoneInput = screen.getByLabelText('Phone');
     const radio = screen.getByLabelText('male');
+    const showMyAge = screen.getByLabelText('Show my age');
 
-    act(() => {
       fireEvent.change(firstNameInput, { target: { value: 'Olga' } });
       fireEvent.change(lastNameInput, { target: { value: 'Fakelastname' } });
       fireEvent.change(birthdayInput, { target: { value: '2008-10-12' } });
@@ -46,7 +49,7 @@ describe('react form page', () => {
       fireEvent.change(emailInput, { target: { value: 'fakemail@gmail.com' } });
       fireEvent.change(phoneInput, { target: { value: '+37529111-11-11' } });
       radio.click();
-    });
+      showMyAge.click();
 
     expect(firstNameInput).toBeTruthy();
     expect(firstNameInput.value).toBe('Olga');
@@ -59,44 +62,48 @@ describe('react form page', () => {
     expect(emailInput).toBeTruthy();
     expect(phoneInput).toBeTruthy();
     expect(radio).toBeTruthy();
+    expect(showMyAge).toBeTruthy();
 
-    const submit = screen.getByPlaceholderText('submit');
+    const submit = screen.getByTestId('submit');
     expect(submit).toBeTruthy();
 
-    const file = screen.getByPlaceholderText('file_input') as HTMLInputElement;
+    const file = screen.getByTestId('file_input') as HTMLInputElement;
     expect(file).toBeTruthy();
-    const file1 = new File(['hello'], 'hello.png', { type: 'image/png' });
+    const fileValid = new File(['hello'], 'image-hello.png', { type: 'image/png' });
+    const fileInvalid = new File(['hello'], 'hello.kuku', { type: 'image/png' });
     await waitFor(() => expect(file.files).toHaveLength(0));
-    await act(async () => await userEvent.upload(file, file1));
+    await act(async () => await userEvent.upload(file, fileInvalid));
     await waitFor(() => expect(file.files).toHaveLength(1));
+    submit.click();
 
-    act(() => submit.click());
+    await act(async () => await userEvent.upload(file, fileValid));
+    await waitFor(() => expect(file.files).toHaveLength(1));
+    submit.click();
 
     await waitFor(() => {
-      const confirm = screen.getByPlaceholderText('confirmation');
+      const confirm = screen.getByTestId('confirmation');
       expect(confirm).toBeTruthy();
     });
 
-    const form = screen.getByPlaceholderText('form') as HTMLFormElement;
-    act(() => form.reset());
+    const form = await screen.findByTestId('form') as HTMLFormElement;
+    form.reset();
     expect(form).toBeTruthy();
+
   });
 
   test('confirm with errors', async () => {
-    render(<RouterProvider router={router} />);
-
     const firstNameInput = screen.getByLabelText('First Name') as HTMLInputElement;
     const lastNameInput = screen.getByLabelText('Last Name');
     const birthdayInput = screen.getByLabelText('Birthday');
     const zipCodeInput = screen.getByLabelText('Zip-code');
-    const countryInput = screen.getByPlaceholderText('country');
+    const countryInput = screen.getByTestId('country');
     const cityInput = screen.getByLabelText('City');
     const addressInput = screen.getByLabelText('Address');
     const emailInput = screen.getByLabelText('E-mail');
     const phoneInput = screen.getByLabelText('Phone');
     const radio = screen.getByLabelText('male');
-    const radioWrapper = screen.getByPlaceholderText('radio');
-    const submit = screen.getByPlaceholderText('submit');
+    const radioWrapper = screen.getByTestId('radio');
+    const submit = screen.getByTestId('submit');
 
     expect(firstNameInput).toBeTruthy();
     expect(lastNameInput).toBeTruthy();
@@ -128,26 +135,24 @@ describe('react form page', () => {
     act(() => submit.click());
 
     await waitFor(() => {
-      const errors = screen.getAllByPlaceholderText('error');
-      expect(errors).toHaveLength(10);
+      const errors = screen.getAllByTestId('error');
+      expect(errors).toHaveLength(11);
       errors.forEach((error) => expect(error.innerText).not.toBe(''));
     });
   });
 
   test('checkboxes works', async () => {
-    render(<RouterProvider router={router} />);
-
     const showMyAge = screen.getByLabelText('Show my age') as HTMLInputElement;
     expect(showMyAge).toBeTruthy();
     act(() => showMyAge.click());
     await waitFor(() => expect(showMyAge.checked).toBe(true));
 
-    const receiveMail = screen.getByPlaceholderText('receiveMail') as HTMLInputElement;
+    const receiveMail = screen.getByTestId('receiveMail') as HTMLInputElement;
     expect(receiveMail).toBeTruthy();
     act(() => receiveMail.click());
     await waitFor(() => expect(receiveMail.checked).toBe(true));
 
-    const receiveSMS = screen.getByPlaceholderText('receiveSMS') as HTMLInputElement;
+    const receiveSMS = screen.getByTestId('receiveSMS') as HTMLInputElement;
     expect(receiveSMS).toBeTruthy();
     act(() => receiveSMS.click());
     await waitFor(() => expect(receiveSMS.checked).toBe(true));

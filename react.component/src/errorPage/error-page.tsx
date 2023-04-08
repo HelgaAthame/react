@@ -8,7 +8,7 @@ export const ErrorPage = () => {
     <div id="error-page">
       <Header currentPage="404" />
       <h1>404</h1>
-      <p placeholder="error-text">Sorry, this page doesn&apos;t exist.</p>
+      <p data-testid="error-text">Sorry, this page doesn&apos;t exist.</p>
       <p>
         <i> {isRouteErrorResponse(error) && error.statusText}</i>
       </p>

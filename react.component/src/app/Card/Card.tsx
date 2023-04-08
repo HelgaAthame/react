@@ -14,7 +14,7 @@ export const Card = (props: BookType) => {
   const handleCloseClick = () => setClicked(false);
   const handleModalClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
-    if (target.dataset.name === 'close') setClicked(false);
+    if (target.dataset.testid === 'close') setClicked(false);
   };
 
   const handleCardClick: MouseEventHandler<HTMLDivElement> = async (e) => {

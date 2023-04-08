@@ -20,7 +20,7 @@ export const Modal = (props: ModalProps) => {
         <div className="modal-content">
           {!smallError && !smallLoading && (
             <>
-              <div className="name" data-name="open">
+              <div className="name" data-name="open" data-testid="card-name">
                 Name: {props.name === '' ? 'unknown' : props.name}
               </div>
               <div className="birth modal-div">

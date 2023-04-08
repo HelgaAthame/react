@@ -29,9 +29,6 @@ export const searchSlice: Slice<CardsState, SliceCaseReducers<CardsState>, 'sear
   name: 'search',
   initialState,
   reducers: {
-    setCards(state, action: PayloadAction<BookType[]>) {
-      state.cards = action.payload;
-    },
     addProfileCard(state, action: PayloadAction<ProfileCard>) {
       state.profileCards.push(action.payload);
     },
@@ -47,8 +44,6 @@ export const searchSlice: Slice<CardsState, SliceCaseReducers<CardsState>, 'sear
     builder.addCase(fetchChars.fulfilled, (state, { payload }) => {
       state.cards = payload;
       state.loading = false;
-      console.log(`state.cards from slice`);
-      console.log(state.cards);
     });
     builder.addCase(fetchChars.rejected, (state, { error }) => {
       if (error.message) state.error = error.message;
@@ -69,5 +64,5 @@ export const searchSlice: Slice<CardsState, SliceCaseReducers<CardsState>, 'sear
   },
 });
 
-export const { sortCards, setCards, addProfileCard, changeSearchText } = searchSlice.actions;
+export const { sortCards, addProfileCard, changeSearchText } = searchSlice.actions;
 export default searchSlice.reducer;

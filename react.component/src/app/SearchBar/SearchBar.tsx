@@ -15,7 +15,7 @@ export const SearchBar = () => {
       const target = e.target as HTMLInputElement;
       const inputValue = target.value;
       dispatch(changeSearchText(inputValue));
-      dispatch(fetchChars(inputValue));
+      dispatch(fetchChars(searchText));
     }
   };
 
