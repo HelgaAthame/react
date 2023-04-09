@@ -3,7 +3,7 @@ import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
 
 export const ErrorPage = () => {
   const error = useRouteError();
-  console.log(error);
+  //if (error) console.log(error);
   return (
     <div id="error-page">
       <Header currentPage="404" />

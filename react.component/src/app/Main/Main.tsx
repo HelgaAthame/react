@@ -14,7 +14,10 @@ export const Main = () => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  if (!cards) dispatch(fetchChars(''));
+  useEffect(() => {
+    dispatch(fetchChars(''))
+  },[]);
+  //if (!cards) dispatch(fetchChars(''));
 
   return (
     <div className="main" data-testid="main">

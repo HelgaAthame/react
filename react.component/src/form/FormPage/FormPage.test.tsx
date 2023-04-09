@@ -72,11 +72,14 @@ describe('react form page', () => {
     const fileValid = new File(['hello'], 'image-hello.png', { type: 'image/png' });
     const fileInvalid = new File(['hello'], 'hello.kuku', { type: 'image/png' });
     await waitFor(() => expect(file.files).toHaveLength(0));
-    await act(async () => await userEvent.upload(file, fileInvalid));
+
+    await waitFor(async () => await userEvent.upload(file, fileInvalid));
+    //await act(async () => await userEvent.upload(file, fileInvalid));
     await waitFor(() => expect(file.files).toHaveLength(1));
     submit.click();
 
-    await act(async () => await userEvent.upload(file, fileValid));
+    await waitFor(async () => await userEvent.upload(file, fileValid));
+    //await act(async () => await userEvent.upload(file, fileValid));
     await waitFor(() => expect(file.files).toHaveLength(1));
     submit.click();
 
