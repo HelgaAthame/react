@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeAll, afterAll, afterEach, beforeEach } from 'vitest';
-import { fireEvent, render, screen, act, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, act } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 
 import { App } from './App';
@@ -75,20 +75,21 @@ const handlers = [
       )
     );
 
-    if (req.url.search.slice(10, -5) === 'this-is-fake') return res(
-      ctx.status(500),
-      ctx.json({
-        message: `Big error on the server side`,
-      })
-    );
+    if (req.url.search.slice(10, -5) === 'this-is-fake')
+      return res(
+        ctx.status(500),
+        ctx.json({
+          message: `Big error on the server side`,
+        })
+      );
 
     return res(
       ctx.status(200),
       ctx.json({
         docs: filteredArr,
       })
-    )}
-  ),
+    );
+  }),
   rest.get(`https://the-one-api.dev/v2/character/fakeID1`, (req, res, ctx) =>
     res(
       ctx.status(500),
@@ -101,7 +102,7 @@ const handlers = [
     res(
       ctx.status(200),
       ctx.json({
-        fakeCard2
+        fakeCard2,
       })
     )
   ),
@@ -110,9 +111,9 @@ const handlers = [
 const server = setupServer(...handlers);
 
 beforeAll(() =>
-    server.listen({
-      onUnhandledRequest: 'error',
-    })
+  server.listen({
+    onUnhandledRequest: 'error',
+  })
 );
 beforeEach(() => {
   render(
@@ -143,15 +144,13 @@ const router = createMemoryRouter(routes);
 
 describe('react app', () => {
   test('input value changes', async () => {
-
-    const input = await screen.findByRole('searchbox') as HTMLInputElement;
+    const input = (await screen.findByRole('searchbox')) as HTMLInputElement;
     expect(input).toBeTruthy();
 
     act(() => fireEvent.change(input, { target: { value: 'fakeName1' } }));
-    act(() => fireEvent.keyDown(input, {key: 'Enter', code: 'Enter', charCode: 13}));
+    act(() => fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', charCode: 13 }));
 
     expect(input.value).toBe('fakeName1');
-
 
     const cards = await screen.findAllByTestId('card');
     expect(cards).toHaveLength(4);
@@ -159,8 +158,7 @@ describe('react app', () => {
   });
 
   test('cards works', async () => {
-
-    const input = await screen.findByRole('searchbox') as HTMLInputElement;
+    const input = (await screen.findByRole('searchbox')) as HTMLInputElement;
     expect(input).toBeTruthy();
 
     act(() => fireEvent.change(input, { target: { value: 'fakeName' } }));
@@ -180,7 +178,6 @@ describe('react app', () => {
 
     act(() => close.click());
 
-
     act(() => cards[1].click());
 
     expect(modal).toBeTruthy();
@@ -188,11 +185,10 @@ describe('react app', () => {
     expect(close).toBeTruthy();
 
     act(() => close.click());
-
   });
 
   test('response in not ok', async () => {
-    const input = await screen.findByRole('searchbox') as HTMLInputElement;
+    const input = (await screen.findByRole('searchbox')) as HTMLInputElement;
     expect(input).toBeTruthy();
 
     act(() => fireEvent.change(input, { target: { value: 'this-is-fake' } }));
@@ -203,13 +199,12 @@ describe('react app', () => {
   });
 
   test('form page opens', async () => {
-
     const formLink = await screen.findByTestId('form-link');
     expect(formLink).toBeTruthy();
 
     act(() => formLink.click());
 
-    const form = await screen.findByTestId('form') as HTMLFormElement;
+    const form = (await screen.findByTestId('form')) as HTMLFormElement;
     expect(form).toBeTruthy();
   });
 });

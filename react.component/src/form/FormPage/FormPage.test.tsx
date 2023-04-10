@@ -39,17 +39,17 @@ describe('react form page', () => {
     const radio = screen.getByLabelText('male');
     const showMyAge = screen.getByLabelText('Show my age');
 
-      fireEvent.change(firstNameInput, { target: { value: 'Olga' } });
-      fireEvent.change(lastNameInput, { target: { value: 'Fakelastname' } });
-      fireEvent.change(birthdayInput, { target: { value: '2008-10-12' } });
-      fireEvent.change(zipCodeInput, { target: { value: '1111111' } });
-      fireEvent.change(countryInput, { target: { value: 'Belarus' } });
-      fireEvent.change(cityInput, { target: { value: 'FakeCity' } });
-      fireEvent.change(addressInput, { target: { value: 'Fake address' } });
-      fireEvent.change(emailInput, { target: { value: 'fakemail@gmail.com' } });
-      fireEvent.change(phoneInput, { target: { value: '+37529111-11-11' } });
-      radio.click();
-      showMyAge.click();
+    fireEvent.change(firstNameInput, { target: { value: 'Olga' } });
+    fireEvent.change(lastNameInput, { target: { value: 'Fakelastname' } });
+    fireEvent.change(birthdayInput, { target: { value: '2008-10-12' } });
+    fireEvent.change(zipCodeInput, { target: { value: '1111111' } });
+    fireEvent.change(countryInput, { target: { value: 'Belarus' } });
+    fireEvent.change(cityInput, { target: { value: 'FakeCity' } });
+    fireEvent.change(addressInput, { target: { value: 'Fake address' } });
+    fireEvent.change(emailInput, { target: { value: 'fakemail@gmail.com' } });
+    fireEvent.change(phoneInput, { target: { value: '+37529111-11-11' } });
+    radio.click();
+    showMyAge.click();
 
     expect(firstNameInput).toBeTruthy();
     expect(firstNameInput.value).toBe('Olga');
@@ -74,12 +74,10 @@ describe('react form page', () => {
     await waitFor(() => expect(file.files).toHaveLength(0));
 
     await waitFor(async () => await userEvent.upload(file, fileInvalid));
-    //await act(async () => await userEvent.upload(file, fileInvalid));
     await waitFor(() => expect(file.files).toHaveLength(1));
     submit.click();
 
     await waitFor(async () => await userEvent.upload(file, fileValid));
-    //await act(async () => await userEvent.upload(file, fileValid));
     await waitFor(() => expect(file.files).toHaveLength(1));
     submit.click();
 
@@ -88,10 +86,9 @@ describe('react form page', () => {
       expect(confirm).toBeTruthy();
     });
 
-    const form = await screen.findByTestId('form') as HTMLFormElement;
+    const form = (await screen.findByTestId('form')) as HTMLFormElement;
     form.reset();
     expect(form).toBeTruthy();
-
   });
 
   test('confirm with errors', async () => {

@@ -1,7 +1,7 @@
 import { BookType } from '../types';
 import { MouseEventHandler } from 'react';
 import './modal.scss';
-import { RootState, store } from '../../redux-folder';
+import { RootState } from '../../redux-folder';
 import { Loading } from '../Loading';
 import { useSelector } from 'react-redux';
 

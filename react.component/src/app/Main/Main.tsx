@@ -5,19 +5,17 @@ import { Card } from '../Card';
 import { Loading } from '../Loading';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState, store } from '../../redux-folder';
+import { AppDispatch, RootState } from '../../redux-folder';
 import { fetchChars } from '../../redux-folder';
 
 export const Main = () => {
-
-  const { cards, error, loading } = useSelector((state: RootState) => state.curState);
+  const { cards, error, loading, searchText } = useSelector((state: RootState) => state.curState);
 
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(fetchChars(''))
-  },[]);
-  //if (!cards) dispatch(fetchChars(''));
+    dispatch(fetchChars(searchText)); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   return (
     <div className="main" data-testid="main">

@@ -36,6 +36,8 @@ export const FormPage = () => {
     formState: { errors },
   } = useForm({
     criteriaMode: 'all',
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
   });
 
   const curState = useSelector((state: RootState) => state.curState);
@@ -217,6 +219,7 @@ export const FormPage = () => {
                     valueAsDate: true,
                     validate: {
                       sixPlus: (date) => dateToAge(date) >= 6 || 'Only 6+ users',
+                      immortal: (date) => dateToAge(date) <= 150 || 'Are you immortal?',
                     },
                   })}
                 />
@@ -270,7 +273,11 @@ export const FormPage = () => {
                     <>{errors.file.message}</>
                   </span>
                 )}
-                {fileError && <span className="error" data-testid="file-error">Error: upload an image</span>}
+                {fileError && (
+                  <span className="error" data-testid="file-error">
+                    Error: upload an image
+                  </span>
+                )}
               </label>
             </div>
           </fieldset>
