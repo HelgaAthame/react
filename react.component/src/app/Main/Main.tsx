@@ -25,7 +25,7 @@ export const Main = () => {
     } else {
       console.log('there is no data');
     }
-  }, [data]);
+  }, [data, dispatch]);
 
   const cards = useSelector((state: RootState) => state.cards);
 

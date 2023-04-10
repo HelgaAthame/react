@@ -2,6 +2,7 @@ import { describe, expect, test } from 'vitest';
 import { render, waitFor } from '@testing-library/react';
 
 import { Main } from './Main';
+import React from 'react';
 
 describe('react Main', () => {
   test('Main renders properly', async () => {

@@ -5,6 +5,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { ErrorPage } from '../../errorPage';
 import { AboutUs } from '../../aboutUs/aboutus';
 import { App } from '../App';
+import React from 'react';
 
 const routes = [
   {
