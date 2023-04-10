@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 
@@ -11,6 +11,18 @@ const fakeroutes = [
   },
 ];
 const router = createMemoryRouter(fakeroutes);
+
+const assignMock = vi.fn();
+Object.defineProperty(window, 'location', {
+  value: {
+    hash: {
+      endsWith: assignMock,
+      includes: assignMock,
+    },
+    assign: assignMock,
+  },
+  writable: true,
+});
 
 describe('react error page', () => {
   test('error page renders correctly', () => {
