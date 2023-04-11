@@ -1,21 +1,19 @@
-import { Component } from 'react';
-import { Card } from '../Card';
-import { CardT } from '../cards';
+import { AppContext } from '../../context';
+import { useContext } from 'react';
 import './main.scss';
+import { BookType } from '../types/';
+import { Card } from '../Card';
+import { Loading } from '../Loading';
 
-type PropT = {
-  cards: CardT[];
-  updateData: (cards: CardT[]) => void;
+export const Main = () => {
+  const { docs, isLoading, error } = useContext(AppContext);
+
+  return (
+    <div className="main">
+      {docs && !isLoading && docs.map((doc: BookType) => <Card key={doc._id} {...doc} />)}
+      {isLoading && <Loading />}
+      {error && <div className="error">{error}</div>}
+      {docs.length === 0 && !isLoading && !error && <div className="error">No elements found</div>}
+    </div>
+  );
 };
-
-export class Main extends Component<PropT> {
-  render() {
-    return (
-      <div className="main">
-        {this.props.cards.map((card: CardT, i: number) => (
-          <Card key={i.toString()} {...card} cards={this.props.cards} updateData = {this.props.updateData} />
-        ))}
-      </div>
-    );
-  }
-}

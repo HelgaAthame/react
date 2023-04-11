@@ -1,95 +1,51 @@
-import { ChangeEvent, Component, createRef, RefObject } from 'react';
+import { ChangeEvent, useContext, useState, KeyboardEventHandler } from 'react';
 import './searchbar.scss';
-import { cards, CardT } from '../cards';
-import { ReactComponent as Lupa } from '../../assets/lupa.svg';
+import { ReactComponent as SearchIcon } from '../../assets/searchIcon.svg';
+import { AppContext } from '../../context';
+import { BookType } from '../types';
 
-interface SearchBarProps {
-  cards: CardT[];
-  updateData: (cards: CardT[]) => void;
-}
+export const SearchBar = () => {
+  const { isLoading, setIsLoading, getDocs, setDocs, setError } = useContext(AppContext);
 
-export class SearchBar extends Component<SearchBarProps> {
-  wrapper: RefObject<HTMLDivElement>;
-  input: RefObject<HTMLInputElement> | undefined;
+  const [inputValue, setInputValue] = useState<string>(
+    localStorage.getItem('bestbookstore-input-data') || ''
+  );
 
-  constructor(props: SearchBarProps) {
-    super(props);
-    this.state = { cards: this.props.cards };
-    this.handleChange = this.handleChange.bind(this);
-    this.wrapper = createRef<HTMLDivElement>();
-    this.input = createRef<HTMLInputElement>();
-  }
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
 
-  componentWillUnmount() {
-    const neededValue = this.input?.current?.value;
-    if (neededValue) {
-      localStorage.setItem('bestbookstore-input-data', neededValue.toString());
-    } else {
-      localStorage.setItem('bestbookstore-input-data', '');
+  const handleKeyUp: KeyboardEventHandler<HTMLInputElement> = async (e) => {
+    if (e.code === 'Enter' && !isLoading) {
+      localStorage.setItem('bestbookstore-input-data', inputValue);
+      setIsLoading(true);
+      setError(null);
+      try {
+        const books = (await getDocs(inputValue)) as BookType[];
+        setDocs(books);
+      } catch (e: unknown) {
+        if (e instanceof Error) setError(e.message);
+      }
+      setIsLoading(false);
     }
-  }
+  };
 
-  componentDidMount(): void {
-    const myvalue = localStorage.getItem('bestbookstore-input-data');
-    if (myvalue && this.input && this.input.current) {
-      this.input.current.value = myvalue;
-
-      const filtered = cards.filter((card) =>
-      Object.values(card).find(
-        (value: string | number) =>
-          value.toString().toLowerCase().search(myvalue.toLowerCase()) !== -1
-      )
-    );
-    this.setState({ cards: filtered });
-    this.props.updateData(filtered);
-    }
-
-
-  }
-
-  handleChange(event: ChangeEvent<HTMLInputElement>) {
-    const filtered = cards.filter((card) =>
-      Object.values(card).find(
-        (value: string | number) =>
-          value.toString().toLowerCase().search(event.target.value.toLowerCase()) !== -1
-      )
-    );
-    this.setState({ cards: filtered });
-    this.props.updateData(filtered);
-  }
-
-  handleFocus() {
-    if (this.wrapper.current !== null) this.wrapper.current.style.flexGrow = '1';
-    if(this.input && this.input.current) this.input.current.style.color = '#109966';
-  }
-
-  handleBlur() {
-    if (this.wrapper.current && this.input && document.activeElement !== this.input.current)
-      this.wrapper.current.style.flexGrow = '0';
-      if(this.input && this.input.current) this.input.current.style.color = '#105544';
-  }
-
-  render() {
-    return (
-      <div className="wrapper">
-        <div
-          ref={this.wrapper}
-          className="search_wrapper"
-          onMouseOver={this.handleFocus.bind(this)}
-          onMouseOut={this.handleBlur.bind(this)}
-        >
-          <div className="lupa"><Lupa/></div>
-          <input
-            ref={this.input}
-            type="search"
-            className="input"
-            onChange={this.handleChange.bind(this)}
-            onFocus={this.handleFocus.bind(this)}
-            onBlur={this.handleBlur.bind(this)}
-            required
-          />
+  return (
+    <div className="wrapper">
+      <div className="search_wrapper">
+        <div className="searchIcon">
+          <SearchIcon />
         </div>
+        <input
+          data-testid="input search"
+          value={inputValue}
+          type="search"
+          className="input"
+          onChange={handleChange}
+          onKeyUp={handleKeyUp}
+          required
+        />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
