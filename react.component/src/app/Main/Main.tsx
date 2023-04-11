@@ -13,6 +13,7 @@ export const Main = () => {
       {docs && !isLoading && docs.map((doc: BookType) => <Card key={doc._id} {...doc} />)}
       {isLoading && <Loading />}
       {error && <div className="error">{error}</div>}
+      {docs.length === 0 && !isLoading && !error && <div className="error">No elements found</div>}
     </div>
   );
 };

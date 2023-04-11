@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useEffect, useState, KeyboardEventHandler } from 'react';
+import { ChangeEvent, useContext, useState, KeyboardEventHandler } from 'react';
 import './searchbar.scss';
 import { ReactComponent as SearchIcon } from '../../assets/searchIcon.svg';
 import { AppContext } from '../../context';
@@ -11,22 +11,13 @@ export const SearchBar = () => {
     localStorage.getItem('bestbookstore-input-data') || ''
   );
 
-  useEffect(() => {
-    return () => {
-      if (inputValue) {
-        localStorage.setItem('bestbookstore-input-data', inputValue);
-      } else {
-        localStorage.setItem('bestbookstore-input-data', '');
-      }
-    };
-  }, [inputValue]);
-
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
   const handleKeyUp: KeyboardEventHandler<HTMLInputElement> = async (e) => {
     if (e.code === 'Enter' && !isLoading) {
+      localStorage.setItem('bestbookstore-input-data', inputValue);
       setIsLoading(true);
       setError(null);
       try {

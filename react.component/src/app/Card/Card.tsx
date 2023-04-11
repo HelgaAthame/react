@@ -22,14 +22,14 @@ export const Card = (props: BookType) => {
     const searchId = target.closest('section')?.id;
 
     setError(null);
-    try {
-      const result = await getChar(searchId || '');
-      setProperties(result);
-    } catch (e: unknown) {
-      if (e instanceof Error) setError(e.message);
-    }
     if (target.dataset.name === 'open') {
       setClicked(true);
+      try {
+        const result = await getChar(searchId || '');
+        setProperties(result);
+      } catch (e: unknown) {
+        if (e instanceof Error) setError(e.message);
+      }
     }
   };
 
