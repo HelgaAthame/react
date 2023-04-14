@@ -23,7 +23,6 @@ export const createServer = async () => {
       template = await vite.transformIndexHtml(url, template);
 
       const parts = template.split('<!--placeholder-->');
-      console.log(parts);
 
       const { render } = await vite.ssrLoadModule('/src/entry-server.tsx');
       const { pipe } = await render(url, {

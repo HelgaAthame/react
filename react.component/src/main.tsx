@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/form',
     element: <FormPage />,
-  }
+  },
 ];
 
 const router = createBrowserRouter(routes);

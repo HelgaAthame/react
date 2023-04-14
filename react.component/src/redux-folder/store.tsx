@@ -6,6 +6,13 @@ export const store = configureStore({
   reducer: {
     curState: cardsReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: null,
+      },
+      serializableCheck: false,
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
