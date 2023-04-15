@@ -1,5 +1,6 @@
-describe('template spec', () => {
-  it('passes', () => {
-    cy.visit('http://localhost:5000');
+describe('My first react App e2e tests', () => {
+  it('opens nav links', () => {
+    cy.visit('/');
+
   })
 })
