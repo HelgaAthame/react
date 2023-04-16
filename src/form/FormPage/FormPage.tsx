@@ -144,7 +144,7 @@ export const FormPage = () => {
       {confirm && <Confirmation />}
       <Header currentPage="FORM" />
 
-      <form data-testid="form" className="form" onSubmit={handleSubmit(onSubmit)}>
+      <form data-testid="form" className="form" ref={form} onSubmit={handleSubmit(onSubmit)}>
         <div className="fieldset-wrapper">
           <fieldset className="fieldset">
             <h3>Personal Information</h3>
@@ -254,7 +254,7 @@ export const FormPage = () => {
               )}
             </div>
 
-            <div className="input__wrapper">
+            <div className="input__wrapper" ref={photoInputWrapper}>
               <input
                 type="file"
                 {...register('file', {
@@ -271,7 +271,9 @@ export const FormPage = () => {
                     <Upload />
                   </>
                 </span>
-                <span className="input__file-button-text">UPLOAD PROFILE PHOTO</span>
+                <span className="input__file-button-text" ref={buttonText}>
+                  UPLOAD PROFILE PHOTO
+                </span>
                 {errors.file && (
                   <span className="error">
                     <>{errors.file.message}</>
