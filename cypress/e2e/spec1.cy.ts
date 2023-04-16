@@ -28,7 +28,7 @@ describe('My first react App e2e tests', () => {
     cy.get('#age').type('2010-10-10');
     cy.get('#showMyAge').should('not.be.checked');
     cy.get('#showMyAge').click({force: true});
-    cy.get('input[type=file]').selectFile('C:/react/first/helgaathame-JSFE2022Q3/react.component/src/assets/unbounded.ttf', {force: true});
+    cy.get('input[type=file]').selectFile('src/assets/unbounded.ttf', {force: true});
     cy.get('#zipCode').type('111111');
     cy.get('select').select('Antarctica');
     cy.get('#address').type('Some address');
@@ -38,7 +38,7 @@ describe('My first react App e2e tests', () => {
     cy.get('[type="radio"]').first().check();
     cy.get('[type="submit"]').click();
 
-    cy.get('input[type=file]').selectFile('C:/react/first/helgaathame-JSFE2022Q3/react.component/src/assets/photo.jpg', {force: true});
+    cy.get('input[type=file]').selectFile('src/assets/photo.jpg', {force: true});
 
     cy.get('[type="submit"]').click();
   });
