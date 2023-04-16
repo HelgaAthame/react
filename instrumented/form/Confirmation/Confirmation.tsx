@@ -1,3 +1,4 @@
+import React from 'react';
 import './confirmation.scss';
 
 export const Confirmation = () => {

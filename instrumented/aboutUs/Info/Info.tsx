@@ -1,5 +1,6 @@
 import './info.scss';
 import olga from '../../assets/photo.jpg';
+import React from 'react';
 
 export const Info = () => {
   return (

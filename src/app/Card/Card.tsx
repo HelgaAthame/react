@@ -15,14 +15,14 @@ export const Card = (props: BookType) => {
   const handleCloseClick = () => setClicked(false);
   const handleModalClick: MouseEventHandler<HTMLDivElement> = (e) => {
     const target = e.target as HTMLDivElement;
-    if (target.dataset.testid === 'close') setClicked(false);
+    if (target.dataset.name === 'close') setClicked(false);
   };
 
   const handleCardClick: MouseEventHandler<HTMLDivElement> = async (e) => {
     const target = e.target as HTMLDivElement;
     const searchId = target.dataset.name === 'open' ? target.closest('section')?.id : null;
-    if (searchId) dispatch(fetchCharById(searchId));
     if (target.dataset.name === 'open') {
+      if (searchId) dispatch(fetchCharById(searchId));
       setClicked(true);
     }
   };

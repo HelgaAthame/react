@@ -1,5 +1,5 @@
 import { Header } from '../../app/Header';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import './formPage.scss';
 import { countries } from '../countries';
 import { Confirmation } from '../Confirmation';
@@ -8,6 +8,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { addProfileCard } from '../../redux-folder';
 import { RootState } from '../../redux-folder';
+import React from 'react';
 
 export type ProfileCard = {
   gender: string | undefined;
@@ -46,6 +47,10 @@ export const FormPage = () => {
   const [confirm, setConfirm] = useState<boolean>(false);
 
   const [fileError, setFileError] = useState<boolean>(false);
+
+  const form = useRef<HTMLFormElement | null>(null);
+  const photoInputWrapper = useRef<HTMLInputElement | null>(null);
+  const buttonText = useRef<HTMLSpanElement | null>(null);
 
   const dateToAge = (date: string) => {
     const now = new Date();
@@ -91,13 +96,12 @@ export const FormPage = () => {
       newCard.upload = result;
       dispatch(addProfileCard(newCard));
 
-      const form = document.querySelector('form');
-      if (form) form.reset();
+      if (form.current) form.current.reset();
     });
   };
 
   const validatePhoto = () => {
-    const photoInput = document.querySelector('.input__file') as HTMLInputElement;
+    const photoInput = photoInputWrapper.current?.firstChild as HTMLInputElement;
     const files = photoInput.files as FileList;
     const pattern = /image-*/;
     const file = Array.from(files).at(-1) as File;
@@ -120,8 +124,8 @@ export const FormPage = () => {
 
       return result;
     }
-    const upload = document.querySelector('.input__file-button-text') as HTMLDivElement;
-    const input = upload.parentElement?.parentElement?.firstChild as HTMLInputElement;
+    const upload = buttonText.current;
+    const input = upload?.parentElement?.parentElement?.firstChild as HTMLInputElement;
     const files = input.files;
     let fileURL =
       'https://avatars.mds.yandex.net/i?id=3a61f30a8dda7b409f22c83055b5800984f9830c-8242815-images-thumbs&n=13';

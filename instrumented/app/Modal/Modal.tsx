@@ -4,6 +4,7 @@ import './modal.scss';
 import { RootState } from '../../redux-folder';
 import { Loading } from '../Loading';
 import { useSelector } from 'react-redux';
+import React from 'react';
 
 interface ModalProps extends BookType {
   handleModalClick: MouseEventHandler<HTMLDivElement>;
@@ -15,7 +16,7 @@ export const Modal = (props: ModalProps) => {
 
   return (
     <div className="modal" data-name="close" data-testid="modal" onClick={props.handleModalClick}>
-      <div className="close" data-testid="close" onClick={props.handleCloseClick}></div>
+      <div className="close" data-testid="close" data-name="close"  onClick={props.handleCloseClick}></div>
       <div className="modal-wrapper">
         <div className="modal-content">
           {!smallError && !smallLoading && (
