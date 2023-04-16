@@ -1,6 +1,5 @@
-import { ErrorPage } from './errorPage';
 import React from 'react';
-import ReactDOM, { hydrateRoot } from 'react-dom/client';
+import { hydrateRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.scss';
 import { Provider } from 'react-redux';

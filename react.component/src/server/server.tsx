@@ -11,15 +11,11 @@ const entryServerPath = resolve(__dirname, 'entry-server.tsx');
 export const createServer = async () => {
   const app = express();
 
-  const {
-    transformIndexHtml,
-    ssrLoadModule,
-    middlewares,
-    ssrFixStacktrace,
-  } = await createViteServer({
-    server: { middlewareMode: true },
-    appType: 'custom',
-  });
+  const { transformIndexHtml, ssrLoadModule, middlewares, ssrFixStacktrace } =
+    await createViteServer({
+      server: { middlewareMode: true },
+      appType: 'custom',
+    });
 
   app.use(middlewares);
 
@@ -58,13 +54,13 @@ export const createServer = async () => {
 
   process.on('SIGINT', () => process.exit());
   process.on('uncaughtException', (e) => {
-    console.log("An uncaught exception has occured");
+    console.log('An uncaught exception has occured');
     console.error(e);
     process.exit(1);
   });
-  process.on('exit', () => console.log( 'Server closed' ));
+  process.on('exit', () => console.log('Server closed'));
 
   app.listen(5000);
-}
+};
 
 createServer().then(() => console.log('Server listen on http://localhost:5000/'));

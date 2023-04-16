@@ -4,6 +4,7 @@ import { ReactComponent as SearchIcon } from '../../assets/searchIcon.svg';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { changeSearchText, fetchChars, AppDispatch, RootState } from '../../redux-folder';
+import React from 'react';
 
 export const SearchBar = () => {
   const dispatch = useDispatch<AppDispatch>();

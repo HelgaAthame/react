@@ -8,6 +8,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { addProfileCard } from '../../redux-folder';
 import { RootState } from '../../redux-folder';
+import React from 'react';
 
 export type ProfileCard = {
   gender: string | undefined;

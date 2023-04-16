@@ -1,3 +1,4 @@
+import React from 'react';
 import { AppDispatch, store, fetchCharById } from '../../redux-folder';
 import { Modal } from '../Modal';
 import { BookType } from '../types';

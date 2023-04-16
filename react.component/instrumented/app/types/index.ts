@@ -1,24 +1,25 @@
 function cov_1ftxc7jlab() {
-  var path = "C:\\react\\first\\helgaathame-JSFE2022Q3\\react.component\\src\\app\\types\\index.ts";
-  var hash = "900d70a40c7cca7f09a6ea35262a9c73f7b6f667";
-  var global = new Function("return this")();
-  var gcv = "__coverage__";
-  var coverageData = {
-    path: "C:\\react\\first\\helgaathame-JSFE2022Q3\\react.component\\src\\app\\types\\index.ts",
+  const path =
+    'C:\\react\\first\\helgaathame-JSFE2022Q3\\react.component\\src\\app\\types\\index.ts';
+  const hash = '900d70a40c7cca7f09a6ea35262a9c73f7b6f667';
+  const global = new Function('return this')();
+  const gcv = '__coverage__';
+  const coverageData = {
+    path: 'C:\\react\\first\\helgaathame-JSFE2022Q3\\react.component\\src\\app\\types\\index.ts',
     statementMap: {},
     fnMap: {},
     branchMap: {},
     s: {},
     f: {},
     b: {},
-    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    hash: "900d70a40c7cca7f09a6ea35262a9c73f7b6f667"
+    _coverageSchema: '1a1c01bbd47fc00a2c39e90264f33305004495a9',
+    hash: '900d70a40c7cca7f09a6ea35262a9c73f7b6f667',
   };
-  var coverage = global[gcv] || (global[gcv] = {});
+  const coverage = global[gcv] || (global[gcv] = {});
   if (!coverage[path] || coverage[path].hash !== hash) {
     coverage[path] = coverageData;
   }
-  var actualCoverage = coverage[path];
+  const actualCoverage = coverage[path];
   {
     // @ts-ignore
     cov_1ftxc7jlab = function () {

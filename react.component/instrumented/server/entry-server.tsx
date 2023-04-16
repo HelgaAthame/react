@@ -11,7 +11,6 @@ import { store } from '../redux-folder';
 import { routes } from './routes';
 
 export const render = async (url: string, opts?: object) => {
-
   const { query, dataRoutes } = createStaticHandler(routes);
   const fetchRequest = new Request(`http://localhost:5000${url}`, {
     method: 'GET',

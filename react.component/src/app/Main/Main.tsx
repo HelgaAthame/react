@@ -7,6 +7,7 @@ import { Loading } from '../Loading';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux-folder';
 import { fetchChars } from '../../redux-folder';
+import React from 'react';
 
 export const Main = () => {
   const { cards, error, loading, searchText } = useSelector((state: RootState) => state.curState);

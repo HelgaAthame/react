@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import './logo.scss';
+import React from 'react';
 
 type LogoProps = {
   curPage: string;

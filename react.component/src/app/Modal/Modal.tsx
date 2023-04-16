@@ -4,6 +4,7 @@ import './modal.scss';
 import { RootState } from '../../redux-folder';
 import { Loading } from '../Loading';
 import { useSelector } from 'react-redux';
+import React from 'react';
 
 interface ModalProps extends BookType {
   handleModalClick: MouseEventHandler<HTMLDivElement>;

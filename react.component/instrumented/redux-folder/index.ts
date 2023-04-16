@@ -1,24 +1,25 @@
 function cov_poxggpqzl() {
-  var path = "C:\\react\\first\\helgaathame-JSFE2022Q3\\react.component\\src\\redux-folder\\index.ts";
-  var hash = "37e12f8f0bdc5958f791fe21d7a0ba226deeb2cb";
-  var global = new Function("return this")();
-  var gcv = "__coverage__";
-  var coverageData = {
-    path: "C:\\react\\first\\helgaathame-JSFE2022Q3\\react.component\\src\\redux-folder\\index.ts",
+  const path =
+    'C:\\react\\first\\helgaathame-JSFE2022Q3\\react.component\\src\\redux-folder\\index.ts';
+  const hash = '37e12f8f0bdc5958f791fe21d7a0ba226deeb2cb';
+  const global = new Function('return this')();
+  const gcv = '__coverage__';
+  const coverageData = {
+    path: 'C:\\react\\first\\helgaathame-JSFE2022Q3\\react.component\\src\\redux-folder\\index.ts',
     statementMap: {},
     fnMap: {},
     branchMap: {},
     s: {},
     f: {},
     b: {},
-    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    hash: "37e12f8f0bdc5958f791fe21d7a0ba226deeb2cb"
+    _coverageSchema: '1a1c01bbd47fc00a2c39e90264f33305004495a9',
+    hash: '37e12f8f0bdc5958f791fe21d7a0ba226deeb2cb',
   };
-  var coverage = global[gcv] || (global[gcv] = {});
+  const coverage = global[gcv] || (global[gcv] = {});
   if (!coverage[path] || coverage[path].hash !== hash) {
     coverage[path] = coverageData;
   }
-  var actualCoverage = coverage[path];
+  const actualCoverage = coverage[path];
   {
     // @ts-ignore
     cov_poxggpqzl = function () {
