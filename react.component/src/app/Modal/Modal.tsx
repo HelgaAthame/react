@@ -15,12 +15,12 @@ export const Modal = (props: ModalProps) => {
 
   return (
     <div className="modal" data-name="close" data-testid="modal" onClick={props.handleModalClick}>
-      <div className="close" data-testid="close" onClick={props.handleCloseClick}></div>
+      <div className="close" data-testid="close" data-name="close" onClick={props.handleCloseClick}></div>
       <div className="modal-wrapper">
         <div className="modal-content">
           {!smallError && !smallLoading && (
             <>
-              <div className="name" data-name="open" data-testid="card-name">
+              <div className="name" data-testid="card-name">
                 Name: {props.name === '' ? 'unknown' : props.name}
               </div>
               <div className="birth modal-div">
