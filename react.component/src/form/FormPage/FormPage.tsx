@@ -270,7 +270,9 @@ export const FormPage = () => {
                     <Upload />
                   </>
                 </span>
-                <span className="input__file-button-text" ref={buttonText}>UPLOAD PROFILE PHOTO</span>
+                <span className="input__file-button-text" ref={buttonText}>
+                  UPLOAD PROFILE PHOTO
+                </span>
                 {errors.file && (
                   <span className="error">
                     <>{errors.file.message}</>
