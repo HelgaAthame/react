@@ -1,11 +1,11 @@
 function cov_poxggpqzl() {
   const path =
-    './index.ts';
+    'index.ts';
   const hash = '37e12f8f0bdc5958f791fe21d7a0ba226deeb2cb';
   const global = new Function('return this')();
   const gcv = '__coverage__';
   const coverageData = {
-    path: './index.ts',
+    path: 'index.ts',
     statementMap: {},
     fnMap: {},
     branchMap: {},
