@@ -156,6 +156,7 @@ export const FormPage = () => {
                   type="text"
                   className="input"
                   id="firstName"
+                  data-testid="firstName"
                   {...register('firstName', {
                     required: 'Required',
                     minLength: {
@@ -187,6 +188,7 @@ export const FormPage = () => {
                   type="text"
                   className="input"
                   id="lastName"
+                  data-testid="lastName"
                   {...register('lastName', {
                     required: 'Required',
                     minLength: {
@@ -218,6 +220,7 @@ export const FormPage = () => {
                   type="date"
                   className="input"
                   id="age"
+                  data-testid="age"
                   {...register('age', {
                     required: 'Required',
                     valueAsDate: true,
@@ -239,6 +242,7 @@ export const FormPage = () => {
               <input
                 type="checkbox"
                 id="showMyAge"
+                data-testid="showMyAge"
                 className="checkbox-input"
                 {...register('showMyAge', {
                   required: 'Required',
@@ -271,9 +275,7 @@ export const FormPage = () => {
                     <Upload />
                   </>
                 </span>
-                <span className="input__file-button-text" ref={buttonText}>
-                  UPLOAD PROFILE PHOTO
-                </span>
+                <span className="input__file-button-text" ref={buttonText}>UPLOAD PROFILE PHOTO</span>
                 {errors.file && (
                   <span className="error">
                     <>{errors.file.message}</>
@@ -300,6 +302,7 @@ export const FormPage = () => {
                   type="text"
                   className="input"
                   id="zipCode"
+                  data-testid="zipCode"
                   {...register('zipCode', {
                     required: 'Required',
                     minLength: {
@@ -358,6 +361,7 @@ export const FormPage = () => {
                   type="text"
                   className="input"
                   id="city"
+                  data-testid="city"
                   {...register('city', {
                     required: 'Required',
                     minLength: {
@@ -390,6 +394,7 @@ export const FormPage = () => {
                   type="text"
                   className="input"
                   id="address"
+                  data-testid="address"
                   {...register('address', {
                     required: 'Required',
                     minLength: {
@@ -427,6 +432,7 @@ export const FormPage = () => {
                   type="text"
                   className="input"
                   id="email"
+                  data-testid="email"
                   {...register('email', {
                     required: 'Required',
                     pattern: {
@@ -463,6 +469,7 @@ export const FormPage = () => {
                   type="text"
                   className="input"
                   id="phone"
+                  data-testid="phone"
                   {...register('phone', {
                     required: 'Required',
                     pattern: {

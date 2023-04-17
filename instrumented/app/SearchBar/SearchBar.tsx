@@ -33,6 +33,7 @@ export const SearchBar = () => {
         <input
           defaultValue={searchText}
           type="search"
+          data-testid="search-input"
           className="input"
           onKeyUp={handleKeyUp}
           onChange={handleChange}

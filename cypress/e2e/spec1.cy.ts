@@ -1,4 +1,4 @@
-describe('My first react App e2e tests', () => {
+describe('e2e tests', () => {
   it('opens nav links', () => {
     cy.visit('/');
     cy.contains('ABOUT US').click();
@@ -9,12 +9,12 @@ describe('My first react App e2e tests', () => {
     cy.visit('/');
     cy.contains('Melkor').click();
     cy.contains('Beleriand');
-    cy.get('.close').click();
+    cy.get('[data-testid="close"]').click();
   });
   it('search works', () => {
     cy.visit('/');
-    cy.get('.input').type('Elrond{enter}')
-    cy.get('.input').should('have.value', 'Elrond');
+    cy.get('[data-testid="search-input"]').type('Elrond{enter}')
+    cy.get('[data-testid="search-input"]').should('have.value', 'Elrond');
   });
   it('error page opens', () => {
     cy.visit('/some-fake-url');
@@ -23,18 +23,18 @@ describe('My first react App e2e tests', () => {
   it('form fills out correctly', () => {
     cy.visit('/form');
     cy.get('[type="submit"]').click();
-    cy.get('#firstName').type('Name');
-    cy.get('#lastName').type('Surname');
-    cy.get('#age').type('2010-10-10');
-    cy.get('#showMyAge').should('not.be.checked');
-    cy.get('#showMyAge').click({force: true});
+    cy.get('[data-testid="firstName"]').type('Name');
+    cy.get('[data-testid="lastName"]').type('Surname');
+    cy.get('[data-testid="age"]').type('2010-10-10');
+    cy.get('[data-testid="age"]').should('not.be.checked');
+    cy.get('[data-testid="showMyAge"]').click({force: true});
     cy.get('input[type=file]').selectFile('src/assets/unbounded.ttf', {force: true});
-    cy.get('#zipCode').type('111111');
+    cy.get('[data-testid="zipCode"]').type('111111');
     cy.get('select').select('Antarctica');
-    cy.get('#address').type('Some address');
-    cy.get('#city').type('City');
-    cy.get('#email').type('email@gmail.com');
-    cy.get('#phone').type('+375 29 111-11-11');
+    cy.get('[data-testid="address"]').type('Some address');
+    cy.get('[data-testid="city"]').type('City');
+    cy.get('[data-testid="email"]').type('email@gmail.com');
+    cy.get('[data-testid="phone"]').type('+375 29 111-11-11');
     cy.get('[type="radio"]').first().check();
     cy.get('[type="submit"]').click();
 
