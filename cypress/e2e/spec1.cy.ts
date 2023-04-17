@@ -42,4 +42,7 @@ describe('e2e tests', () => {
     cy.visit('/some-fake-url');
     cy.contains('404');
   });
+  it('Does not do much!', () => {
+    expect(true).to.equal(true)
+  })
 });
