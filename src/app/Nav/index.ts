@@ -19,12 +19,6 @@ function cov_2cd1h55soo() {
     coverage[path] = coverageData;
   }
   const actualCoverage = coverage[path];
-  {
-    // @ts-ignore
-    cov_2cd1h55soo = function () {
-      return actualCoverage;
-    };
-  }
   return actualCoverage;
 }
 cov_2cd1h55soo();

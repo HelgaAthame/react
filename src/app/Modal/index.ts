@@ -1,6 +1,5 @@
 function cov_ruaocmayd() {
-  const path =
-    'index.ts';
+  const path = 'index.ts';
   const hash = '0280d7172faae5b3c1ceceaab602a39cc91a9c6e';
   const global = new Function('return this')();
   const gcv = '__coverage__';
@@ -20,12 +19,6 @@ function cov_ruaocmayd() {
     coverage[path] = coverageData;
   }
   const actualCoverage = coverage[path];
-  {
-    // @ts-ignore
-    cov_ruaocmayd = function () {
-      return actualCoverage;
-    };
-  }
   return actualCoverage;
 }
 cov_ruaocmayd();

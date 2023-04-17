@@ -1,6 +1,5 @@
 function cov_poxggpqzl() {
-  const path =
-    'index.ts';
+  const path = 'index.ts';
   const hash = '37e12f8f0bdc5958f791fe21d7a0ba226deeb2cb';
   const global = new Function('return this')();
   const gcv = '__coverage__';
@@ -20,12 +19,6 @@ function cov_poxggpqzl() {
     coverage[path] = coverageData;
   }
   const actualCoverage = coverage[path];
-  {
-    // @ts-ignore
-    cov_poxggpqzl = function () {
-      return actualCoverage;
-    };
-  }
   return actualCoverage;
 }
 cov_poxggpqzl();

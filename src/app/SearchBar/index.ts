@@ -1,6 +1,5 @@
 function cov_2g2qhu52t8() {
-  const path =
-    'index.ts';
+  const path = 'index.ts';
   const hash = 'e50713dc7c62833445be29b5888cf953bac1c39b';
   const global = new Function('return this')();
   const gcv = '__coverage__';
@@ -20,12 +19,6 @@ function cov_2g2qhu52t8() {
     coverage[path] = coverageData;
   }
   const actualCoverage = coverage[path];
-  {
-    // @ts-ignore
-    cov_2g2qhu52t8 = function () {
-      return actualCoverage;
-    };
-  }
   return actualCoverage;
 }
 cov_2g2qhu52t8();

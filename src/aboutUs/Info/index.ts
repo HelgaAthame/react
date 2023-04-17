@@ -1,6 +1,5 @@
 function cov_1lc5k6fmi() {
-  const path =
-    'index.ts';
+  const path = 'index.ts';
   const hash = '30a32821e9b5c3ff793a97226c395a3998aef1b8';
   const global = new Function('return this')();
   const gcv = '__coverage__';
@@ -20,12 +19,6 @@ function cov_1lc5k6fmi() {
     coverage[path] = coverageData;
   }
   const actualCoverage = coverage[path];
-  {
-    // @ts-ignore
-    cov_1lc5k6fmi = function () {
-      return actualCoverage;
-    };
-  }
   return actualCoverage;
 }
 cov_1lc5k6fmi();

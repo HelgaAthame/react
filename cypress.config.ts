@@ -15,5 +15,5 @@ export default defineConfig({
     baseUrl: 'http://localhost:5000',
   },
   video: false,
-  pageLoadTimeout: 200000,
+  pageLoadTimeout: 100000,
 })

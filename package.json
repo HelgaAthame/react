@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "lint": "eslint ./src --fix",
+    "lint": "eslint ./src",
+    "fix": "eslint ./src --fix",
     "dev": "nodemon",
     "cypress": "cypress open",
-    "run": "cypress run",
+    "run": "cypress run --env coverage=false",
     "cover": "cypress run --env coverage=true",
     "report": "npx nyc report --reporter=text-summary",
     "vitest": "vitest run --coverage",

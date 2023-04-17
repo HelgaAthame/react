@@ -19,12 +19,6 @@ function cov_9oz6m35w1() {
     coverage[path] = coverageData;
   }
   const actualCoverage = coverage[path];
-  {
-    // @ts-ignore
-    cov_9oz6m35w1 = function () {
-      return actualCoverage;
-    };
-  }
   return actualCoverage;
 }
 cov_9oz6m35w1();

@@ -1,6 +1,5 @@
 function cov_1ftxc7jlab() {
-  const path =
-    'index.ts';
+  const path = 'index.ts';
   const hash = '900d70a40c7cca7f09a6ea35262a9c73f7b6f667';
   const global = new Function('return this')();
   const gcv = '__coverage__';
@@ -20,12 +19,6 @@ function cov_1ftxc7jlab() {
     coverage[path] = coverageData;
   }
   const actualCoverage = coverage[path];
-  {
-    // @ts-ignore
-    cov_1ftxc7jlab = function () {
-      return actualCoverage;
-    };
-  }
   return actualCoverage;
 }
 cov_1ftxc7jlab();
