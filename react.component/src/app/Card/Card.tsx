@@ -1,58 +1,61 @@
-import { CardT } from '../cards';
+import { AppDispatch, store, fetchCharById } from '../../redux-folder';
+import { Modal } from '../Modal';
+import { BookType } from '../types';
 import './card.scss';
-import { ReactComponent as Heart } from '../../assets/heart.svg';
-import { Component, createRef, RefObject } from 'react';
+import { MouseEventHandler, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-interface NewCardT extends CardT {
-  cards: CardT[];
-  updateData: (cards: CardT[]) => void;
-};
+export const Card = (props: BookType) => {
+  const [clicked, setClicked] = useState(false);
 
-export class Card extends Component<NewCardT> {
-  heart: RefObject<HTMLDivElement>;
+  const { curChar } = store.getState().curState;
+  const dispatch = useDispatch<AppDispatch>();
 
-  constructor(props: NewCardT) {
-    super(props);
-    this.heart = createRef<HTMLDivElement>();
-  }
+  const handleCloseClick = () => setClicked(false);
+  const handleModalClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    const target = e.target as HTMLDivElement;
+    if (target.dataset.name === 'close') setClicked(false);
+  };
 
-  handleClick(event: React.MouseEvent) {
-    const heartDiv = this.heart.current;
-    const heartEl = (heartDiv ? heartDiv.firstElementChild : undefined) as SVGElement;
-    if (heartEl) {
-      heartEl.setAttribute('fill', 'darkred');
+  const handleCardClick: MouseEventHandler<HTMLDivElement> = async (e) => {
+    const target = e.target as HTMLDivElement;
+    const searchId = target.dataset.name === 'open' ? target.closest('section')?.id : null;
+    if (target.dataset.name === 'open') {
+      if (searchId) dispatch(fetchCharById(searchId));
+      setClicked(true);
     }
-    setTimeout(() => {
-      heartEl.setAttribute('fill', '#105544');
-    }, 500);
+  };
 
-    const target = event.target as HTMLDivElement;
-    const changedCards: CardT[] = JSON.parse(JSON.stringify(this.props.cards));
-    const targetCard = changedCards.find((card: { name: string | undefined; }) => card.name === target.closest('section')?.querySelector('.name')?.innerHTML);
-    if (targetCard) targetCard.likes++;
-    this.props.updateData(changedCards);
-  }
-
-  render() {
-    return (
-      <section className="card">
-        <div className="image">
-          <img src={this.props.picture} />
+  return (
+    <section
+      className="card"
+      data-name="open"
+      id={props._id}
+      onClick={handleCardClick}
+      data-testid="card"
+    >
+      <div className="additional-wrapper" data-testid="additional-wrapper" data-name="open">
+        <div className="name" data-testid="name" data-name="open">
+          {props.name}
         </div>
-        <div className="name">{this.props.name}</div>
-        <div className="author">{this.props.author}</div>
-        <div className="card-footer">
-          <div className="left">
-            <div className="genre">{this.props.genre}</div>
-            <div className="country">{this.props.country}</div>
-          </div>
-          <div ref={this.heart} placeholder="likes" className="likes" onClick={this.handleClick.bind(this)}>
-            <Heart />
-            &nbsp;
-            {this.props.likes}
-          </div>
-        </div>
-      </section>
-    );
-  }
+        {clicked && (
+          <Modal
+            handleModalClick={handleModalClick}
+            handleCloseClick={handleCloseClick}
+            _id={curChar?._id || ''}
+            name={curChar?.name || ''}
+            birth={curChar?.birth || ''}
+            death={curChar?.death || ''}
+            gender={curChar?.gender || ''}
+            hair={curChar?.hair || ''}
+            height={curChar?.height || ''}
+            race={curChar?.race || ''}
+            realm={curChar?.realm || ''}
+            spouse={curChar?.spouse || ''}
+            wikiUrl={curChar?.wikiUrl || ''}
+          />
+        )}
+      </div>
+    </section>
+  );
 };
