@@ -20,7 +20,6 @@ export const Card = (props: BookType) => {
 
   const handleCardClick: MouseEventHandler<HTMLDivElement> = async (e) => {
     const target = e.target as HTMLDivElement;
-    console.log(target);
     const searchId = target.dataset.name === 'open' ? target.closest('section')?.id : null;
     if (target.dataset.name === 'open') {
       if (searchId) dispatch(fetchCharById(searchId));
