@@ -7,7 +7,7 @@ https://github.com/HelgaAthame/react/tree/react-ssr
 
 ## *npm run dev* - to lauch server with nodemon on localhost:5000
 
-*Please, don't forget to lauch an app before running tests*
+*Please, don't forget to lauch an app with **npm run dev** before running tests*
 
 ## *npm run cover* - to run e2e tests and see results of tests in VSCode console
 

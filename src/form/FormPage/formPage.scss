@@ -363,6 +363,7 @@ $basic: 1rem;
       transition: 1s;
       display: flex;
       flex-direction: column;
+      max-width: 17.9rem;
       &:hover {
         color: $col2;
         input {

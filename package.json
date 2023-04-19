@@ -11,11 +11,7 @@
     "run": "cypress run --env coverage=false",
     "cover": "cypress run --env coverage=true",
     "report": "npx nyc report --reporter=text-summary",
-    "vitest": "vitest run --coverage",
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "vite build --outDir dist/client",
-    "build:server": "vite build --ssr src/server/entry-server.tsx --outDir dist/server",
-    "generate": "vite build --outDir dist/static && npm run build:server && node prerender"
+    "vitest": "vitest run --coverage"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",

@@ -54,9 +54,6 @@ $basic: 1rem;
     background-color: white;
     padding: $basic 5vw 2rem;
     transition: 1s;
-    &:hover {
-      //transform: scale(1.1);
-    }
     .modal-content {
       .modal-div {
         max-width: 90vw;
