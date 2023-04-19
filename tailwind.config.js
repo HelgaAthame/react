@@ -26,9 +26,18 @@ export default {
             backgroundIimage: 'conic-gradient($col2 100%, white 0%)'
           }
         },
+        loading: {
+          '0%': {
+            transform: 'scale(5) rotate(0deg)',
+          },
+          '100%': {
+            transform: 'scale(5) rotate(360deg)'
+          }
+        }
       },
       animation: {
         button: 'button 750ms forwards ease-in-out',
+        loading: 'loading 750ms forwards infinite linear'
       }
     },
   },
