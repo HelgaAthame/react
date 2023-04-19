@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: Light-font;
+    src: url("./assets/Objectivity/Objectivity-Light.otf");
+}
+
+@font-face {
+    font-family: Regular-font;
+    src: url("./assets/Objectivity/Objectivity-Regular.otf");
+}
+
+@font-face {
+    font-family: Medium-font;
+    src: url("./assets/Objectivity/Objectivity-Medium.otf");
+}
