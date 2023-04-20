@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import './main.scss';
 import { BookType } from '../types/';
 import { Card } from '../Card';
 import { Loading } from '../Loading';
@@ -19,10 +18,11 @@ export const Main = () => {
   }, [dispatch]);
 
   return (
-    <div className="main" data-testid="main">
+    <div className="main mx-4 mb-4
+    flex flex-row flex-wrap h-full justify-between" data-testid="main">
       {cards && !loading && cards.map((doc: BookType) => <Card key={doc._id} {...doc} />)}
       {loading && <Loading />}
-      {error && <div className="error">Error: {error}</div>}
+      {error && <div className="error m-4">Error: {error}</div>}
     </div>
   );
 };
