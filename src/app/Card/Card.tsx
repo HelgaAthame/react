@@ -2,7 +2,6 @@ import React from 'react';
 import { AppDispatch, store, fetchCharById } from '../../redux-folder';
 import { Modal } from '../Modal';
 import { BookType } from '../types';
-import './card.scss';
 import { MouseEventHandler, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -29,13 +28,19 @@ export const Card = (props: BookType) => {
 
   return (
     <section
-      className="card"
+      className="card mt-4 mx-2 flex rounded grow overflow-hidden relative duration-1000
+      before:absolute before:bg-[conic-gradient(var(--tw-gradient-stops))] from-white from-0% to-emerald-900 to-0%
+      before:h-full before:w-full before:z-[-1] duration-1000
+      hover:before:animate-button"
       data-name="open"
       id={props._id}
       onClick={handleCardClick}
       data-testid="card"
     >
-      <div className="additional-wrapper" data-testid="additional-wrapper" data-name="open">
+      <div className="additional-wrapper
+      flex items-center bg-white grow flex-col
+      rounded-sm border-0 m-px p-6 w-40 duration-500
+      hover:border-emerald-600 hover:text-emerald-600 hover:cursor-pointer" data-testid="additional-wrapper" data-name="open">
         <div className="name" data-testid="name" data-name="open">
           {props.name}
         </div>

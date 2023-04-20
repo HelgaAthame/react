@@ -11,7 +11,8 @@
     "run": "cypress run --env coverage=false",
     "cover": "cypress run --env coverage=true",
     "report": "npx nyc report --reporter=text-summary",
-    "vitest": "vitest run --coverage"
+    "vitest": "vitest run --coverage",
+    "tw": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",

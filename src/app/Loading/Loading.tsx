@@ -1,5 +1,4 @@
 import React from 'react';
-//import './loading.scss';
 
 export const Loading = () => (
   <section className="super-wrapper w-full flex justify-center items-center">
