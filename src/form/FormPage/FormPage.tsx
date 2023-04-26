@@ -141,6 +141,7 @@ export const FormPage = () => {
 
   return (
     <section className="form-page">
+      <Confirmation />
       {confirm && <Confirmation />}
       <Header currentPage="FORM" />
 
