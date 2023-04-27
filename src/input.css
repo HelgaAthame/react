@@ -4,15 +4,43 @@
 
 @font-face {
     font-family: Light-font;
-    src: url("./assets/Objectivity/Objectivity-Light.otf");
+    src: url("../src/assets/Objectivity/Objectivity-Light.otf");
 }
 
 @font-face {
     font-family: Regular-font;
-    src: url("./assets/Objectivity/Objectivity-Regular.otf");
+    src: url("../src/assets/Objectivity/Objectivity-Regular.otf");
 }
 
 @font-face {
     font-family: Medium-font;
-    src: url("./assets/Objectivity/Objectivity-Medium.otf");
+    src: url("../src/assets/Objectivity/Objectivity-Medium.otf");
 }
+
+:root {
+  font-family: Regular-font;
+  line-height: 1.5;
+  font-weight: 600;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  color: #105544;
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  align-items: flex-start;
+}
+
+input[type=text]::-ms-clear {  display: none; width : 0; height: 0; }
+input[type=text]::-ms-reveal {  display: none; width : 0; height: 0; }
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration { display: none; }

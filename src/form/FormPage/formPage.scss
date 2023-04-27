@@ -35,95 +35,95 @@ $basic: 1rem;
 }
 
 .form {
-  margin: 0 1rem;
-  display: flex;
-  flex-wrap: wrap;
+  //margin: 0 1rem;
+  //display: flex;
+  //flex-wrap: wrap;
 
   .fieldset-wrapper {
-    flex-grow: 1;
-    overflow: hidden;
-    position:relative;
+    //flex-grow: 1;
+    //overflow: hidden;
+    //position:relative;
     @include animated-border;
-    margin: 0.5rem;
-    border-radius: 3px;
-    display: flex;
-    align-items: stretch;
+    //margin: 0.5rem;
+    //border-radius: 3px;
+    //display: flex;
+    //align-items: stretch;
     .fieldset {
-      width: 100%;
-      font-size: 1.5rem;
-      margin: 1px;
-      border-radius: 2px;
-      background-color: white;
-      border-width: 0;
-      padding: $basic;
-      color: $color;
-      transition: 1s;
+      //width: 100%;
+      //font-size: 1.5rem;
+      //margin: 1px;
+      //border-radius: 2px;
+      //background-color: white;
+      //border-width: 0;
+      //padding: $basic;
+      //color: $color;
+      //transition: 1s;
       &:hover {
-        color: $col2;
+        //color: $col2;
         input {
-          color: $col2;
+          //color: $col2;
         }
       }
       h3 {
-        text-transform: uppercase;
-        margin: 0;
-        padding: $basic 0;
-        text-align: left;
+        //text-transform: uppercase;
+        //margin: 0;
+        //padding: $basic 0;
+        //text-align: left;
       }
 
       .input-wrapper {
-        font-size: $basic;
-        font-family: Regular-font;
-        display: flex;
+        //font-size: $basic;
+        //font-family: Regular-font;
+        //display: flex;
         .label {
-          flex-wrap: wrap;
-          text-align: left;
-          flex-grow: 1;
-          display: flex;
-          margin: 0.5rem 0;
-          transition: 1s;
+          //flex-wrap: wrap;
+          //text-align: left;
+          //flex-grow: 1;
+          //display: flex;
+          //margin: 0.5rem 0;
+          //transition: 1s;
           .input {
-            overflow: visible;
-            flex-grow: 1;
-            font-size: $basic;
-            outline: none;
-            border: none;
-            transition: 1s;
-            margin-left: 0.5rem;
-            color: $color;
-            background-color: white;
-            width: 50%;
+            //overflow: visible;
+            //flex-grow: 1;
+            //font-size: $basic;
+            //outline: none;
+            //border: none;
+            //transition: 1s;
+            //margin-left: 0.5rem;
+            //color: $color;
+            //background-color: white;
+            //width: 50%;
             &:focus {
-              color: $col2;
-              border-bottom: 1px solid $col2;
+              //color: $col2;
+              //border-bottom: 1px solid $col2;
             }
           }
           .error {
-            color: red;
+            //color: red;
           }
         }
       }
 
       .radio-super-wrapper {
-        text-transform: uppercase;
-        text-align: left;
+        //text-transform: uppercase;
+        //text-align: left;
         .radio-wrapper {
-          text-transform:none;
-          font-size: 1rem;
-          display: flex;
-          flex-direction: column;
+          //text-transform:none;
+          //font-size: 1rem;
+          //display: flex;
+          //flex-direction: column;
           .radio-label{
-            padding: 0.25rem;
-            text-align: left;
+            //padding: 0.25rem;
+            //text-align: left;
             .radio-input {
 
             }
           }
         }
         .error {
-          color: red;
-          font-size: 1rem;
-          text-transform:none;
+          //color: red;
+          //font-size: 1rem;
+          //text-transform:none;
         }
       }
     }
@@ -131,171 +131,171 @@ $basic: 1rem;
 
 
   .submit-wrapper {
-    display: flex;
-    align-items: stretch;
-    margin: 0.5rem;
-    outline: none;
-    overflow: hidden;
-    position:relative;
-    border-radius: 3px;
+    //display: flex;
+    //align-items: stretch;
+    //margin: 0.5rem;
+    //outline: none;
+    //overflow: hidden;
+    //position:relative;
+    //border-radius: 3px;
     @include animated-border;
-    height: min-content;
+    //height: min-content;
     .submit-input {
-      color: $color;
-      border: none;
-      background-color: white;
-      margin: 1px;
-      border-radius: 2px;
-      padding: 1.2rem 1rem 0.8rem;
-      transition: 1s;
-      font-size: 2rem;
-      font-family: Light-font;
+      //color: $color;
+      //border: none;
+      //background-color: white;
+      //margin: 1px;
+      //border-radius: 2px;
+      //padding: 1.2rem 1rem 0.8rem;
+      //transition: 1s;
+      //font-size: 2rem;
+      //font-family: Light-font;
       &:hover {
-        color: $col2;
+        //color: $col2;
       }
     }
   }
 
   .checkbox-wrapper {
-    margin: 0.5rem 0;
-    display: flex;
-    padding: 0.5rem 0;
+    //margin: 0.5rem 0;
+    //display: flex;
+    //padding: 0.5rem 0;
     .error {
-      color: red;
-      font-size: $basic;
+      //color: red;
+      //font-size: $basic;
     }
     .checkbox-label {
-      flex-grow: 1;
-      font-size: $basic;
-      text-align: left;
+      //flex-grow: 1;
+      //font-size: $basic;
+      //text-align: left;
     }
     .checkbox-input {
-      position: absolute;
-      z-index: -1;
-      opacity: 0;
+      //position: absolute;
+      //z-index: -1;
+      //opacity: 0;
     }
 
     .checkbox-input+label {
-      display: inline-flex;
-      align-items: center;
-      user-select: none;
+      //display: inline-flex;
+      //align-items: center;
+      //user-select: none;
     }
     .checkbox-input+label::before {
-      transition: 1s;
+      //transition: 1s;
       content: '✔';
-      font-size: 1rem;
-      line-height: 1.2rem;
-      text-align: center;
-      vertical-align: middle;
-      display: inline-block;
-      width: 1rem;
-      height: 1rem;
-      flex-shrink: 0;
-      flex-grow: 0;
-      border: 1px solid $color;
-      border-radius: 3px;
-      margin-right: 0.5rem;
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: 50% 50%;
-      background-color: $color;
-      color: $color;
+      //font-size: 1rem;
+      //line-height: 1.2rem;
+      //text-align: center;
+      //vertical-align: middle;
+      //display: inline-block;
+      //width: 1rem;
+      //height: 1rem;
+      //flex-shrink: 0;
+      //flex-grow: 0;
+      //border: 1px solid $color;
+      //border-radius: 3px;
+      //margin-right: 0.5rem;
+      //background-repeat: no-repeat;
+      //background-position: center center;
+      //background-size: 50% 50%;
+      //background-color: $color;
+      //color: $color;
     }
     .checkbox-input:checked+label::before {
-      background-color: white;
+      //background-color: white;
     }
     /* стили при наведении курсора на checkbox */
-  .checkbox-input:not(:disabled):not(:checked)+label:hover::before {
+  /*.checkbox-input:not(:disabled):not(:checked)+label:hover::before {
     border-color: $col2;
     background-color: $col2;
     color: $col2;
-  }
+  }*/
   /* стили для активного состояния чекбокса (при нажатии на него) */
-  .checkbox-input:not(:disabled):active+label::before {
+  /*.checkbox-input:not(:disabled):active+label::before {
     background-color: $col2;
     border-color: $col2;
     color: $col2;
-  }
+  }*/
   /* стили для чекбокса, находящегося в состоянии disabled */
-  .checkbox-input:disabled+label::before {
+  /*.checkbox-input:disabled+label::before {
     background-color: grey;
-  }
+  }*/
   }
 
   .input__wrapper {
     .input__file {
-      opacity: 0;
-      visibility: hidden;
-      position: absolute;
+      //opacity: 0;
+      //visibility: hidden;
+      //position: absolute;
     }
     .input__label {
-      font-size: $basic;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
+      //font-size: $basic;
+      //display: flex;
+      //align-items: center;
+      //justify-content: flex-start;
       .error{
-        color: red;
+        //color: red;
       }
       &:hover {
-        cursor: pointer;
+        //cursor: pointer;
       }
       .input__file-icon-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        //display: flex;
+        //align-items: center;
+        //justify-content: center;
       }
       .input__file-button-text {
-        line-height: 1rem;
-        padding: $basic;
-        font-family: Medium-font;
+        //line-height: 1rem;
+        //padding: $basic;
+        //font-family: Medium-font;
       }
     }
   }
 
   .select-wrapper{
-    font-size: $basic;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+    //font-size: $basic;
+    //text-align: left;
+    //display: flex;
+    //align-items: center;
+    //flex-wrap: wrap;
     .select{
-      height: 1.5rem;
-      flex-grow: 1;
-      color: $color;
-      font-size: $basic;
-      font-family: Regular-font;
-      margin: $basic;
-      outline: none;
-      border: none;
-      cursor: pointer;
-      background-color: white;
-      width: 50%;
+      //height: 1.5rem;
+      //flex-grow: 1;
+      //color: $color;
+      //font-size: $basic;
+      //font-family: Regular-font;
+      //margin: $basic;
+      //outline: none;
+      //border: none;
+      //cursor: pointer;
+      //background-color: white;
+      //width: 50%;
       &:hover{
-        color: $col2;
+        //color: $col2;
       }
       .option {
-        font-family: Regular-font;
-        font-size: $basic;
-        cursor: pointer;
+        //font-family: Regular-font;
+        //font-size: $basic;
+        //cursor: pointer;
       }
     }
     .error {
-      color: red;
+      //color: red;
     }
   }
 
   .switcher-wrapper{
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    font-size: $basic;
-    text-align: left;
+    //display: flex;
+    //flex-wrap: nowrap;
+    //align-items: center;
+    //font-size: $basic;
+    //text-align: left;
 
     .switcher-input{
-      height: 0;
-      width: 0;
-      visibility: hidden;
-      margin: 0;
+      //height: 0;
+      //width: 0;
+      //visibility: hidden;
+      //margin: 0;
     }
 
     .switcher-label {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './index.scss';
+//import './index.scss';
 import { Provider } from 'react-redux';
 import { store } from './redux-folder';
 import { routes } from './server/routes';

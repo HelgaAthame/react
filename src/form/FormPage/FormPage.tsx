@@ -139,23 +139,31 @@ export const FormPage = () => {
     return fileURL;
   };
 
+  const fieldsetWrapperClasses = 'fieldset-wrapper grow overflow-hidden relative m-2 rounded flex items-stretch';
+  const fieldsetClasses = 'fieldset w-full text-2xl m-px rounded-sm bg-white border-0 p-2 text-emerald-900 duration-1000 hover:text-emerald-600 group';
+  const fieldsetH3Classes = 'uppercase m-0 py-2 text-left';
+  const inputWrapperClasses = 'input-wrapper text-base regular-font flex';
+  const labelClasses = 'label flex flex-wrap text-left grow duration-1000 my-1';
+  const inputClasses = 'input group-hover:text-emerald-600 overflow-visible grow text-base outline-none border-none duration-100 ml-1 text-emerald-900 bg-white w-6/12 focus:text-emerald-600 focus:border-b focus:border-b-solid focus:borderb--emerald-600';
+  const errorClasses = 'error text-red-900 text-base transform-none';
+  const checkboxLabelClasses ="checkbox-label grow text-base text-left inline-flex items-center select-none before:duration-1000 before:content-['✔'] before:text-base before:leading-4 before:text-center before:align-middle before:inline-block before:w-4 before:h-4 before:shrink-0 before:grow-0 before:border before:border-solid before:border-emerald-900 before:rounded before:mr-1 before:bg-no-repeat before:bg-center before:bg-50% before:bg-emerald-600 before:text-emerald-600 peer-checked:before:bg-white";
+
   return (
     <section className="form-page">
-      <Confirmation />
       {confirm && <Confirmation />}
       <Header currentPage="FORM" />
 
-      <form data-testid="form" className="form" ref={form} onSubmit={handleSubmit(onSubmit)}>
-        <div className="fieldset-wrapper">
-          <fieldset className="fieldset">
-            <h3>Personal Information</h3>
+      <form data-testid="form" className="form mx-4 flex flex-wrap" ref={form} onSubmit={handleSubmit(onSubmit)}>
+        <div className={fieldsetWrapperClasses}>
+          <fieldset className={fieldsetClasses}>
+            <h3 className={fieldsetH3Classes}>Personal Information</h3>
 
-            <div className="input-wrapper">
-              <label htmlFor="firstName" className="label">
+            <div className={inputWrapperClasses}>
+              <label htmlFor="firstName" className={labelClasses}>
                 First Name
                 <input
                   type="text"
-                  className="input"
+                  className={inputClasses}
                   id="firstName"
                   data-testid="firstName"
                   {...register('firstName', {
@@ -175,19 +183,19 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.firstName && (
-                  <span className="error" data-testid="error">
+                  <span className={errorClasses} data-testid="error">
                     <>{errors.firstName.message}</>
                   </span>
                 )}
               </label>
             </div>
 
-            <div className="input-wrapper">
-              <label htmlFor="lastName" className="label">
+            <div className={inputWrapperClasses}>
+              <label htmlFor="lastName" className={labelClasses}>
                 Last Name
                 <input
                   type="text"
-                  className="input"
+                  className={inputClasses}
                   id="lastName"
                   data-testid="lastName"
                   {...register('lastName', {
@@ -207,19 +215,19 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.lastName && (
-                  <span className="error" data-testid="error">
+                  <span className={errorClasses} data-testid="error">
                     <>{errors.lastName.message}</>
                   </span>
                 )}
               </label>
             </div>
 
-            <div className="input-wrapper">
-              <label htmlFor="age" className="label">
+            <div className={inputWrapperClasses}>
+              <label htmlFor="age" className={labelClasses}>
                 Birthday
                 <input
                   type="date"
-                  className="input"
+                  className={inputClasses}
                   id="age"
                   data-testid="age"
                   {...register('age', {
@@ -232,28 +240,28 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.age && (
-                  <span className="error" data-testid="error">
+                  <span className={errorClasses} data-testid="error">
                     <>{errors.age.message}</>
                   </span>
                 )}
               </label>
             </div>
 
-            <div className="checkbox-wrapper">
+            <div className="checkbox-wrapper my-1 py-1 flex">
               <input
                 type="checkbox"
                 id="showMyAge"
                 data-testid="showMyAge"
-                className="checkbox-input"
+                className="checkbox-input absolute z-[-1] opacity-0 peer"
                 {...register('showMyAge', {
                   required: 'Required',
                 })}
               />
-              <label htmlFor="showMyAge" className="checkbox-label">
+              <label htmlFor="showMyAge" className={checkboxLabelClasses}>
                 Show my age
               </label>
               {errors.showMyAge && (
-                <span className="error" data-testid="error">
+                <span className={errorClasses} data-testid="error">
                   <>{errors.showMyAge.message}</>
                 </span>
               )}
@@ -267,25 +275,25 @@ export const FormPage = () => {
                 })}
                 accept="image/*"
                 id="profilePhoto"
-                className="input__file"
+                className="input__file absolute opacity-0 invisible"
                 data-testid="file_input"
               />
-              <label htmlFor="profilePhoto" className="input__label">
-                <span className="input__file-icon-wrapper">
+              <label htmlFor="profilePhoto" className="input__label text-base flex items-center justify-start hover:cursor-pointer">
+                <span className="input__file-icon-wrapper flex items-center justify-center">
                   <>
                     <Upload />
                   </>
                 </span>
-                <span className="input__file-button-text" ref={buttonText}>
+                <span className="input__file-button-text leading-4 p-2 medium-font" ref={buttonText}>
                   UPLOAD PROFILE PHOTO
                 </span>
                 {errors.file && (
-                  <span className="error">
+                  <span className={errorClasses}>
                     <>{errors.file.message}</>
                   </span>
                 )}
                 {fileError && (
-                  <span className="error" data-testid="file-error">
+                  <span className={errorClasses} data-testid="file-error">
                     Error: upload an image
                   </span>
                 )}
@@ -294,16 +302,16 @@ export const FormPage = () => {
           </fieldset>
         </div>
 
-        <div className="fieldset-wrapper">
-          <fieldset className="fieldset">
-            <h3>Address</h3>
+        <div className={fieldsetWrapperClasses}>
+          <fieldset className={fieldsetClasses}>
+            <h3 className={fieldsetH3Classes}>Address</h3>
 
-            <div className="input-wrapper">
-              <label htmlFor="zipCode" className="label">
+            <div className={inputWrapperClasses}>
+              <label htmlFor="zipCode" className={labelClasses}>
                 Zip-code
                 <input
                   type="text"
-                  className="input"
+                  className={inputClasses}
                   id="zipCode"
                   data-testid="zipCode"
                   {...register('zipCode', {
@@ -323,27 +331,27 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.zipCode && (
-                  <span className="error" data-testid="error">
+                  <span className={errorClasses} data-testid="error">
                     <>{errors.zipCode.message}</>
                   </span>
                 )}
               </label>
             </div>
 
-            <div className="select-wrapper">
+            <div className="select-wrapper text-base text-left flex items-center flex-wrap">
               Country
               <select
                 data-testid="country"
                 id="country"
                 multiple={false}
-                className="select"
+                className="select h-6 grow text-emerald-600 text-base regular-font m-2 outline-none border-none cursor-pointer bg-white w-6/12 hover:text-emerald-600"
                 {...register('country', {
                   validate: {
                     country: (v) => countries.includes(v) || 'Required',
                   },
                 })}
               >
-                <option className="option" value=""></option>
+                <option className="option regular-font text-base cursor-pointer" value=""></option>
                 {countries.sort().map((country, index) => (
                   <option value={country} key={index} className="option">
                     {country}
@@ -351,18 +359,18 @@ export const FormPage = () => {
                 ))}
               </select>
               {errors.country && (
-                <span className="error" data-testid="error">
+                <span className={errorClasses} data-testid="error">
                   <>{errors.country.message}</>
                 </span>
               )}
             </div>
 
-            <div className="input-wrapper">
-              <label htmlFor="city" className="label">
+            <div className={inputWrapperClasses}>
+              <label htmlFor="city" className={labelClasses}>
                 City
                 <input
                   type="text"
-                  className="input"
+                  className={inputClasses}
                   id="city"
                   data-testid="city"
                   {...register('city', {
@@ -383,19 +391,19 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.city && (
-                  <span className="error" data-testid="error">
+                  <span className={errorClasses} data-testid="error">
                     <>{errors.city.message}</>
                   </span>
                 )}
               </label>
             </div>
 
-            <div className="input-wrapper">
-              <label htmlFor="address" className="label">
+            <div className={inputWrapperClasses}>
+              <label htmlFor="address" className={labelClasses}>
                 Address
                 <input
                   type="text"
-                  className="input"
+                  className={inputClasses}
                   id="address"
                   data-testid="address"
                   {...register('address', {
@@ -415,7 +423,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.address && (
-                  <span className="error" data-testid="error">
+                  <span className={errorClasses} data-testid="error">
                     <>{errors.address.message}</>
                   </span>
                 )}
@@ -424,16 +432,16 @@ export const FormPage = () => {
           </fieldset>
         </div>
 
-        <div className="fieldset-wrapper">
-          <fieldset className="fieldset">
-            <h3>Contacts</h3>
+        <div className={fieldsetWrapperClasses}>
+          <fieldset className={fieldsetClasses}>
+            <h3 className={fieldsetH3Classes}>Contacts</h3>
 
-            <div className="input-wrapper">
-              <label htmlFor="email" className="label">
+            <div className={inputWrapperClasses}>
+              <label htmlFor="email" className={labelClasses}>
                 E-mail
                 <input
                   type="text"
-                  className="input"
+                  className={inputClasses}
                   id="email"
                   data-testid="email"
                   {...register('email', {
@@ -446,31 +454,31 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.email && (
-                  <span className="error" data-testid="error">
+                  <span className={errorClasses} data-testid="error">
                     <>{errors.email.message}</>
                   </span>
                 )}
               </label>
             </div>
 
-            <div className="switcher-wrapper">
+            <div className="switcher-wrapper flex flex-nowrap items-center text-base text-left">
               Receive notifications by mail
               <input
                 type="checkbox"
                 data-testid="receiveMail"
                 id="receiveMail"
-                className="switcher-input"
+                className="switcher-input h-0 w-0 m-0 invisible"
                 {...register('receiveMail')}
               />
-              <label htmlFor="receiveMail" className="switcher-label"></label>
+              <label htmlFor="receiveMail" className="switcher-label "></label>
             </div>
 
-            <div className="input-wrapper">
-              <label htmlFor="phone" className="label">
+            <div className={inputWrapperClasses}>
+              <label htmlFor="phone" className={labelClasses}>
                 Phone
                 <input
                   type="text"
-                  className="input"
+                  className={inputClasses}
                   id="phone"
                   data-testid="phone"
                   {...register('phone', {
@@ -482,7 +490,7 @@ export const FormPage = () => {
                   })}
                 />
                 {errors.phone && (
-                  <span className="error" data-testid="error">
+                  <span className={errorClasses} data-testid="error">
                     <>{errors.phone.message}</>
                   </span>
                 )}
@@ -503,57 +511,57 @@ export const FormPage = () => {
           </fieldset>
         </div>
 
-        <div className="fieldset-wrapper">
-          <fieldset className="fieldset">
-            <h3>Checkboxes</h3>
+        <div className={fieldsetWrapperClasses}>
+          <fieldset className={fieldsetClasses}>
+            <h3 className={fieldsetH3Classes}>Checkboxes</h3>
 
-            <div className="checkbox-wrapper">
+            <div className="checkbox-wrapper my-1 py-1 flex">
               <input
                 type="checkbox"
                 id="firstCheckbox"
-                className="checkbox-input"
+                className="checkbox-input absolute z-[-1] opacity-0 peer"
                 {...register('firstCheckbox')}
               />
-              <label htmlFor="firstCheckbox" className="checkbox-label">
+              <label htmlFor="firstCheckbox" className={checkboxLabelClasses}>
                 I like this website
               </label>
             </div>
 
-            <div className="checkbox-wrapper">
+            <div className="checkbox-wrapper my-1 py-1 flex">
               <input
                 type="checkbox"
                 id="secondCheckbox"
-                className="checkbox-input"
+                className="checkbox-input absolute z-[-1] opacity-0 peer"
                 {...register('secondCheckbox')}
               />
-              <label htmlFor="secondCheckbox" className="checkbox-label">
+              <label htmlFor="secondCheckbox" className={checkboxLabelClasses}>
                 I enjoy filling out forms
               </label>
             </div>
 
-            <div className="checkbox-wrapper">
+            <div className="checkbox-wrapper my-1 py-1 flex">
               <input
                 type="checkbox"
                 id="thirdCheckbox"
-                className="checkbox-input"
+                className="checkbox-input absolute z-[-1] opacity-0 peer"
                 {...register('thirdCheckbox')}
               />
-              <label htmlFor="thirdCheckbox" className="checkbox-label">
+              <label htmlFor="thirdCheckbox" className={checkboxLabelClasses}>
                 I like reading good books
               </label>
             </div>
           </fieldset>
         </div>
 
-        <div className="fieldset-wrapper">
-          <fieldset className="fieldset">
-            <h3>Radios</h3>
+        <div className={fieldsetWrapperClasses}>
+          <fieldset className={fieldsetClasses}>
+            <h3 className={fieldsetH3Classes}>Radios</h3>
 
-            <div className="radio-super-wrapper">
+            <div className="radio-super-wrapper text-left uppercase transform-none">
               Gender
-              <div className="radio-wrapper" data-testid="radio" {...register}>
+              <div className="radio-wrapper flex flex-col text-base" data-testid="radio" {...register}>
                 {['undefined', 'female', 'male', 'other'].map((value, index) => (
-                  <label className="radio-label" htmlFor={`gender__${index}`} key={index}>
+                  <label className="radio-label p-1 text-left" htmlFor={`gender__${index}`} key={index}>
                     <input
                       className="radio-input"
                       id={`gender__${index}`}
@@ -568,7 +576,7 @@ export const FormPage = () => {
                 ))}
               </div>
               {errors.gender && (
-                <span className="error" data-testid="error">
+                <span className={errorClasses} data-testid="error">
                   <>{errors.gender.message}</>
                 </span>
               )}
@@ -576,8 +584,8 @@ export const FormPage = () => {
           </fieldset>
         </div>
 
-        <div className="submit-wrapper">
-          <input type="submit" className="submit-input" value="SUBMIT" data-testid="submit" />
+        <div className="submit-wrapper flex items-stretch m-1 outline-none overflow-hidden relative rounded h-min">
+          <input type="submit" className="submit-input text-emerald-900 border-none bg-white m-px rounded-sm pt-5 px-4 pb-3 duration-1000 text-4xl light-font hover:text-emerald-600" value="SUBMIT" data-testid="submit" />
         </div>
       </form>
 

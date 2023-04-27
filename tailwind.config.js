@@ -40,6 +40,9 @@ export default {
         loading: 'loading 750ms forwards infinite linear'
       }
     },
+    backgroundSize: {
+      '50%': '50%',
+    }
   },
   plugins: [],
 }
