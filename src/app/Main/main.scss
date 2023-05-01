@@ -1,0 +1,11 @@
+.main {
+  margin: 0 1rem 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+  justify-content: space-between;
+  height: 100%;
+  .error{
+    margin: 1rem;
+  }
+}

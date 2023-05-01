@@ -1,0 +1,66 @@
+$color: #105544;
+$col2: #109966;
+$basic: 1rem;
+@mixin animated-border {
+  &::before{
+    content: ' ';
+    position:absolute;
+    background-image: conic-gradient(white 0%,$color 0%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    transition: 1s;
+  }
+  &:hover::before {
+    background-image: conic-gradient(white 10%,$color 20%);
+    animation: 750ms forwards ease-in-out button;
+  }
+
+  @keyframes button {
+    0% {
+      transform: scale(6) rotate(0deg);
+      background-image: conic-gradient($color 80%, white 90%);
+    }
+    99% {
+      transform: scale(6) rotate(360deg);
+      background-image: conic-gradient($col2 80%, white 90%);
+    }
+    100% {
+      transform: scale(6) rotate(360deg);
+      background-image: conic-gradient($col2 100%, white 0%);
+    }
+  }
+}
+
+.confirmation-section {
+  position: absolute;
+  height:98%;
+  width: 98%;
+  background: radial-gradient( $color, transparent 70%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .confirmation-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+    .confirmation {
+      font-size: 2rem;
+      text-transform: uppercase;
+      overflow: hidden;
+      @include animated-border;
+      margin: 1px;
+      background-color: white;
+      width: 15rem;
+      height: 10rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+      padding: $basic;
+    }
+  }
+}
