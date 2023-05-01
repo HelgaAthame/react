@@ -33,6 +33,7 @@ export default defineConfig({
   optimizeDeps: { include: ['react/jsx-dev-runtime'] },
   build: {
     minify: false,
+    sourcemap: true,
   },
   envDir: './',
 })
